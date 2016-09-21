@@ -5,11 +5,8 @@ admin.autodiscover()
 
 import home.views
 
-# Examples:
-# url(r'^$', 'band_maker.views.home', name='home'),
-# url(r'^blog/', include('blog.urls')),
-
 urlpatterns = [
     url(r'^$', home.views.index, name='index'),
+    url(r'^songs/', include('songs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
