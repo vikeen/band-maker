@@ -1,4 +1,4 @@
-# python-getting-started
+# Band Maker
 
 A barebones Python app, which can easily be deployed to Heroku.
 
@@ -8,34 +8,38 @@ This application supports the [Getting Started with Python on Heroku](https://de
 
 Make sure you have Python [installed properly](http://install.python-guide.org).  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
 
+### Depencies
+
 ```sh
-$ git clone git@github.com:heroku/python-getting-started.git
-$ cd python-getting-started
-
 $ pip install -r requirements.txt
+```
 
-$ createdb python_getting_started
+### Database
 
+```sql
+CREATE DATABASE band_maker;
+CREATE ROLE band_maker_user with PASSWORD 'password';
+ALTER DATABASE band_maker OWNER TO band_maker_user;
+ALTER ROLE band_maker_user with LOGIN;
+```
+
+```sh
 $ python manage.py migrate
 $ python manage.py collectstatic
 
-$ heroku local
+$ python manage.py runserver
 ```
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+Your app should now be running on [localhost:8000](http://localhost:8000/).
 
 ## Deploying to Heroku
 
 ```sh
-$ heroku create
 $ git push heroku master
-
 $ heroku run python manage.py migrate
 $ heroku open
 ```
 or
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Documentation
 
