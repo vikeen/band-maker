@@ -28,15 +28,16 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = (
-    'songs.apps.SongsConfig',
-    'signup.apps.SignupConfig',
-    'home',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'django_gravatar',
+    'songs.apps.SongsConfig',
+    'signup.apps.SignupConfig',
+    'home'
 )
 
 MIDDLEWARE_CLASSES = (
