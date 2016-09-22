@@ -1,21 +1,27 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav">
-            <li class="active">
+            <li{% if request.path == "/" %} class="active"{% endif %}>
                 <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
-            </li>
-            <li>
-                <a href="https://devcenter.heroku.com/articles/how-heroku-works"><span
-                        class="glyphicon glyphicon-user"></span> How Heroku Works</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="/signup">Sign Up</a>
-            </li>
-            <li>
-                <a href="/login">Log In</a>
-            </li>
+            {% if user.id %}
+                {% url 'songs:index' as url %}
+                <li{% if request.path == url %} class="active"{% endif %}>
+                    <a href="{{ url }}">My Songs</a>
+                </li>
+                <li>
+                    <a href="{% url 'django.contrib.auth.views.logout' %}">Log Out</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="/signup">Sign Up</a>
+                </li>
+                <li>
+                    <a href="{% url 'django.contrib.auth.views.login' %}">Log In</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
