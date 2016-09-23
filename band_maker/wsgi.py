@@ -1,5 +1,5 @@
 """
-WSGI config for gettingstarted project.
+WSGI config for band_maker project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
