@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'django_gravatar',
     'songs.apps.SongsConfig',
     'registration.backends.simple',

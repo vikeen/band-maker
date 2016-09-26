@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+# {% load widget_tweaks %}
+
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
@@ -15,28 +17,28 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="id_username">Username</label>
-                {{ form.username }}
+                {% render_field form.username class+="form-control" %}
                 {% if form.username.errors %}
                     <p class="errors">{{ form.username.errors.as_text }}</p>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="id_email">Email</label>
-                {{ form.email }}
+                {% render_field form.email class+="form-control" %}
                 {% if form.email.errors %}
                     <p class="errors">{{ form.email.errors.as_text }}</p>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="id_password1">Password</label>
-                {{ form.password1 }}
+                {% render_field form.password1 class+="form-control" %}
                 {% if form.password1.errors %}
                     <p class="errors">{{ form.password1.errors.as_text }}</p>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="id_password2">Confirm Password</label>
-                {{ form.password2 }}
+                {% render_field form.password2 class+="form-control" %}
                 {% if form.password2.errors %}
                     <p class="errors">{{ form.password2.errors.as_text }}</p>
                 {% endif %}
