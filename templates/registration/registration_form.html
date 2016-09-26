@@ -8,7 +8,7 @@
 
     <main class="container">
         {% if form.errors %}
-            <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+            <div class="alert alert-danger">Please correct the errors below: {{ form.non_field_errors }}</div>
         {% endif %}
 
         <h1>Create an account</h1>
