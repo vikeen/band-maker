@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_gravatar',
     'songs.apps.SongsConfig',
-    'signup.apps.SignupConfig',
+    'registration.backends.simple',
     'home'
 )
 

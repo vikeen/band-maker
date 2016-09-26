@@ -7,11 +7,10 @@ admin.autodiscover()
 
 import home.views
 
+
 urlpatterns = [
     url(r'^$', home.views.index, name='index'),
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}),
-    url(r'^logout/$', auth_views.logout),
-    url(r'^signup/', include('signup.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^songs/', include('songs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
