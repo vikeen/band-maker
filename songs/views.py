@@ -26,8 +26,6 @@ class Create(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.composer = self.request.user
-        print form.instance
-        print form
         return super(Create, self).form_valid(form)
 
 
@@ -47,7 +45,7 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
 def upload(request):
     s3_bucket = os.environ.get('S3_BUCKET')
 
-    file_name = request.GET['file_name']
+    file_name = "%s/%s" % (request.user.username, request.GET['file_name'])
     file_type = request.GET['file_type']
 
     s3 = boto3.client('s3')

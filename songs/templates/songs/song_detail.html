@@ -35,9 +35,9 @@
             var mediaPlayer = new MediaPlayer(wavesurfer);
         });
 
-        wavesurfer.on("audioprocess", function () {
-            console.log("processing audio");
-        });
+{#        wavesurfer.on("audioprocess", function () {#}
+{#            console.log("processing audio");#}
+{#        });#}
 
         wavesurfer.on("error", function (error) {
             console.error("error processing video", error);
