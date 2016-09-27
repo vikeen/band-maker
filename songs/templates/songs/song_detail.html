@@ -10,7 +10,8 @@
     <div class="page-header">
         <h1>{{ song.title }}
             <small>
-                <a href="{% url 'users:songs' song.composer %}">{{ song.composer }}</a></small>
+                <a href="{% url 'users:songs' song.composer %}">{{ song.composer }}</a>
+            </small>
         </h1>
     </div>
     <div class="media-player">
@@ -35,9 +36,9 @@
             var mediaPlayer = new MediaPlayer(wavesurfer);
         });
 
-{#        wavesurfer.on("audioprocess", function () {#}
-{#            console.log("processing audio");#}
-{#        });#}
+        {#        wavesurfer.on("audioprocess", function () {#}
+        {#            console.log("processing audio");#}
+        {#        });#}
 
         wavesurfer.on("error", function (error) {
             console.error("error processing video", error);
@@ -63,11 +64,11 @@
             return this;
         }
 
-        MediaPlayer.prototype.play = function() {
+        MediaPlayer.prototype.play = function () {
             this.audio.play();
         };
 
-        MediaPlayer.prototype.pause = function() {
+        MediaPlayer.prototype.pause = function () {
             this.audio.pause();
         };
     </script>

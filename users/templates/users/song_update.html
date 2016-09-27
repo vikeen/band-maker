@@ -29,7 +29,7 @@
         </div>
         <hr/>
         <div class="form-group">
-            <a class="btn btn-danger" href="{% url 'songs:delete' song.id %}">Delete</a>
+            <a class="btn btn-danger" href="{% url 'users:song_delete' user.username song.id %}">Delete</a>
         </div>
     </form>
 {% endblock %}

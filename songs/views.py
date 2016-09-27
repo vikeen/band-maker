@@ -19,13 +19,6 @@ class Detail(generic.DetailView):
     model = Song
 
 
-class Delete(LoginRequiredMixin, generic.DeleteView):
-    model = Song
-
-    def get_success_url(self):
-        return reverse_lazy('users:songs', kwargs={'pk': self.request.user.username})
-
-
 def upload(request):
     s3_bucket = os.environ.get('S3_BUCKET')
 
