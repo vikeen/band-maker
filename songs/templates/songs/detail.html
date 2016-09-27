@@ -3,10 +3,14 @@
 
 {% block content %}
     <main class="container">
-        <h1>{{ song.title }}</h1>
-        <dl>
-            <dt>Composer</dt>
-            <dd>{{ song.composer.username }}</dd>
-        </dl>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'songs:index' %}">Songs</a></li>
+            <li class="active">{{ song.title }}</li>
+        </ol>
+        <div class="page-header">
+            <h1>{{ song.title }}
+                <small>{{ song.composer.username }}</small>
+            </h1>
+        </div>
     </main>
 {% endblock %}

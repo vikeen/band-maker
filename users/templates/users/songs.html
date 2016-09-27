@@ -3,8 +3,13 @@
 
 {% block content %}
     <main class="container">
-        <h1>User Songs</h1>
+        <ol class="breadcrumb">
+            <li class="active">Songs</a></li>
+        </ol>
         <a class="btn btn-primary" href="{% url 'songs:create' %}">Create Song</a>
+        <div class="page-header">
+            <h1>{{ user.username }}</h1>
+        </div>
         <ul>
             {% for song in song_list %}
                 <li>

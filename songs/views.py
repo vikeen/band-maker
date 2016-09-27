@@ -30,4 +30,4 @@ class Create(LoginRequiredMixin, generic.CreateView):
 class Update(LoginRequiredMixin, generic.UpdateView):
     model = Song
     fields = ["title"]
-    template_name = 'songs/create.html'
+    template_name = 'songs/update.html'

@@ -6,11 +6,14 @@
             <li{% if request.path == "/" %} class="active"{% endif %}>
                 <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
             </li>
+            <li{% if request.path == "/songs" %} class="active"{% endif %}>
+                <a href="/songs"><span class="glyphicon glyphicon-music"></span> Songs</a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if user.id %}
                 <li>
-                    <a href="/users/{{user.username}}/songs">My Songs</a>
+                    <a href="{% url 'users:songs' user.username %}">My Songs</a>
                 </li>
 
                 <li class="dropdown">
