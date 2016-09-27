@@ -19,12 +19,6 @@ class Detail(generic.DetailView):
     model = Song
 
 
-class Update(LoginRequiredMixin, generic.UpdateView):
-    model = Song
-    fields = ["title"]
-    template_name = 'songs/song_update.html'
-
-
 class Delete(LoginRequiredMixin, generic.DeleteView):
     model = Song
 

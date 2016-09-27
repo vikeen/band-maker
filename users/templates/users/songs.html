@@ -3,7 +3,7 @@
 
 {% block content %}
     <ol class="breadcrumb">
-        <li><a href="#">{{ request.resolver_match.kwargs.pk }}</a></li>
+        <li><a href="#">{{ request.resolver_match.kwargs.username }}</a></li>
         <li class="active">Songs</li>
     </ol>
 
@@ -15,8 +15,8 @@
     </div>
     <div class="list-group">
         {% for song in song_list %}
-            {% if request.resolver_match.kwargs.pk == user.username %}
-                <a href="{% url 'songs:update' song.id %}" class="list-group-item">
+            {% if request.resolver_match.kwargs.username == user.username %}
+                <a href="{% url 'users:song_update' user.username song.id %}" class="list-group-item">
             {% else %}
                 <a href="{% url 'songs:detail' song.id %}" class="list-group-item">
             {% endif %}

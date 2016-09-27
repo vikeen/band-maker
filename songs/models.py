@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 
@@ -14,6 +13,3 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
-
-    def get_absolute_url(self):
-        return reverse('songs:update', kwargs={'pk': self.pk})
