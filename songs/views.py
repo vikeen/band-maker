@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 
 from .models import Song
@@ -17,8 +17,7 @@ class Detail(generic.DetailView):
     template_name = 'songs/detail.html'
 
 
-# @login_required
-class Create(generic.CreateView):
+class Create(LoginRequiredMixin, generic.CreateView):
     model = Song
     fields = ['title']
     template_name = 'songs/create.html'
@@ -28,8 +27,7 @@ class Create(generic.CreateView):
         return super(Create, self).form_valid(form)
 
 
-# @login_required
-class Update(generic.UpdateView):
+class Update(LoginRequiredMixin, generic.UpdateView):
     model = Song
     fields = ["title"]
     template_name = 'songs/create.html'

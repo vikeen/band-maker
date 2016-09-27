@@ -2,10 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
-<h1>{{ song.title }}</h1>
-
-{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-{% endif %}
-
+    <main class="container">
+        <h1>{{ song.title }}</h1>
+        <dl>
+            <dt>Composer</dt>
+            <dd>{{ song.composer.username }}</dd>
+        </dl>
+    </main>
 {% endblock %}
