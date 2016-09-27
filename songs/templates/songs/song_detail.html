@@ -46,7 +46,7 @@
 
         wavesurfer.on('ready', function () {
             $('.progress').hide();
-            var mediaPlayer = new MediaPlayer(wavesurfer);
+            var mediaPlayer = new MediaPlayer([wavesurfer]);
         });
 
         {#        wavesurfer.on("audioprocess", function () {#}
@@ -65,8 +65,8 @@
 
         wavesurfer.load("{{ song.media_url }}");
 
-        function MediaPlayer(audio) {
-            this.audio = audio;
+        function MediaPlayer(tracks) {
+            this.tracks = tracks;
             this.$element = $('.media-player');
             this.$controls = {
                 "$play": this.$element.find(".media-player__control-play"),
@@ -80,11 +80,19 @@
         }
 
         MediaPlayer.prototype.play = function () {
-            this.audio.play();
+            this.tracks.forEach(function (track) {
+                if (!track.isPlaying()) {
+                    track.play();
+                }
+            });
         };
 
         MediaPlayer.prototype.pause = function () {
-            this.audio.pause();
+            this.tracks.forEach(function (track) {
+                if (track.isPlaying()) {
+                    track.pause();
+                }
+            });
         };
     </script>
 {% endblock %}
