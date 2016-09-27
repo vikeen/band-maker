@@ -9,7 +9,8 @@
         </ol>
         <div class="page-header">
             <h1>{{ song.title }}
-                <small>{{ song.composer.username }}</small>
+                <small>
+                    <a href="{% url 'users:songs' song.composer %}">{{ song.composer }}</a></small>
             </h1>
         </div>
     </main>
