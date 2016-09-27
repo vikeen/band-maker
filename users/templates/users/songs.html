@@ -4,26 +4,25 @@
 {% block content %}
     <main class="container">
         <ol class="breadcrumb">
+            <li><a href="#">{{ user.username }}</a></li>
             <li class="active">Songs</a></li>
         </ol>
         <a class="btn btn-primary" href="{% url 'songs:create' %}">Create Song</a>
         <div class="page-header">
             <h1>{{ user.username }}</h1>
         </div>
-        <ul>
+        <div class="list-group">
             {% for song in song_list %}
-                <li>
-                    <a href="{% url 'songs:update' song.id %}">{{ song.title }}</a>
-                    <table>
-                        <tr>
-                            <td><b>Likes:</b> {{ song.likes }}</td>
-                        </tr>
-                        <tr>
-                            <td><b>Views:</b> {{ song.views }}</td>
-                        </tr>
-                    </table>
-                </li>
+                <a href="{% url 'songs:update' song.id %}" class="list-group-item">
+                    <h2 class="list-group-item-heading">{{ song.title }}</h2>
+                    <p class="list-group-item-text">
+                        <b>Likes:</b> {{ song.likes }}
+                    </p>
+                    <p class="list-group-item-text">
+                        <b>Views:</b> {{ song.views }}
+                    </p>
+                </a>
             {% endfor %}
-        </ul>
+        </div>
     </main>
 {% endblock %}
