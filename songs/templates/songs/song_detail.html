@@ -15,7 +15,11 @@
         </h1>
     </div>
     <div class="media-player">
-        <div id="waveform"></div>
+        <div id="waveform">
+            <div class="progress">
+                <div id="progress" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
         <ul class="media-player__controls">
             <li class="media-player__control media-player__control-play">
                 <i class="glyphicon glyphicon-play"></i>
@@ -26,13 +30,22 @@
         </ul>
     </div>
     <script>
+        var ctx = document.createElement('canvas').getContext('2d');
+        var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
+        linGrad.addColorStop(0.5, 'rgba(225, 225, 225, 1.000)');
+        linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
+
         var wavesurfer = WaveSurfer.create({
             container: '#waveform',
-            waveColor: 'violet',
-            progressColor: 'purple'
+            waveColor: linGrad,
+            progressColor: 'hsla(200, 100%, 30%, 0.5)',
+            cursorColor: '#fff',
+            normalize: true,
+            barWidth: 3
         });
 
         wavesurfer.on('ready', function () {
+            $('.progress').hide();
             var mediaPlayer = new MediaPlayer(wavesurfer);
         });
 
@@ -44,8 +57,10 @@
             console.error("error processing video", error);
         });
 
-        wavesurfer.on("loading", function () {
-            console.log("loading audio");
+        wavesurfer.on('loading', function (percents) {
+            $('.progress .progress-bar').css({
+                width: percents + "%"
+            })
         });
 
         wavesurfer.load("{{ song.media_url }}");
