@@ -13,4 +13,62 @@
                 <a href="{% url 'users:songs' song.composer %}">{{ song.composer }}</a></small>
         </h1>
     </div>
+    <div class="media-player">
+        <div id="waveform"></div>
+        <ul class="media-player__controls">
+            <li class="media-player__control media-player__control-play">
+                <i class="glyphicon glyphicon-play"></i>
+            </li>
+            <li class="media-player__control media-player__control-pause">
+                <i class="glyphicon glyphicon-pause"></i>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            waveColor: 'violet',
+            progressColor: 'purple'
+        });
+
+        wavesurfer.on('ready', function () {
+            var mediaPlayer = new MediaPlayer(wavesurfer);
+        });
+
+        wavesurfer.on("audioprocess", function () {
+            console.log("processing audio");
+        });
+
+        wavesurfer.on("error", function (error) {
+            console.error("error processing video", error);
+        });
+
+        wavesurfer.on("loading", function () {
+            console.log("loading audio");
+        });
+
+        wavesurfer.load("{{ song.media_url }}");
+
+        function MediaPlayer(audio) {
+            this.audio = audio;
+            this.$element = $('.media-player');
+            this.$controls = {
+                "$play": this.$element.find(".media-player__control-play"),
+                "$pause": this.$element.find(".media-player__control-pause")
+            };
+
+            this.$controls.$pause.on("click", this.pause.bind(this));
+            this.$controls.$play.on("click", this.play.bind(this));
+
+            return this;
+        }
+
+        MediaPlayer.prototype.play = function() {
+            this.audio.play();
+        };
+
+        MediaPlayer.prototype.pause = function() {
+            this.audio.pause();
+        };
+    </script>
 {% endblock %}
