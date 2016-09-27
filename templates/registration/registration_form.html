@@ -5,8 +5,6 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-
-    <main class="container">
         {% if form.errors %}
             <div class="alert alert-danger">Please correct the errors below: {{ form.non_field_errors }}</div>
         {% endif %}
@@ -47,8 +45,6 @@
                 <button class="btn btn-primary" type="submit">Register &rarr;</button>
             </div>
         </form>
-    </main>
-
 {% endblock %}
 
 {% block content-related %}

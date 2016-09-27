@@ -1,0 +1,16 @@
+{% extends "songs/song_base.html" %}
+
+{% block title %}{{ song.title }}{% endblock %} }}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'songs:index' %}">Songs</a></li>
+        <li class="active">{{ song.title }}</li>
+    </ol>
+    <div class="page-header">
+        <h1>{{ song.title }}
+            <small>
+                <a href="{% url 'users:songs' song.composer %}">{{ song.composer }}</a></small>
+        </h1>
+    </div>
+{% endblock %}

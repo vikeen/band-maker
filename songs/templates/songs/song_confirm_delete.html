@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Delete - {{ object.title }}{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'users:songs' user.username %}">My Songs</a></li>
+        <li><a href="{% url 'songs:update' object.id %}">{{ object.title }}</a></li>
+        <li class="active">Delete</li>
+    </ol>
+    <form class="form" action="" method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ object.title }}"?</p>
+        <a href="{% url 'songs:update' object.id %}">Cancel</a>
+        <button type="submit" class="btn btn-danger">Confirm</button>
+    </form>
+{% endblock %}

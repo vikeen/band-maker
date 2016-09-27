@@ -1,0 +1,25 @@
+{% extends "songs/song_base.html" %}
+{% load staticfiles %}
+
+{% block title %}Songs{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li class="active">Songs</li>
+    </ol>
+    <ul>
+        {% for song in song_list %}
+            <li>
+                <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>
+                <table>
+                    <tr>
+                        <td><b>Likes:</b> {{ song.likes }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Views:</b> {{ song.views }}</td>
+                    </tr>
+                </table>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
