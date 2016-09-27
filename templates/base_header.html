@@ -9,9 +9,8 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if user.id %}
-                {% url 'songs:index' as url %}
-                <li{% if request.path == url %} class="active"{% endif %}>
-                    <a href="{{ url }}">My Songs</a>
+                <li>
+                    <a href="/users/{{user.username}}/songs">My Songs</a>
                 </li>
 
                 <li class="dropdown">

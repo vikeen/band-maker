@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'django_gravatar',
     'songs.apps.SongsConfig',
+    'users.apps.UsersConfig',
     'registration.backends.simple',
     'home'
 )

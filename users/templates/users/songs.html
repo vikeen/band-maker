@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <main class="container">
+        <h1>User Songs</h1>
+        <a class="btn btn-primary" href="{% url 'songs:create' %}">Create Song</a>
+        <ul>
+            {% for song in song_list %}
+                <li>
+                    <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>
+                    <table>
+                        <tr>
+                            <td><b>Likes:</b> {{ song.likes }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Views:</b> {{ song.views }}</td>
+                        </tr>
+                    </table>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}
