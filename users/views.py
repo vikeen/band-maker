@@ -40,4 +40,6 @@ class SongDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = 'users/song_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse('users:songs', kwargs={'username': self.request.user.username})
+        return reverse('users:songs', kwargs={
+            'username': self.request.user.username
+        })

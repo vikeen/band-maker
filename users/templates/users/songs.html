@@ -7,7 +7,7 @@
         <li class="active">Songs</li>
     </ol>
 
-    {% if request.resolver_match.kwargs.pk == user.username %}
+    {% if request.resolver_match.kwargs.username == user.username %}
         <a class="btn btn-primary" href="{% url 'users:song_create' user.username %}">Create Song</a>
     {% endif %}
     <div class="page-header">
