@@ -6,7 +6,6 @@ app_name = 'songs'
 urlpatterns = [
     url(r'^$', views.Index.as_view(), name='index'),
     url(r'^upload/$', views.upload),
-    url(r'^create/$', views.Create.as_view(), name='create'),
     url(r'^(?P<pk>[0-9]+)/delete$', views.Delete.as_view(), name='delete'),
     url(r'^(?P<pk>[0-9]+)/$', views.Detail.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/edit$', views.Update.as_view(), name='update')
