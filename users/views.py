@@ -1,5 +1,5 @@
 from django.views import generic
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from songs.models import Song
@@ -22,6 +22,11 @@ class SongCreate(LoginRequiredMixin, generic.CreateView):
         form.instance.composer = self.request.user
         return super(SongCreate, self).form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('users:songs', kwargs={
+            'username': self.kwargs['username']
+        })
+
 
 class SongUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Song
@@ -40,6 +45,6 @@ class SongDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = 'users/song_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse('users:songs', kwargs={
-            'username': self.request.user.username
+        return reverse_lazy('users:songs', kwargs={
+            'username': self.kwargs['username']
         })
