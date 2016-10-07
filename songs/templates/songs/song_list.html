@@ -12,7 +12,7 @@
             <h2 class="list-group-item-heading">
                 <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>
             </h2>
-            <p><a href="{% url 'users:songs' song.composer.username %}">&nbsp;{{ song.composer.username }}</a></p>
+            <p><a href="{% url 'users:songs' song.created_by.username %}">&nbsp;{{ song.created_by.username }}</a></p>
             <ul class="songs-meta clearfix">
                 <li>
                     <i class="glyphicon glyphicon-heart"></i> {{ song.likes }}

@@ -10,7 +10,7 @@
     <div class="page-header">
         <h1>{{ song.title }}
             <small>
-                <a href="{% url 'users:songs' song.composer %}">{{ song.composer }}</a>
+                <a href="{% url 'users:songs' song.created_by %}">{{ song.created_by }}</a>
             </small>
         </h1>
     </div>

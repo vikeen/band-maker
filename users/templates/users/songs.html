@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block title %}My Songs{% endblock %}
+
 {% block content %}
     <ol class="breadcrumb">
         <li><a href="#">{{ request.resolver_match.kwargs.username }}</a></li>

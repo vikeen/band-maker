@@ -25,6 +25,20 @@
             {% endif %}
         </div>
         <div class="form-group">
+            <label>Tracks</label>
+            <p>
+                <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-secondary">Add Track</a>
+            </p>
+            <ul>
+                {% for track in tracks %}
+                    <li>
+                        <p>{{ track.instrument }}</p>
+                        <p>{{ track.media_url }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="form-group">
             <button class="btn btn-primary" type="submit">Save</button>
         </div>
         <hr/>
