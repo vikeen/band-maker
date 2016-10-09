@@ -48,12 +48,12 @@
                     waveColor: linGrad,
                     progressColor: 'hsla(200, 100%, 30%, 0.5)',
                     cursorColor: '#fff',
-                    barWidth: 3,
-                    height: 75
+                    height: 37
                 });
 
                 wavesurfer.on('ready', function () {
                     $('.progress').hide();
+                    $('wave').show();
                 });
 
                 wavesurfer.on("error", function (error) {
@@ -67,6 +67,8 @@
                 });
 
                 wavesurfer.load(track.fields.media_url);
+
+                $('wave').hide();
 
                 track.__audio = wavesurfer;
             });
