@@ -25,6 +25,7 @@
 
         vm.play = play;
         vm.pause = pause;
+        vm.restart = restart;
 
         activate();
 
@@ -47,8 +48,8 @@
                     waveColor: linGrad,
                     progressColor: 'hsla(200, 100%, 30%, 0.5)',
                     cursorColor: '#fff',
-                    normalize: true,
-                    barWidth: 3
+                    barWidth: 3,
+                    height: 75
                 });
 
                 wavesurfer.on('ready', function () {
@@ -71,7 +72,13 @@
             });
         }
 
-        function play() {
+        function restart() {
+            vm.tracks.forEach(function (track) {
+                track.__audio.play(0);
+            });
+        }
+
+        function play(start, end) {
             vm.tracks.forEach(function (track) {
                 if (!track.__audio.isPlaying()) {
                     track.__audio.play();
