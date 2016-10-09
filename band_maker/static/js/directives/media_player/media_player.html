@@ -1,5 +1,6 @@
 <div class="media-player">
-    <div id="waveform-{{ track.pk }}" ng-repeat="track in vm.tracks">
+    <div id="waveform-{{ track.pk }}" class="media-player__waveform"
+         ng-repeat="track in vm.tracks">
         <div class="progress">
             <div id="progress" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
         </div>

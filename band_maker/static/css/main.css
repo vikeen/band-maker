@@ -27,3 +27,9 @@ form .errors {
     float: left;
     font-size: 20px;
 }
+
+.media-player__waveform,
+.media-player__waveform wave,
+.media-player__waveform canvas {
+    height: 50px;
+}
