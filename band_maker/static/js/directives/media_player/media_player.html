@@ -1,0 +1,17 @@
+<div class="media-player">
+    <div id="waveform-{{ track.pk }}" ng-repeat="track in vm.tracks">
+        <div class="progress">
+            <div id="progress" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+    <ul class="media-player__controls">
+        <li class="media-player__control media-player__control-play">
+            <i class="glyphicon glyphicon-play"
+               ng-click="vm.play()"></i>
+        </li>
+        <li class="media-player__control media-player__control-pause">
+            <i class="glyphicon glyphicon-pause"
+               ng-click="vm.pause()"></i>
+        </li>
+    </ul>
+</div>
