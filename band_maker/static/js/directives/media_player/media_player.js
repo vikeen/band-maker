@@ -18,8 +18,8 @@
         }
     }
 
-    MediaPlayerController.$inject = ["$timeout"];
-    function MediaPlayerController($timeout) {
+    MediaPlayerController.$inject = ["$timeout", "$q"];
+    function MediaPlayerController($timeout, $q) {
         var vm = this;
 
 
@@ -66,11 +66,45 @@
                     })
                 });
 
+                wavesurfer.on('seek', _onSeekEvent);
+
                 wavesurfer.load(track.fields.media_url);
 
                 $('wave').hide();
 
                 track.__audio = wavesurfer;
+            });
+        }
+
+        function _onSeekEvent(progress) {
+            var unsubSeekPromises = [];
+
+            // prevent excess seek events from firing
+            vm.tracks.forEach(function (track) {
+                var promise = $q(function (resolve, reject) {
+                    try {
+                        track.__audio.un("seek");
+                        resolve();
+                    } catch (error) {
+                        console.log(error);
+                        reject(error);
+                    }
+                });
+
+                unsubSeekPromises.push(promise);
+            });
+
+            $q.all(unsubSeekPromises).then(function () {
+                vm.pause();
+
+                vm.tracks.forEach(function (track) {
+                    track.__audio.seekTo(progress);
+                    track.__audio.on("seek", _onSeekEvent);
+                });
+
+                vm.play();
+            }).catch(function (error) {
+                console.log(error);
             });
         }
 
@@ -80,7 +114,7 @@
             });
         }
 
-        function play(start, end) {
+        function play() {
             vm.tracks.forEach(function (track) {
                 if (!track.__audio.isPlaying()) {
                     track.__audio.play();
