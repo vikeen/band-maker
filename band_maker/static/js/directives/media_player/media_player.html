@@ -1,10 +1,14 @@
 <div class="media-player">
-    <div id="waveform-{{ track.pk }}" class="media-player__waveform"
-         ng-repeat="track in vm.tracks">
-        <div class="progress">
-            <div id="progress" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-    </div>
+    <section class="media-player___tracks">
+        <article ng-repeat="track in vm.tracks">
+            <div id="waveform-{{ track.pk }}" class="media-player__track-waveform">
+                <div class="progress">
+                    <div id="progress" class="progress-bar" role="progressbar" aria-valuemin="0"
+                         aria-valuemax="100"></div>
+                </div>
+            </div>
+        </article>
+    </section>
     <ul class="media-player__controls">
         <li class="media-player__control media-player__control-play">
             <i class="glyphicon glyphicon-step-backward"

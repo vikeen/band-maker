@@ -1,7 +1,5 @@
 from django.views import generic
 from django.http import JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse_lazy
 from django.core import serializers
 from .models import Song
 import os
