@@ -14,7 +14,12 @@
             templateUrl: "/static/js/directives/media_player/media_player.html",
             controller: MediaPlayerController,
             controllerAs: "vm",
-            bindToController: true
+            bindToController: true,
+            link: function(scope, element) {
+                scope.vm.$element = $(element);
+
+                scope.vm.activate();
+            }
         }
     }
 
@@ -30,8 +35,7 @@
         vm.play = play;
         vm.pause = pause;
         vm.restart = restart;
-
-        activate();
+        vm.activate = activate;
 
         function activate() {
             $timeout(function () {
@@ -81,8 +85,8 @@
                 });
 
                 wavesurfer.on('ready', function () {
-                    $('.progress').hide();
-                    $('wave').show();
+                    vm.$element.find('.progress').hide();
+                    vm.$element.find('wave').show();
                 });
 
                 wavesurfer.on("error", function (error) {
@@ -102,7 +106,7 @@
 
                 wavesurfer.load(track.fields.media_url);
 
-                $('wave').hide();
+                vm.$element.find('wave').hide();
 
                 track.__audio = wavesurfer;
             });
