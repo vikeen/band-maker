@@ -31,3 +31,7 @@ form .errors {
 .media-player__track-waveform {
     background: #555;
 }
+
+.media-player .progress-bar {
+    transition: none;
+}

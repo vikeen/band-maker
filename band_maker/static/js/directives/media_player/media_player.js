@@ -18,10 +18,14 @@
         }
     }
 
-    MediaPlayerController.$inject = ["$timeout", "$q"];
-    function MediaPlayerController($timeout, $q) {
+    MediaPlayerController.$inject = ["$scope", "$timeout", "$q"];
+    function MediaPlayerController($scope, $timeout, $q) {
         var vm = this;
 
+        vm.songLoadingPercentStyle = {
+            width: "0%"
+        };
+        vm.trackLoadingProgressMap = {};
 
         vm.play = play;
         vm.pause = pause;
@@ -35,9 +39,34 @@
             })
         }
 
+        function restart() {
+            vm.tracks.forEach(function (track) {
+                track.__audio.play(0);
+            });
+        }
+
+        function play() {
+            vm.tracks.forEach(function (track) {
+                if (!track.__audio.isPlaying()) {
+                    track.__audio.play();
+                }
+            });
+        }
+
+        function pause() {
+            vm.tracks.forEach(function (track) {
+                if (track.__audio.isPlaying()) {
+                    track.__audio.pause();
+                }
+            });
+        }
+
+        // PRIVATE API
+
         function _createAudioWaves(tracks) {
 
             tracks.forEach(function (track) {
+                vm.trackLoadingProgressMap[track.pk] = 0;
                 var ctx = document.createElement('canvas').getContext('2d');
                 var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
                 linGrad.addColorStop(0.5, 'rgba(225, 225, 225, 1.000)');
@@ -60,10 +89,13 @@
                     console.error("error processing video", error);
                 });
 
-                wavesurfer.on('loading', function (percents) {
-                    $('.progress .progress-bar').css({
-                        width: percents + "%"
-                    })
+                wavesurfer.on('loading', function (percent) {
+                    vm.trackLoadingProgressMap[track.pk] = percent;
+
+                    vm.songLoadingPercentStyle.width = _getLoadingProgress() + "%";
+
+                    // progress bar change won't render without this
+                    $scope.$apply();
                 });
 
                 wavesurfer.on('seek', _onSeekEvent);
@@ -74,6 +106,19 @@
 
                 track.__audio = wavesurfer;
             });
+        }
+
+        function _getLoadingProgress() {
+            var keys = Object.keys(vm.trackLoadingProgressMap),
+                totalProgress = 0;
+
+            keys.forEach(function (key) {
+                totalProgress += vm.trackLoadingProgressMap[key];
+            });
+
+            totalProgress = totalProgress / keys.length;
+
+            return totalProgress;
         }
 
         function _onSeekEvent(progress) {
@@ -105,28 +150,6 @@
                 vm.play();
             }).catch(function (error) {
                 console.log(error);
-            });
-        }
-
-        function restart() {
-            vm.tracks.forEach(function (track) {
-                track.__audio.play(0);
-            });
-        }
-
-        function play() {
-            vm.tracks.forEach(function (track) {
-                if (!track.__audio.isPlaying()) {
-                    track.__audio.play();
-                }
-            });
-        }
-
-        function pause() {
-            vm.tracks.forEach(function (track) {
-                if (track.__audio.isPlaying()) {
-                    track.__audio.pause();
-                }
             });
         }
     }
