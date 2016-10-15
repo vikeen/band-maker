@@ -37,9 +37,11 @@ form .errors {
     transition: none;
 }
 
-.media-player__track:first-of-type .media-player__track-waveform {
+.media-player__track:first-of-type .media-player__track-waveform,
+.media-player__track:first-of-type .media-player__track-title {
     padding-top: 15px;
 }
+
 .media-player__track:last-of-type .media-player__track-waveform {
     padding-bottom: 15px;
 }
@@ -51,4 +53,5 @@ form .errors {
 .media-player__track-title {
     text-align: right;
     font-weight: bold;
+    margin-top: 7px;
 }

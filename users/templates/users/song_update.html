@@ -26,12 +26,10 @@
         </div>
         <div class="form-group">
             <label>Tracks</label>
-            <p>
-                <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-secondary">Add Track</a>
-            </p>
             <bm-media-player title="{{ song.title }}" tracks="{{ tracks }}"></bm-media-player>
         </div>
         <div class="form-group">
+            <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">Add Track</a>
             <button class="btn btn-primary" type="submit">Save</button>
         </div>
         <hr/>

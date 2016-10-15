@@ -1,29 +1,32 @@
 <div class="media-player">
     <section class="media-player___tracks">
-        <article class="row media-player__track"
-                 ng-repeat="track in vm.tracks">
+        <article class="row media-player__track" ng-repeat="track in vm.tracks">
             <div class="media-player__track-title col-sm-2">
                 {{ track.fields.instrument }}
             </div>
             <div id="waveform-{{ track.pk }}" class="media-player__track-waveform col-sm-10"></div>
         </article>
+        <div class="media-player__progress col-sm-offset-2 col-sm-10">
+            <div class="progress">
+                <div id="progress" class="progress-bar" role="progressbar"
+                     ng-style="vm.songLoadingPercentStyle"></div>
+            </div>
+        </div>
     </section>
-    <div class="progress">
-        <div id="progress" class="progress-bar" role="progressbar"
-             ng-style="vm.songLoadingPercentStyle"></div>
+    <div class="row">
+        <ul class="media-player__controls col-sm-offset-2 clearfix">
+            <li class="media-player__control media-player__control-play">
+                <i class="glyphicon glyphicon-step-backward"
+                   ng-click="vm.restart()"></i>
+            </li>
+            <li class="media-player__control media-player__control-play">
+                <i class="glyphicon glyphicon-play"
+                   ng-click="vm.play()"></i>
+            </li>
+            <li class="media-player__control media-player__control-pause">
+                <i class="glyphicon glyphicon-pause"
+                   ng-click="vm.pause()"></i>
+            </li>
+        </ul>
     </div>
-    <ul class="media-player__controls clearfix">
-        <li class="media-player__control media-player__control-play">
-            <i class="glyphicon glyphicon-step-backward"
-               ng-click="vm.restart()"></i>
-        </li>
-        <li class="media-player__control media-player__control-play">
-            <i class="glyphicon glyphicon-play"
-               ng-click="vm.play()"></i>
-        </li>
-        <li class="media-player__control media-player__control-pause">
-            <i class="glyphicon glyphicon-pause"
-               ng-click="vm.pause()"></i>
-        </li>
-    </ul>
 </div>
