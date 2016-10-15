@@ -15,7 +15,7 @@
             controller: MediaPlayerController,
             controllerAs: "vm",
             bindToController: true,
-            link: function(scope, element) {
+            link: function (scope, element) {
                 scope.vm.$element = $(element);
 
                 scope.vm.activate();
@@ -39,7 +39,7 @@
 
         function activate() {
             $timeout(function () {
-                _createAudioWaves(vm.tracks);
+                vm.tracks = vm.tracks.map(_createAudioWave);
             })
         }
 
@@ -67,49 +67,35 @@
 
         // PRIVATE API
 
-        function _createAudioWaves(tracks) {
+        function _createAudioWave(track) {
+            vm.trackLoadingProgressMap[track.pk] = 0;
+            var ctx = document.createElement('canvas').getContext('2d');
+            var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
+            linGrad.addColorStop(0.5, 'rgba(225, 225, 225, 1.000)');
+            linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
 
-            tracks.forEach(function (track) {
-                vm.trackLoadingProgressMap[track.pk] = 0;
-                var ctx = document.createElement('canvas').getContext('2d');
-                var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
-                linGrad.addColorStop(0.5, 'rgba(225, 225, 225, 1.000)');
-                linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
-
-                var wavesurfer = WaveSurfer.create({
-                    container: '#waveform-' + track.pk,
-                    waveColor: linGrad,
-                    progressColor: 'hsla(200, 100%, 30%, 0.5)',
-                    cursorColor: '#fff',
-                    height: 37
-                });
-
-                wavesurfer.on('ready', function () {
-                    vm.$element.find('.progress').hide();
-                    vm.$element.find('wave').show();
-                });
-
-                wavesurfer.on("error", function (error) {
-                    console.error("error processing video", error);
-                });
-
-                wavesurfer.on('loading', function (percent) {
-                    vm.trackLoadingProgressMap[track.pk] = percent;
-
-                    vm.songLoadingPercentStyle.width = _getLoadingProgress() + "%";
-
-                    // progress bar change won't render without this
-                    $scope.$apply();
-                });
-
-                wavesurfer.on('seek', _onSeekEvent);
-
-                wavesurfer.load(track.fields.media_url);
-
-                vm.$element.find('wave').hide();
-
-                track.__audio = wavesurfer;
+            var wavesurfer = WaveSurfer.create({
+                container: '#waveform-' + track.pk,
+                waveColor: linGrad,
+                progressColor: 'hsla(200, 100%, 30%, 0.5)',
+                cursorColor: '#fff',
+                height: 37
             });
+
+            wavesurfer.on('ready', _onTrackReadyEvent);
+            wavesurfer.on("error", _onTrackErrorEvent);
+            wavesurfer.on('loading', function(progress) {
+                _onTrackLoadingEvent(track, progress);
+            });
+            wavesurfer.on('seek', _onTrackSeekEvent);
+
+            wavesurfer.load(track.fields.media_url);
+
+            vm.$element.find('wave').hide();
+
+            track.__audio = wavesurfer;
+
+            return track;
         }
 
         function _getLoadingProgress() {
@@ -125,12 +111,19 @@
             return totalProgress;
         }
 
-        function _onSeekEvent(progress) {
-            var unsubSeekPromises = [];
+        function _onTrackReadyEvent() {
+            vm.$element.find('.progress').hide();
+            vm.$element.find('wave').show();
+        }
 
+        function _onTrackErrorEvent(error) {
+            console.error("error processing video", error);
+        }
+
+        function _onTrackSeekEvent(progress) {
             // prevent excess seek events from firing
-            vm.tracks.forEach(function (track) {
-                var promise = $q(function (resolve, reject) {
+            var promises = vm.tracks.map(function (track) {
+                return $q(function (resolve, reject) {
                     try {
                         track.__audio.un("seek");
                         resolve();
@@ -139,22 +132,29 @@
                         reject(error);
                     }
                 });
-
-                unsubSeekPromises.push(promise);
             });
 
-            $q.all(unsubSeekPromises).then(function () {
+            $q.all(promises).then(function () {
                 vm.pause();
 
                 vm.tracks.forEach(function (track) {
                     track.__audio.seekTo(progress);
-                    track.__audio.on("seek", _onSeekEvent);
+                    track.__audio.on("seek", _onTrackSeekEvent);
                 });
 
                 vm.play();
             }).catch(function (error) {
                 console.log(error);
             });
+        }
+
+        function _onTrackLoadingEvent(track, progress) {
+            vm.trackLoadingProgressMap[track.pk] = progress;
+
+            vm.songLoadingPercentStyle.width = _getLoadingProgress() + "%";
+
+            // progress bar change won't render without this
+            $scope.$apply();
         }
     }
 })();
