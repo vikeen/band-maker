@@ -28,7 +28,7 @@
                    ng-click="vm.pause()"></i>
             </li>
             <li class="media-player__control media-player__control-duration">
-                {{ vm.songCurrentSeek }} / {{ vm.songDuration }}
+                {{ vm.songCurrentSeek | bmSecondsToDateTime | date:'mm:ss' }} / {{ vm.songDuration | bmSecondsToDateTime | date:'mm:ss'}}
             </li>
         </ul>
     </div>
