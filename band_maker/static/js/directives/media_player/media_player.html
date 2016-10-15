@@ -1,7 +1,11 @@
 <div class="media-player">
     <section class="media-player___tracks">
-        <article ng-repeat="track in vm.tracks">
-            <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
+        <article class="row media-player__track"
+                 ng-repeat="track in vm.tracks">
+            <div class="media-player__track-title col-sm-2">
+                {{ track.fields.instrument }}
+            </div>
+            <div id="waveform-{{ track.pk }}" class="media-player__track-waveform col-sm-10"></div>
         </article>
     </section>
     <div class="progress">

@@ -29,10 +29,26 @@ form .errors {
     cursor: pointer;
 }
 
-.media-player__track-waveform {
-    background: #555;
+.media-player .progress {
+    margin-top: 15px;
 }
 
 .media-player .progress-bar {
     transition: none;
+}
+
+.media-player__track:first-of-type .media-player__track-waveform {
+    padding-top: 15px;
+}
+.media-player__track:last-of-type .media-player__track-waveform {
+    padding-bottom: 15px;
+}
+
+.media-player__track-waveform {
+    background: #555;
+}
+
+.media-player__track-title {
+    text-align: right;
+    font-weight: bold;
 }

@@ -91,7 +91,7 @@
 
             wavesurfer.load(track.fields.media_url);
 
-            vm.$element.find('wave').hide();
+            vm.$element.find('media-player_track').hide();
 
             track.__audio = wavesurfer;
 
@@ -113,7 +113,7 @@
 
         function _onTrackReadyEvent() {
             vm.$element.find('.progress').hide();
-            vm.$element.find('wave').show();
+            vm.$element.find('media-player_track').show();
         }
 
         function _onTrackErrorEvent(error) {
