@@ -4,7 +4,9 @@
             <div class="media-player__track-title col-sm-2">
                 {{ track.fields.instrument }}
             </div>
-            <div id="waveform-{{ track.pk }}" class="media-player__track-waveform col-sm-10"></div>
+            <div class="media-player__track-waveform-container col-sm-10">
+                <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
+            </div>
         </article>
         <div class="media-player__progress col-sm-offset-2 col-sm-10">
             <div class="progress">
@@ -28,7 +30,8 @@
                    ng-click="vm.pause()"></i>
             </li>
             <li class="media-player__control media-player__control-duration">
-                {{ vm.songCurrentSeek | bmSecondsToDateTime | date:'mm:ss' }} / {{ vm.songDuration | bmSecondsToDateTime | date:'mm:ss'}}
+                {{ vm.songCurrentSeek | bmSecondsToDateTime | date:'mm:ss' }}
+                / {{ vm.songDuration | bmSecondsToDateTime | date:'mm:ss' }}
             </li>
         </ul>
     </div>

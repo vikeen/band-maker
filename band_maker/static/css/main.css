@@ -46,8 +46,11 @@ form .errors {
     padding-bottom: 15px;
 }
 
-.media-player__track-waveform {
+.media-player__track-waveform-container {
     background: #555;
+}
+
+.media-player__track-waveform {
 }
 
 .media-player__track-title {
