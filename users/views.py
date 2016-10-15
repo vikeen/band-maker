@@ -1,5 +1,6 @@
-from django.views import generic
+from django.core import serializers
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
@@ -48,7 +49,7 @@ class SongUpdate(LoginRequiredMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super(SongUpdate, self).get_context_data(**kwargs)
         song = context['song']
-        context['tracks'] = song.tracks.all()
+        context['tracks'] = serializers.serialize("json", song.tracks.all())
         return context
 
 

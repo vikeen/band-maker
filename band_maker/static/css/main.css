@@ -26,6 +26,7 @@ form .errors {
     margin-right: 10px;
     float: left;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .media-player__track-waveform {
