@@ -23,14 +23,17 @@
         }
     }
 
-    MediaPlayerController.$inject = ["$scope", "$timeout", "$q"];
-    function MediaPlayerController($scope, $timeout, $q) {
+    MediaPlayerController.$inject = ["$scope", "$timeout", "$q", "$interval"];
+    function MediaPlayerController($scope, $timeout, $q, $interval) {
         var vm = this;
 
         vm.songLoadingPercentStyle = {
             width: "0%"
         };
         vm.trackLoadingProgressMap = {};
+        vm.longestTrack = vm.tracks[0];
+        vm.songDuration = 0;
+        vm.songCurrentSeek = 0;
 
         vm.play = play;
         vm.pause = pause;
@@ -47,6 +50,8 @@
             vm.tracks.forEach(function (track) {
                 track.__audio.play(0);
             });
+
+            vm.songCurrentSeek = vm.longestTrack.__audio.getCurrentTime();
         }
 
         function play() {
@@ -55,6 +60,8 @@
                     track.__audio.play();
                 }
             });
+
+            vm.songCurrentSeek = vm.longestTrack.__audio.getCurrentTime();
         }
 
         function pause() {
@@ -63,6 +70,8 @@
                     track.__audio.pause();
                 }
             });
+
+            vm.songCurrentSeek = vm.longestTrack.__audio.getCurrentTime();
         }
 
         // PRIVATE API
@@ -82,9 +91,11 @@
                 height: 37
             });
 
-            wavesurfer.on('ready', _onTrackReadyEvent);
+            wavesurfer.on('ready', function () {
+                _onTrackReadyEvent(track);
+            });
             wavesurfer.on("error", _onTrackErrorEvent);
-            wavesurfer.on('loading', function(progress) {
+            wavesurfer.on('loading', function (progress) {
                 _onTrackLoadingEvent(track, progress);
             });
             wavesurfer.on('seek', _onTrackSeekEvent);
@@ -111,9 +122,43 @@
             return totalProgress;
         }
 
-        function _onTrackReadyEvent() {
+        function _onTrackReadyEvent(track) {
             vm.$element.find('.progress').hide();
             vm.$element.find('media-player_track').show();
+
+            track._loadingComplete = true;
+
+            if (_allTracksAreLoaded()) {
+                console.log("all tracks are loaded");
+
+                vm.longestTrack = _getLongestTrack();
+                vm.songDuration = vm.longestTrack.__audio.getDuration();
+
+                vm.longestTrack.__audio.on("play", function () {
+
+                    if (vm.seekUpdateInterval) {
+                        $interval.cancel(vm.seekUpdateInterval);
+                    }
+
+                    vm.seekUpdateInterval = $interval(function () {
+                        vm.songCurrentSeek = vm.longestTrack.__audio.getCurrentTime();
+
+                        if (vm.songCurrentSeek >= vm.songDuration) {
+                            vm.songCurrentSeek = vm.songDuration;
+
+                            if (vm.seekUpdateInterval) {
+                                $interval.cancel(vm.seekUpdateInterval);
+                            }
+                        }
+                    }, 1000);
+
+                    $scope.$on("$destroy", function () {
+                        $interval.cancel(vm.seekUpdateInterval);
+                    })
+                });
+
+                $scope.$apply();
+            }
         }
 
         function _onTrackErrorEvent(error) {
@@ -155,6 +200,26 @@
 
             // progress bar change won't render without this
             $scope.$apply();
+        }
+
+        function _getLongestTrack() {
+            var longestTrack = vm.tracks[0];
+
+            vm.tracks.forEach(function (track) {
+                var trackDuration = track.__audio.getDuration();
+
+                if (trackDuration > longestTrack.__audio.getDuration()) {
+                    longestTrack = track;
+                }
+            });
+
+            return longestTrack;
+        }
+
+        function _allTracksAreLoaded() {
+            return vm.tracks.every(function (track) {
+                return !!track._loadingComplete;
+            });
         }
     }
 })();

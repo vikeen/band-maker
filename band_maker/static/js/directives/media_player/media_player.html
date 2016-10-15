@@ -27,6 +27,9 @@
                 <i class="glyphicon glyphicon-pause"
                    ng-click="vm.pause()"></i>
             </li>
+            <li class="media-player__control media-player__control-duration">
+                {{ vm.songCurrentSeek }} / {{ vm.songDuration }}
+            </li>
         </ul>
     </div>
 </div>
