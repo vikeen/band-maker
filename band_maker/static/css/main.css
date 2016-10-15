@@ -58,3 +58,20 @@ form .errors {
     font-weight: bold;
     margin-top: 7px;
 }
+
+.media-player__track-title-controls {
+    padding: 0;
+    list-style: none;
+    display: inline;
+    float: right;
+}
+
+.media-player__track-title-control {
+    float: left;
+    margin-left: 10px;
+}
+
+.media-player__track-title-control .btn {
+    padding: 3px 6px;
+    display: inline;
+}

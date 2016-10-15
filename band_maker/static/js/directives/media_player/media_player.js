@@ -38,6 +38,7 @@
         vm.play = play;
         vm.pause = pause;
         vm.restart = restart;
+        vm.toggleMuteForTrack = toggleMuteForTrack;
         vm.activate = activate;
 
         function activate() {
@@ -74,6 +75,10 @@
             vm.songCurrentSeek = vm.longestTrack.__audio.getCurrentTime();
         }
 
+        function toggleMuteForTrack(track) {
+            track.__audio.toggleMute();
+        }
+
         // PRIVATE API
 
         function _createAudioWave(track) {
@@ -88,7 +93,8 @@
                 waveColor: linGrad,
                 progressColor: 'hsla(200, 100%, 30%, 0.5)',
                 cursorColor: '#fff',
-                height: 37
+                height: 45,
+                barWidth: 3
             });
 
             wavesurfer.on('ready', function () {
