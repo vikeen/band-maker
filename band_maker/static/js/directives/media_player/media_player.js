@@ -39,6 +39,7 @@
         vm.pause = pause;
         vm.restart = restart;
         vm.toggleMuteForTrack = toggleMuteForTrack;
+        vm.toggleSoloForTrack = toggleSoloForTrack;
         vm.activate = activate;
 
         function activate() {
@@ -77,6 +78,26 @@
 
         function toggleMuteForTrack(track) {
             track.__audio.toggleMute();
+        }
+
+        function toggleSoloForTrack(track) {
+            track.isSolo = !track.isSolo;
+
+            var tracksAreSoloed = vm.tracks.some(function (t) {
+                return t.isSolo;
+            });
+
+            if (!tracksAreSoloed) {
+                vm.tracks.forEach(function (t) {
+                    t.__audio.setMute(false);
+                });
+
+                return;
+            }
+
+            vm.tracks.forEach(function (t) {
+                t.__audio.setMute(!t.isSolo);
+            });
         }
 
         // PRIVATE API
