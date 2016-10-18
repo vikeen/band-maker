@@ -1,5 +1,11 @@
-import MediaPlayer from "./media_player";
+import {MediaPlayer} from "./components/media_player";
+import {secondsToDateTime} from "./utils/seconds_to_date_time";
 
 window.bm = {
-  MediaPlayer: MediaPlayer
+    components: {
+        MediaPlayer: MediaPlayer
+    },
+    utils: {
+        secondsToDateTime: secondsToDateTime
+    }
 };

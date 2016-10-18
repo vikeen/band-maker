@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Edit Track{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'users:songs' user.username %}">My Songs</a></li>
+        <li><a href="{% url 'users:song_update' user.username song.id %}">{{ song.title }}</a></li>
+        <li class="active">Edit Track</li>
+    </ol>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">Please correct the errors below:</div>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <legend>Edit Track</legend>
+        <div class="form-group">
+            <label for="id_instrument">Instrument</label>
+            {% render_field form.instrument class+="form-control" required="required" %}
+            {% if form.title.errors %}
+                <p class="errors">{{ form.instrument.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group" ng-controller="TrackUploadController as vm">
+            <input type="hidden" id="id_media_url" name="media_url"
+                   ng-model="vm.fileUrl"/>
+            <label for="id_media_file">Audio File</label>
+            <input type="file" id="id_media_file" required="required"
+                   accept=".mp3"
+                   ng-model="vm.file"
+                   onchange="angular.element(this).scope().vm.onTrackInputChange(this)"/>
+            {% if form.title.errors %}
+                <p class="errors">{{ form.media_url.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+{% endblock %}

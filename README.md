@@ -26,15 +26,21 @@ ALTER ROLE band_maker_user with LOGIN;
 ```sh
 $ python manage.py migrate
 $ python manage.py collectstatic
-
-$ python manage.py runserver
 ```
+
+### Development
+
+
+`python manage.py runserver` - Server
+`gulp` - Frontend Assets
+
 
 Your app should now be running on [localhost:8000](http://localhost:8000/).
 
 ## Deploying to Heroku
 
 ```sh
+$ gulp build
 $ git push heroku master
 $ heroku run python manage.py migrate
 $ heroku open

@@ -7,16 +7,12 @@
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{% static 'js/vendor/wavesurfer.js' %}"></script>
 
-    <!-- angular dependencies -->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-resource.js"></script>
-
     <!-- css -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/theme.css' %}"/>
 </head>
-<body ng-app="bmApp">
+<body>
 
 {% include 'base_header.html' %}
 
@@ -25,10 +21,6 @@
 </main>
 
 {% include 'base_footer.html' %}
-<script src="{% static 'js/app.js' %}"></script>
-<script src="{% static 'js/directives/media_player/media_player.js' %}"></script>
-<script src="{% static 'js/filters/seconds_to_date_time.js' %}"></script>
-<script src="{% static 'js/controllers/track_upload.js' %}"></script>
-<script></script>
+<script src="{% static 'js/app.bundle.js' %}"></script>
 </body>
 </html>
