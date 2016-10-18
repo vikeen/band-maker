@@ -66,7 +66,7 @@ class SongDelete(LoginRequiredMixin, generic.DeleteView):
 
 class TrackCreate(LoginRequiredMixin, generic.CreateView):
     model = Track
-    fields = ['instrument', 'media_url']
+    fields = ['instrument', 'media_url', 'media_name']
     template_name = 'users/track_create.html'
 
     def form_valid(self, form):
@@ -92,7 +92,7 @@ class TrackCreate(LoginRequiredMixin, generic.CreateView):
 
 class TrackUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Track
-    fields = ['instrument', 'media_url']
+    fields = ['instrument', 'media_url', 'media_name']
     template_name = 'users/track_update.html'
     context_object_name = 'track'
 
@@ -102,6 +102,7 @@ class TrackUpdate(LoginRequiredMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super(TrackUpdate, self).get_context_data(**kwargs)
         context['song'] = Song.objects.get(id=self.kwargs['song_id'])
+        context['track_json'] = serializers.serialize("json", [context['track'], ])
         return context
 
     def get_success_url(self):

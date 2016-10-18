@@ -1,78 +1,95 @@
-(function () {
-    "use strict";
+export class TrackUpload {
+    constructor($element, track) {
+        const self = this;
 
-    angular.module("bmApp").controller("TrackUploadController", TrackUploadController);
+        self.$element = $element;
+        self.$formSubmitBtn = self.$element.parents("form").find("button[type='submit']");
+        self.$mediaUrlInput = self.$element.find(".js-track-upload__media-url");
+        self.$mediaFileName = self.$element.find(".js-track-upload__media-file-name");
+        self.track = track;
 
-    TrackUploadController.$inject = ["$scope", "$resource"];
-    function TrackUploadController($scope, $resource) {
-        var vm = this,
-            TrackUploadResource = $resource("/tracks/upload?file_name&file_type", {}, {});
+        $element.find("input[type='file']").on("change", function () {
+            const $element = $(this);
 
-        vm.id = $scope.$id;
-        vm.onTrackInputChange = onTrackInputChange;
+            self.$formSubmitBtn.prop('disabled', true);
 
-        ////////////
-
-        function onTrackInputChange(element) {
-            var $element = $(element)[0];
-
-            $("#submit-track").prop('disabled', true);
+            // Initialize the jQuery File Upload widget:
+            // $('#fileupload').fileupload({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            // url: 'server/php/'
+            // });
 
             try {
-                var file = $element.files[0];
+                var file = $element.get(0).files[0];
 
                 if (!file) {
                     return console.error("No file selected.");
                 }
-
-                _getSignedRequest(file);
+                __getSignedRequest.bind(self)(file);
             } catch (error) {
                 console.error(error);
-                $("#submit-track").prop('disabled', false);
+                self.$formSubmitBtn.prop('disabled', false);
             }
-
-        }
-
-        // PRIVATE API
-
-        function _getSignedRequest(file) {
-            TrackUploadResource.get({
-                "file_name": file.name,
-                "file_type": file.type
-            }).$promise.then(function (response) {
-                try {
-                    _uploadFile(file, response.data, response.url);
-                } catch (error) {
-                    console.error("Failed to parse song upload signed request", error);
-                }
-            }).catch(function (error) {
-                console.error("Could not get signed URL.", error);
-            });
-        }
-
-        function _uploadFile(file, s3Data, url) {
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("POST", s3Data.url);
-
-            var postData = new FormData();
-            for (var key in s3Data.fields) {
-                postData.append(key, s3Data.fields[key]);
-            }
-            postData.append('file', file);
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 || xhr.status === 204) {
-                        $("#id_media_url").val(url);
-                        $("#submit-track").prop('disabled', false);
-                    }
-                    else {
-                        console.error("Could not upload file.");
-                    }
-                }
-            };
-            xhr.send(postData);
-        }
+        });
     }
-})();
+}
+
+function __getSignedRequest(file) {
+    const self = this;
+
+    $.ajax({
+        url: "/tracks/upload",
+        type: "get",
+        data: {
+            "file_name": file.name,
+            "file_type": file.type
+        },
+        success: function (response) {
+            try {
+                __uploadFile.bind(self)(file, response.data, response.url);
+            } catch (error) {
+                console.error("Failed to parse song upload signed request", error);
+            }
+        },
+        error: function (xhr) {
+            console.error("Could not get signed URL.", xhr);
+        }
+    });
+}
+
+function __uploadFile(file, s3Data, url) {
+    const self = this,
+        xhr = new XMLHttpRequest();
+
+    let postData = new FormData();
+
+    xhr.open("POST", s3Data.url);
+
+    for (var key in s3Data.fields) {
+        postData.append(key, s3Data.fields[key]);
+    }
+    postData.append('file', file);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 || xhr.status === 204) {
+                __uploadFileSuccess.bind(self)(file, url);
+            }
+            else {
+                console.error("Could not upload file.");
+            }
+        }
+    };
+    xhr.send(postData);
+}
+
+function __uploadFileSuccess(file, url) {
+    const self = this;
+
+    console.log("file upload success", file, url);
+
+    self.$mediaUrlInput.val(url);
+    self.$mediaFileName.val(file.name);
+    self.$formSubmitBtn.prop('disabled', false);
+}

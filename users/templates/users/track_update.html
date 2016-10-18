@@ -25,18 +25,69 @@
                 <p class="errors">{{ form.instrument.errors.as_text }}</p>
             {% endif %}
         </div>
-        <div class="form-group" ng-controller="TrackUploadController as vm">
-            <input type="hidden" id="id_media_url" name="media_url"
-                   ng-model="vm.fileUrl"/>
-            <label for="id_media_file">Audio File</label>
-            <input type="file" id="id_media_file" required="required"
-                   accept=".mp3"
-                   ng-model="vm.file"
-                   onchange="angular.element(this).scope().vm.onTrackInputChange(this)"/>
-            {% if form.title.errors %}
-                <p class="errors">{{ form.media_url.errors.as_text }}</p>
-            {% endif %}
+        <div class="form-group">
+            <label for="id_track">Audio File</label>
+            <div class="bm-track-upload-container"
+                 data-bm-widget="track-upload"
+                 data-bm-widget-track-upload-track="{{ track_json }}">
+                <input type="hidden" class="js-track-upload__media-url" id="id_track_url" name="media_url"
+                       value="{{ track.media_url }}" required="required"/>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="text" class="js-track-upload__media-file-name form-control" name="media_name"
+                               required="required" readonly="readonly"
+                               value="{{ track.media_name }}"/>
+                    </div>
+                    <div class="col-sm-8">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-file"></i>&nbsp;Upload File
+                        <input type="file" class="js-track-upload__media" id="id_track" name="dummy_files"
+                               accept=".mp3">
+                    </span>
+                    </div>
+                </div>
+                {% if form.media_name.errors %}
+                    <p class="errors">{{ form.media_name.errors.as_text }}</p>
+                {% endif %}
+                {% if form.media_url.errors %}
+                    <p class="errors">{{ form.media_url.errors.as_text }}</p>
+                {% endif %}
+            </div>
         </div>
+        <hr/>
+        <script>
+            $(document).ready(function () {
+                new bm.components.MediaPlayer($(".media-player"), {{ track_json | safe}});
+            })
+        </script>
+        <div class="media-player">
+            <section class="media-player___tracks clearfix">
+                <article class="media-player__track" data-track-id="{{ track.pk }}">
+                    <div class="media-player__track-waveform-container col-sm-12">
+                        <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
+                    </div>
+                </article>
+                <div class="media-player__progress">
+                    <div class="progress">
+                        <div id="progress" class="progress-bar" role="progressbar"></div>
+                    </div>
+                </div>
+            </section>
+            <ul class="media-player__controls clearfix">
+                <li class="media-player__control media-player__control--restart">
+                    <i class="glyphicon glyphicon-step-backward"></i>
+                </li>
+                <li class="media-player__control media-player__control--play">
+                    <i class="glyphicon glyphicon-play"></i>
+                </li>
+                <li class="media-player__control media-player__control--pause">
+                    <i class="glyphicon glyphicon-pause"></i>
+                </li>
+                <li class="media-player__control media-player__control--duration"></li>
+            </ul>
+        </div>
+        <hr/>
         <div class="form-group">
             <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
         </div>

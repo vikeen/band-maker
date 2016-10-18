@@ -9,8 +9,7 @@ gulp.task("default", ['build', 'watch']);
 gulp.task('watch', () => {
     gulp.watch([
         './band_maker/static/js/**/*.js',
-        '!./band_maker/static/js/app.bundle.js',
-        '!./band_maker/static/js/vendor/*.js'
+        '!./band_maker/static/js/app.bundle.js'
     ], ['build:javascript']);
 });
 
