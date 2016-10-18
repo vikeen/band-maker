@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-import json
 
 from songs.models import Song
 from tracks.models import Track

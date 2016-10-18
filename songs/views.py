@@ -20,7 +20,8 @@ class Detail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(Detail, self).get_context_data(**kwargs)
         song = context['song']
-        context['tracks'] = serializers.serialize("json", song.tracks.all())
+        context['tracks'] = song.tracks.all()
+        context['tracks_json'] = serializers.serialize("json", context['tracks'])
         return context
 
 
