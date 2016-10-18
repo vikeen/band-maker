@@ -1,7 +1,5 @@
-(function () {
-    "use strict";
+import MediaPlayer from "./media_player";
 
-    angular.module("bmApp", [
-        "ngResource"
-    ]);
-})();
+window.bm = {
+  MediaPlayer: MediaPlayer
+};
