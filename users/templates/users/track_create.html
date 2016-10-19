@@ -25,17 +25,35 @@
                 <p class="errors">{{ form.instrument.errors.as_text }}</p>
             {% endif %}
         </div>
-        <div class="form-group" ng-controller="TrackUploadController as vm">
-            <input type="hidden" id="id_media_url" name="media_url"
-                   ng-model="vm.fileUrl"/>
-            <label for="id_media_file">Audio File</label>
-            <input type="file" id="id_media_file" required="required"
-                   accept=".mp3"
-                   ng-model="vm.file"
-                   onchange="angular.element(this).scope().vm.onTrackInputChange(this)"/>
-            {% if form.title.errors %}
-                <p class="errors">{{ form.media_url.errors.as_text }}</p>
-            {% endif %}
+        <div class="form-group">
+            <label for="id_track">Audio File</label>
+            <div class="bm-track-upload-container"
+                 data-bm-widget="track-upload"
+                 data-bm-widget-track-upload-track="{{ track_json }}">
+                <input type="hidden" class="js-track-upload__media-url" id="id_track_url" name="media_url"
+                       value="{{ track.media_url }}" required="required"/>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="text" class="js-track-upload__media-file-name form-control" name="media_name"
+                               required="required" readonly="readonly"
+                               value="{{ track.media_name }}"/>
+                    </div>
+                    <div class="col-sm-8">
+                    <span class="btn btn-success fileinput-button">
+                        <i class="glyphicon glyphicon-file"></i>&nbsp;Upload File
+                        <input type="file" class="js-track-upload__media" id="id_track" name="dummy_files"
+                               accept=".mp3">
+                    </span>
+                    </div>
+                </div>
+                {% if form.media_name.errors %}
+                    <p class="errors">{{ form.media_name.errors.as_text }}</p>
+                {% endif %}
+                {% if form.media_url.errors %}
+                    <p class="errors">{{ form.media_url.errors.as_text }}</p>
+                {% endif %}
+            </div>
         </div>
         <div class="form-group">
             <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
