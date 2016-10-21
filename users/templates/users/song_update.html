@@ -28,7 +28,7 @@
             <label>Tracks</label>
             <script>
                 $(document).ready(function () {
-                    new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
+                    window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
                 })
             </script>
             <div class="media-player">
