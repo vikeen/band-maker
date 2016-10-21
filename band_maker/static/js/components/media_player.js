@@ -30,9 +30,7 @@ export class MediaPlayer {
     replaceTrackById(trackId, newTrack) {
         const self = this;
 
-        console.log(self, arguments);
-
-        self.tracks.map(track => {
+        self.tracks = self.tracks.map(track => {
             if (track.pk === trackId) {
                 track.__audio.empty(); // wipe wavesurfer data and events
                 self.$element.find("#waveform-" + trackId).find("wave").remove();
