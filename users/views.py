@@ -18,7 +18,7 @@ class SongsView(generic.ListView):
 
 class SongCreate(LoginRequiredMixin, generic.CreateView):
     model = Song
-    fields = ['title']
+    fields = ['title', 'description']
     template_name = 'users/song_create.html'
 
     def form_valid(self, form):
@@ -33,7 +33,7 @@ class SongCreate(LoginRequiredMixin, generic.CreateView):
 
 class SongUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Song
-    fields = ["title"]
+    fields = ["title", 'description']
     template_name = 'users/song_update.html'
     context_object_name = 'song'
 
