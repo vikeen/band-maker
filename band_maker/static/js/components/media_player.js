@@ -1,20 +1,46 @@
 export class MediaPlayer {
     constructor($element, tracks) {
-        this.$element = $element;
-        this.trackLoadingProgressMap = {};
-        this.tracks = tracks.map(__createAudioWave.bind(this));
+        const self = this;
+
+        self.$element = $element;
+
+        self.loadTracks(tracks);
 
         const $controls = {
-            '$restart': this.$element.find('.media-player__control--restart'),
-            '$pause': this.$element.find('.media-player__control--pause'),
-            '$play': this.$element.find('.media-player__control--play')
+            '$restart': self.$element.find('.media-player__control--restart'),
+            '$pause': self.$element.find('.media-player__control--pause'),
+            '$play': self.$element.find('.media-player__control--play')
         };
 
-        $controls.$play.on("click", this.play.bind(this));
-        $controls.$pause.on("click", this.pause.bind(this));
-        $controls.$restart.on("click", this.restart.bind(this));
+        $controls.$play.on("click", self.play.bind(self));
+        $controls.$pause.on("click", self.pause.bind(self));
+        $controls.$restart.on("click", self.restart.bind(self));
 
-        this.$element.find(".media-player__track-title-control--mute").on("click", __handleTrackMuteClick.bind(this));
+        self.$element.find(".media-player__track-title-control--mute").on("click", __handleTrackMuteClick.bind(self));
+    }
+
+    loadTracks(tracks) {
+        const self = this;
+
+        self.trackLoadingProgressMap = {};
+
+        self.tracks = tracks.map(__createAudioWave.bind(self));
+    }
+
+    replaceTrackById(trackId, newTrack) {
+        const self = this;
+
+        console.log(self, arguments);
+
+        self.tracks.map(track => {
+            if (track.pk === trackId) {
+                track.__audio.empty(); // wipe wavesurfer data and events
+                self.$element.find("#waveform-" + trackId).find("wave").remove();
+                track = __createAudioWave.bind(self)(newTrack);
+            }
+
+            return track;
+        });
     }
 
     restart() {

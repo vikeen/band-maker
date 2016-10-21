@@ -58,7 +58,7 @@
         <hr/>
         <script>
             $(document).ready(function () {
-                new bm.components.MediaPlayer($(".media-player"), {{ track_json | safe}});
+                window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ track_json | safe}});
             })
         </script>
         <div class="media-player">

@@ -13,19 +13,13 @@ export class TrackUpload {
 
             self.$formSubmitBtn.prop('disabled', true);
 
-            // Initialize the jQuery File Upload widget:
-            // $('#fileupload').fileupload({
-            // Uncomment the following to send cross-domain cookies:
-            //xhrFields: {withCredentials: true},
-            // url: 'server/php/'
-            // });
-
             try {
                 var file = $element.get(0).files[0];
 
                 if (!file) {
                     return console.error("No file selected.");
                 }
+
                 __getSignedRequest.bind(self)(file);
             } catch (error) {
                 console.error(error);
@@ -92,4 +86,10 @@ function __uploadFileSuccess(file, url) {
     self.$mediaUrlInput.val(url);
     self.$mediaFileName.val(file.name);
     self.$formSubmitBtn.prop('disabled', false);
+
+    // reinitialize any associated media players
+    self.track.fields.media_name = file.name;
+    self.track.fields.media_url = url;
+
+    window.bm.mediaPlayer.replaceTrackById(self.track.pk, self.track);
 }
