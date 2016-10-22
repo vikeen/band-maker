@@ -1,4 +1,5 @@
 {% extends "songs/song_base.html" %}
+{% load gravatar %}
 
 {% block title %}{{ song.title }}{% endblock %} }}
 
@@ -7,23 +8,28 @@
         <li><a href="{% url 'songs:index' %}">Songs</a></li>
         <li class="active">{{ song.title }}</li>
     </ol>
-    <div class="page-header">
-        <h1>{{ song.title }}
-            <small>
-                <a href="{% url 'users:songs' song.created_by %}">{{ song.created_by }}</a>
-            </small>
-        </h1>
+
+    <div class="media">
+        <div class="media-left">
+            <a href="{% url 'users:songs' song.created_by %}">
+                <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>
+            </a>
+        </div>
+        <div class="media-body">
+            <h1 class="media-heading song__title">{{ song.title }}</h1>
+            {% if song.description %}
+                <p class="song__description">{{ song.description }}</p>
+            {% endif %}
+        </div>
     </div>
-    {% if song.description %}
-        <p>{{ song.description }}</p>
-    {% endif %}
+
     {% if tracks %}
         <script>
             $(document).ready(function () {
                 window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
             })
         </script>
-        <div class="media-player">
+        <div class="song__media-player media-player">
             <section class="media-player___tracks">
                 {% for track in tracks %}
                     <article class="row media-player__track" data-track-id="{{ track.pk }}">
