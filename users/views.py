@@ -33,7 +33,7 @@ class SongCreate(LoginRequiredMixin, generic.CreateView):
 
 class SongUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Song
-    fields = ["title", 'description']
+    fields = ["title", 'description', 'published']
     template_name = 'users/song_update.html'
     context_object_name = 'song'
 

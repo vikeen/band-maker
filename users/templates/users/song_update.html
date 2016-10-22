@@ -33,7 +33,6 @@
             {% endif %}
         </div>
         {% if tracks %}
-
             <div class="form-group">
                 <label>Tracks</label>
                 <script>
@@ -91,6 +90,14 @@
                 </div>
             </div>
         {% endif %}
+        <div class="form-group">
+            <label for="id_published">Published
+                {% render_field form.published %}
+            </label>
+            {% if form.published.errors %}
+                <p class="errors">{{ form.published.errors.as_text }}</p>
+            {% endif %}
+        </div>
         <div class="form-group">
             <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">Add Track</a>
             <button class="btn btn-primary" type="submit">Save</button>

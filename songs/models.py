@@ -14,6 +14,7 @@ class Song(models.Model):
     tracks = models.ManyToManyField(Track)
     media_url = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField(max_length=500, null=True, blank=True)
+    published = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
