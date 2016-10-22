@@ -5,46 +5,49 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-        {% if form.errors %}
-            <div class="alert alert-danger">Please correct the errors below: {{ form.non_field_errors }}</div>
-        {% endif %}
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6">
+            {% if form.errors %}
+                <div class="alert alert-danger">Please correct the errors below: {{ form.non_field_errors }}</div>
+            {% endif %}
+            <h1>Create an account</h1>
 
-        <h1>Create an account</h1>
-
-        <form method="post" action="" class="form">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_username">Username</label>
-                {% render_field form.username class+="form-control" %}
-                {% if form.username.errors %}
-                    <p class="errors">{{ form.username.errors.as_text }}</p>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label for="id_email">Email</label>
-                {% render_field form.email class+="form-control" %}
-                {% if form.email.errors %}
-                    <p class="errors">{{ form.email.errors.as_text }}</p>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label for="id_password1">Password</label>
-                {% render_field form.password1 class+="form-control" %}
-                {% if form.password1.errors %}
-                    <p class="errors">{{ form.password1.errors.as_text }}</p>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <label for="id_password2">Confirm Password</label>
-                {% render_field form.password2 class+="form-control" %}
-                {% if form.password2.errors %}
-                    <p class="errors">{{ form.password2.errors.as_text }}</p>
-                {% endif %}
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Register &rarr;</button>
-            </div>
-        </form>
+            <form method="post" action="" class="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    {% render_field form.username class+="form-control" %}
+                    {% if form.username.errors %}
+                        <p class="errors">{{ form.username.errors.as_text }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    {% render_field form.email class+="form-control" %}
+                    {% if form.email.errors %}
+                        <p class="errors">{{ form.email.errors.as_text }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="id_password1">Password</label>
+                    {% render_field form.password1 class+="form-control" %}
+                    {% if form.password1.errors %}
+                        <p class="errors">{{ form.password1.errors.as_text }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="id_password2">Confirm Password</label>
+                    {% render_field form.password2 class+="form-control" %}
+                    {% if form.password2.errors %}
+                        <p class="errors">{{ form.password2.errors.as_text }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Register &rarr;</button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content-related %}
