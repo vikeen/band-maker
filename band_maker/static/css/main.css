@@ -4,14 +4,14 @@ form .errors {
     margin-top: 5px;
 }
 
-.songs-meta {
+.song__meta {
     list-style: none;
     padding-left: 0;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.songs-meta li {
+.song__meta li {
     float: left;
     margin-right: 20px;
 }

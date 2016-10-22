@@ -2,7 +2,6 @@ from django.views import generic
 from django.http import JsonResponse
 from django.core import serializers
 from .models import Song
-from django.contrib.auth.models import User
 import os
 import boto3
 
