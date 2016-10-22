@@ -11,7 +11,7 @@ class Index(generic.ListView):
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        return Song.objects.all()
+        return Song.objects.filter(published=True)
 
 
 class Detail(generic.DetailView):
