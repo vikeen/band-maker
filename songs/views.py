@@ -63,13 +63,18 @@ def download(request, pk):
             archive.write(temp_download_file_path, track.media_name)
 
         print 'zip file created name: [%s] at path: [%s]' % (archive_file_name, archive_file_path)
-    finally:
-        print 'clean up temporary download directory [%s]' % temp_download_dir
-        archive.close()
+    except:
         rmtree(temp_download_dir)
+    finally:
+        print 'zip file creation complete'
+        archive.close()
 
-    with File(open(archive_file_name, 'rb')) as f:
+    with File(open(archive_file_path, 'rb')) as f:
         response = HttpResponse(f.chunks())
+
+    print 'clean up temporary download directory [%s]' % temp_download_dir
+
+    rmtree(temp_download_dir)
 
     response['Content-Type'] = 'application/zip'
     response['Content-Disposition'] = 'attachment; filename=%s' % archive_file_name
