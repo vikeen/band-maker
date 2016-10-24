@@ -35,58 +35,63 @@
         {% if tracks %}
             <div class="form-group">
                 <label>Tracks</label>
-                <script>
-                    $(document).ready(function () {
-                        window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
-                    })
-                </script>
-                <div class="media-player">
-                    <section class="media-player___tracks">
-                        {% for track in tracks %}
-                            <article class="row media-player__track" data-track-id="{{ track.pk }}">
-                                <div class="media-player__track-title-container col-sm-4">
-                                    <div class="media-player__track-title">
-                                        <a href="{% url 'users:track_update' user.username song.id track.pk %}">{{ track.instrument }}</a>
+            </div>
+            <a href="{% url 'songs:download' song.id %}">
+                <span class="btn btn-primary">
+                    <i class="glyphicon glyphicon-file"></i> Download
+                </span>
+            </a>
+            <script>
+                $(document).ready(function () {
+                    window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
+                })
+            </script>
+            <div class="media-player">
+                <section class="media-player___tracks">
+                    {% for track in tracks %}
+                        <article class="row media-player__track" data-track-id="{{ track.pk }}">
+                            <div class="media-player__track-title-container col-sm-4">
+                                <div class="media-player__track-title">
+                                    <a href="{% url 'users:track_update' user.username song.id track.pk %}">{{ track.instrument }}</a>
 
-                                        <ul class="media-player__track-title-controls clearfix">
-                                            <li class="media-player__track-title-control media-player__track-title-control--mute">
-                                                <a class="btn btn-default">
-                                                    <i class="glyphicon glyphicon-volume-off"></i>
-                                                </a>
-                                            </li>
-                                            <li class="media-player__track-title-control media-player__track-title-control--solo">
-                                                <a class="btn btn-default">
-                                                    <i class="glyphicon glyphicon-headphones"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <ul class="media-player__track-title-controls clearfix">
+                                        <li class="media-player__track-title-control media-player__track-title-control--mute">
+                                            <a class="btn btn-default">
+                                                <i class="glyphicon glyphicon-volume-off"></i>
+                                            </a>
+                                        </li>
+                                        <li class="media-player__track-title-control media-player__track-title-control--solo">
+                                            <a class="btn btn-default">
+                                                <i class="glyphicon glyphicon-headphones"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="media-player__track-waveform-container col-sm-8">
-                                    <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
-                                </div>
-                            </article>
-                        {% endfor %}
-                        <div class="media-player__progress col-sm-offset-4 col-sm-8">
-                            <div class="progress">
-                                <div id="progress" class="progress-bar" role="progressbar"></div>
                             </div>
+                            <div class="media-player__track-waveform-container col-sm-8">
+                                <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                    <div class="media-player__progress col-sm-offset-4 col-sm-8">
+                        <div class="progress">
+                            <div id="progress" class="progress-bar" role="progressbar"></div>
                         </div>
-                    </section>
-                    <div class="row">
-                        <ul class="media-player__controls col-sm-offset-4 clearfix">
-                            <li class="media-player__control media-player__control--restart">
-                                <i class="glyphicon glyphicon-step-backward"></i>
-                            </li>
-                            <li class="media-player__control media-player__control--play">
-                                <i class="glyphicon glyphicon-play"></i>
-                            </li>
-                            <li class="media-player__control media-player__control--pause">
-                                <i class="glyphicon glyphicon-pause"></i>
-                            </li>
-                            <li class="media-player__control media-player__control--duration"></li>
-                        </ul>
                     </div>
+                </section>
+                <div class="row">
+                    <ul class="media-player__controls col-sm-offset-4 clearfix">
+                        <li class="media-player__control media-player__control--restart">
+                            <i class="glyphicon glyphicon-step-backward"></i>
+                        </li>
+                        <li class="media-player__control media-player__control--play">
+                            <i class="glyphicon glyphicon-play"></i>
+                        </li>
+                        <li class="media-player__control media-player__control--pause">
+                            <i class="glyphicon glyphicon-pause"></i>
+                        </li>
+                        <li class="media-player__control media-player__control--duration"></li>
+                    </ul>
                 </div>
             </div>
         {% endif %}

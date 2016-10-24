@@ -11,9 +11,9 @@ def upload(request):
     file_name = "%s/tracks/%s" % (request.user.username, request.GET['file_name'])
     file_type = request.GET['file_type']
 
-    s3 = boto3.client('s3')
+    s3_client = boto3.client('s3')
 
-    presigned_post = s3.generate_presigned_post(
+    presigned_post = s3_client.generate_presigned_post(
         Bucket=s3_bucket,
         Key=file_name,
         Fields={"acl": "public-read", "Content-Type": file_type},
