@@ -41,6 +41,9 @@
                     <i class="glyphicon glyphicon-file"></i> Download
                 </span>
             </a>
+            <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">
+                <i class="glyphicon glyphicon-plus"></i> Add Track
+            </a>
             <script>
                 $(document).ready(function () {
                     window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
@@ -104,12 +107,13 @@
             {% endif %}
         </div>
         <div class="form-group">
-            <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">Add Track</a>
             <button class="btn btn-primary" type="submit">Save</button>
         </div>
         <hr/>
         <div class="form-group">
-            <a class="btn btn-danger" href="{% url 'users:song_delete' user.username song.id %}">Delete</a>
+            <a class="btn btn-danger" href="{% url 'users:song_delete' user.username song.id %}">
+                <i class="glyphicon glyphicon-trash"></i> Delete
+            </a>
         </div>
     </form>
 {% endblock %}
