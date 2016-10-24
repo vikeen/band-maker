@@ -2,7 +2,8 @@ const gulp = require("gulp"),
     rename = require("gulp-rename"),
     fs = require("fs"),
     browserify = require("browserify"),
-    babelify = require("babelify");
+    babelify = require("babelify"),
+    less = require("gulp-less");
 
 gulp.task("default", ['build', 'watch']);
 
@@ -11,6 +12,10 @@ gulp.task('watch', () => {
         './band_maker/static/js/**/*.js',
         '!./band_maker/static/js/app.bundle.js'
     ], ['build:javascript']);
+
+    gulp.watch([
+        './band_maker/static/less/**/*.less'
+    ], ['build:less']);
 });
 
 gulp.task('build:javascript', () => {
@@ -24,6 +29,15 @@ gulp.task('build:javascript', () => {
         .pipe(fs.createWriteStream("./band_maker/static/js/app.bundle.js"));
 });
 
+gulp.task('build:less', function () {
+    return gulp.src([
+        './band_maker/static/less/main.less',
+    ])
+        .pipe(less())
+        .pipe(gulp.dest('./band_maker/static/css'));
+});
+
 gulp.task('build', [
-    'build:javascript'
+    'build:javascript',
+    'build:less'
 ]);
