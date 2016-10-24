@@ -32,24 +32,27 @@
                 <p class="errors">{{ form.description.errors.as_text }}</p>
             {% endif %}
         </div>
-        {% if tracks %}
-            <div class="form-group">
-                <label>Tracks</label>
-            </div>
-            <a href="{% url 'songs:download' song.id %}">
-                <span class="btn btn-primary">
-                    <i class="glyphicon glyphicon-file"></i> Download
-                </span>
-            </a>
-            <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">
-                <i class="glyphicon glyphicon-plus"></i> Add Track
-            </a>
+        <div class="form-group">
+            <label for="id_published">Published
+                {% render_field form.published %}
+            </label>
+            {% if form.published.errors %}
+                <p class="errors">{{ form.published.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="media-player well">
             <script>
                 $(document).ready(function () {
                     window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
                 })
             </script>
-            <div class="media-player">
+            <a href="{% url 'songs:download' song.id %}" class="btn btn-primary">
+                <i class="glyphicon glyphicon-download"></i> Download
+            </a>
+            <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">
+                <i class="glyphicon glyphicon-plus"></i> Add Track
+            </a>
+            {% if tracks %}
                 <section class="media-player___tracks">
                     {% for track in tracks %}
                         <article class="row media-player__track" data-track-id="{{ track.pk }}">
@@ -96,14 +99,6 @@
                         <li class="media-player__control media-player__control--duration"></li>
                     </ul>
                 </div>
-            </div>
-        {% endif %}
-        <div class="form-group">
-            <label for="id_published">Published
-                {% render_field form.published %}
-            </label>
-            {% if form.published.errors %}
-                <p class="errors">{{ form.published.errors.as_text }}</p>
             {% endif %}
         </div>
         <div class="form-group">

@@ -20,11 +20,6 @@
             {% if song.description %}
                 <p class="song__description">{{ song.description }}</p>
             {% endif %}
-            <a href="{% url 'songs:download' song.id %}">
-                <span class="btn btn-primary">
-                    <i class="glyphicon glyphicon-file"></i> Download
-                </span>
-            </a>
         </div>
     </div>
 
@@ -34,7 +29,12 @@
                 window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
             })
         </script>
-        <div class="song__media-player media-player">
+        <div class="media-player well">
+{#            <a href="{% url 'songs:download' song.id %}">#}
+{#                <span class="btn btn-primary">#}
+{#                    <i class="glyphicon glyphicon-download"></i> Download#}
+{#                </span>#}
+{#            </a>#}
             <section class="media-player___tracks">
                 {% for track in tracks %}
                     <article class="row media-player__track" data-track-id="{{ track.pk }}">
