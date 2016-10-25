@@ -91,5 +91,11 @@
         <div class="form-group">
             <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
         </div>
+        <hr/>
+        <div class="form-group">
+            <a class="btn btn-danger" href="{% url 'users:song_track_delete' user.username song.id track.id %}">
+                <i class="glyphicon glyphicon-trash"></i> Delete
+            </a>
+        </div>
     </form>
 {% endblock %}

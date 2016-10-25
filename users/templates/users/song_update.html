@@ -49,7 +49,7 @@
             <a href="{% url 'songs:download' song.id %}" class="btn btn-primary">
                 <i class="glyphicon glyphicon-download"></i> Download
             </a>
-            <a href="{% url "users:track_create" user.username song.id %}" class="btn btn-warning">
+            <a href="{% url "users:song_track_create" user.username song.id %}" class="btn btn-warning">
                 <i class="glyphicon glyphicon-plus"></i> Add Track
             </a>
             {% if tracks %}
@@ -58,7 +58,7 @@
                         <article class="row media-player__track" data-track-id="{{ track.pk }}">
                             <div class="media-player__track-title-container col-sm-4">
                                 <div class="media-player__track-title">
-                                    <a href="{% url 'users:track_update' user.username song.id track.pk %}">{{ track.instrument }}</a>
+                                    <a href="{% url 'users:song_track_update' user.username song.id track.pk %}">{{ track.instrument }}</a>
 
                                     <ul class="media-player__track-title-controls clearfix">
                                         <li class="media-player__track-title-control media-player__track-title-control--mute">

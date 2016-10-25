@@ -71,10 +71,10 @@ class SongDelete(LoginRequiredMixin, generic.DeleteView):
         })
 
 
-class TrackCreate(LoginRequiredMixin, generic.CreateView):
+class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
     model = Track
     fields = ['instrument', 'media_url', 'media_name']
-    template_name = 'users/track_create.html'
+    template_name = 'users/song_track_create.html'
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -86,7 +86,7 @@ class TrackCreate(LoginRequiredMixin, generic.CreateView):
         return redirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
-        context = super(TrackCreate, self).get_context_data(**kwargs)
+        context = super(SongTrackCreate, self).get_context_data(**kwargs)
         context['song'] = Song.objects.get(id=self.kwargs['song_id'])
         return context
 
@@ -97,24 +97,44 @@ class TrackCreate(LoginRequiredMixin, generic.CreateView):
         })
 
 
-class TrackUpdate(LoginRequiredMixin, generic.UpdateView):
+class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Track
     fields = ['instrument', 'media_url', 'media_name']
-    template_name = 'users/track_update.html'
+    template_name = 'users/song_track_update.html'
     context_object_name = 'track'
 
     def get_object(self, queryset=None):
         return Track.objects.get(pk=self.kwargs['track_id'])
 
     def get_context_data(self, **kwargs):
-        context = super(TrackUpdate, self).get_context_data(**kwargs)
+        context = super(SongTrackUpdate, self).get_context_data(**kwargs)
         context['song'] = Song.objects.get(id=self.kwargs['song_id'])
         context['track_json'] = serializers.serialize("json", [context['track'], ])
         return context
 
     def get_success_url(self):
-        return reverse_lazy('users:track_update', kwargs={
+        return reverse_lazy('users:song_track_update', kwargs={
             'username': self.kwargs['username'],
             'song_id': self.kwargs['song_id'],
             'track_id': self.kwargs['track_id']
+        })
+
+
+class SongTrackDelete(LoginRequiredMixin, generic.DeleteView):
+    model = Track
+    template_name = 'users/song_track_confirm_delete.html'
+    context_object_name = 'track'
+
+    def get_object(self, queryset=None):
+        return Track.objects.get(pk=self.kwargs['track_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(SongTrackDelete, self).get_context_data(**kwargs)
+        context['song'] = Song.objects.get(id=self.kwargs['song_id'])
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('users:song_update', kwargs={
+            'username': self.kwargs['username'],
+            'song_id': self.kwargs['song_id']
         })
