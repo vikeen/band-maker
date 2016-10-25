@@ -21,7 +21,7 @@ class Index(generic.ListView):
         requesting_tracks = self.request.GET.get('requesting_tracks') == 'true'
 
         if requesting_tracks:
-            return Song.objects.filter(published=False, tracks__public=True)
+            return Song.objects.filter(published=False, tracks__public=True).distinct("id")
         else:
             return Song.objects.filter(published=True)
 
