@@ -36,6 +36,7 @@
             <label for="id_published">Published
                 {% render_field form.published %}
             </label>
+            <span class="help-block">Published songs can be viewed by any user</span>
             {% if form.published.errors %}
                 <p class="errors">{{ form.published.errors.as_text }}</p>
             {% endif %}
@@ -53,23 +54,27 @@
                 <i class="glyphicon glyphicon-plus"></i> Add Track
             </a>
             {% if tracks %}
-                <section class="clearfix media-player___tracks">
+                <section class="row media-player___tracks">
                     {% for track in tracks %}
-                        <article class="media-player__track" data-track-id="{{ track.pk }}">
+                        <article
+                                class="media-player__track col-xs-12 {% if not track.media_url %}media-player__track--no-media{% endif %}"
+                                data-track-id="{{ track.pk }}">
                             <div class="media-player__track-title-container col-sm-4">
                                 <div class="media-player__track-title">
                                     <a href="{% url 'users:song_track_update' user.username song.id track.pk %}">{{ track.instrument }}</a>
 
                                     <ul class="media-player__track-title-controls clearfix">
                                         <li class="media-player__track-title-control media-player__track-title-control--mute">
-                                            <a class="btn btn-default">
+                                            <button type="button" class="btn btn-default"
+                                                    {% if not track.media_url %}disabled{% endif %}>
                                                 <i class="glyphicon glyphicon-volume-off"></i>
-                                            </a>
+                                            </button>
                                         </li>
                                         <li class="media-player__track-title-control media-player__track-title-control--solo">
-                                            <a class="btn btn-default">
+                                            <button type="button" class="btn btn-default"
+                                                    {% if not track.media_url %}disabled{% endif %}>
                                                 <i class="glyphicon glyphicon-headphones"></i>
-                                            </a>
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>

@@ -88,8 +88,10 @@ function __uploadFileSuccess(file, url) {
     self.$formSubmitBtn.prop('disabled', false);
 
     // reinitialize any associated media players
-    self.track.fields.media_name = file.name;
-    self.track.fields.media_url = url;
+    if (window.bm.mediaPlayer) {
+        self.track.fields.media_name = file.name;
+        self.track.fields.media_url = url;
 
-    window.bm.mediaPlayer.replaceTrackById(self.track.pk, self.track);
+        window.bm.mediaPlayer.replaceTrackById(self.track.pk, self.track);
+    }
 }

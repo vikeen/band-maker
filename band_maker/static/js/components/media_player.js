@@ -32,7 +32,7 @@ export class MediaPlayer {
 
         self.tracks = self.tracks.map(track => {
             if (track.pk === trackId) {
-                track.__audio.empty(); // wipe wavesurfer data and events
+                track.__audio && track.__audio.empty(); // wipe wavesurfer data and events
                 self.$element.find("#waveform-" + trackId).find("wave").remove();
                 track = __createAudioWave.bind(self)(newTrack);
             }
@@ -45,7 +45,7 @@ export class MediaPlayer {
         const self = this;
 
         self.tracks.forEach(track => {
-            track.__audio.play(0);
+            track.__audio && track.__audio.play(0);
         });
 
         __updateSongDurations.bind(self)();
@@ -55,7 +55,7 @@ export class MediaPlayer {
         const self = this;
 
         self.tracks.forEach(track => {
-            if (!track.__audio.isPlaying()) {
+            if (track.__audio && !track.__audio.isPlaying()) {
                 track.__audio.play();
             }
         });
@@ -67,7 +67,7 @@ export class MediaPlayer {
         const self = this;
 
         self.tracks.forEach(track => {
-            if (track.__audio.isPlaying()) {
+            if (track.__audio && track.__audio.isPlaying()) {
                 track.__audio.pause();
             }
         });
@@ -91,13 +91,18 @@ export class MediaPlayer {
     }
 
     getLongestTrack() {
-        var longestTrack = this.tracks[0];
+        const self = this,
+            tracksWithMedia = self.tracks.filter(track => !!track.fields.media_url);
 
-        this.tracks.forEach(track => {
-            var trackDuration = track.__audio.getDuration();
+        let longestTrack = undefined;
+
+        tracksWithMedia.forEach(track => {
+            longestTrack = longestTrack || track;
+            let trackDuration = track.__audio.getDuration();
 
             if (trackDuration > longestTrack.__audio.getDuration()) {
                 longestTrack = track;
+
             }
         });
 
@@ -105,54 +110,56 @@ export class MediaPlayer {
     }
 
     allTracksAreLoaded() {
-        return this.tracks.every(track => {
-            return !!track.__loaded;
-        });
+        const self = this;
+
+        return self.tracks.every(track => !!track.__loaded);
     }
 
     getTrackById(trackId) {
         const self = this;
 
-        return self.tracks.filter(track => {
-            return track.pk === trackId;
-        })[0];
+        return self.tracks.filter(track => track.pk === trackId)[0];
     }
 
     toggleTrackMute(track) {
-        track.__audio.toggleMute();
+        track.__audio && track.__audio.toggleMute();
     }
 }
 
 function __createAudioWave(track) {
     const self = this;
 
-    self.trackLoadingProgressMap[track.pk] = 0;
-    var ctx = document.createElement('canvas').getContext('2d');
-    var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
-    linGrad.addColorStop(0.5, 'rgba(225, 225, 225, 1.000)');
-    linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
+    if (track.fields.media_url) {
+        self.trackLoadingProgressMap[track.pk] = 0;
+        var ctx = document.createElement('canvas').getContext('2d');
+        var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
+        linGrad.addColorStop(0.5, 'rgba(225, 225, 225, 1.000)');
+        linGrad.addColorStop(0.5, 'rgba(183, 183, 183, 1.000)');
 
-    var wavesurfer = WaveSurfer.create({
-        container: '#waveform-' + track.pk,
-        waveColor: linGrad,
-        progressColor: 'hsla(200, 100%, 30%, 0.5)',
-        cursorColor: '#fff',
-        height: 45,
-        barWidth: 3
-    });
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform-' + track.pk,
+            waveColor: linGrad,
+            progressColor: 'hsla(200, 100%, 30%, 0.5)',
+            cursorColor: '#fff',
+            height: 45,
+            barWidth: 3
+        });
 
-    wavesurfer.on('ready', () => {
-        __onTrackReadyEvent.bind(self)(track);
-    });
-    wavesurfer.on("error", __onTrackErrorEvent);
-    wavesurfer.on('loading', progress => {
-        return __onTrackLoadingEvent.bind(self)(track, progress);
-    });
-    wavesurfer.on('seek', __onTrackSeekEvent.bind(self));
+        wavesurfer.on('ready', () => {
+            __onTrackReadyEvent.bind(self)(track);
+        });
+        wavesurfer.on("error", __onTrackErrorEvent);
+        wavesurfer.on('loading', progress => {
+            return __onTrackLoadingEvent.bind(self)(track, progress);
+        });
+        wavesurfer.on('seek', __onTrackSeekEvent.bind(self));
 
-    wavesurfer.load(track.fields.media_url);
+        wavesurfer.load(track.fields.media_url);
 
-    track.__audio = wavesurfer;
+        track.__audio = wavesurfer;
+    } else {
+        track.__loaded = true;
+    }
 
     return track;
 }
@@ -212,10 +219,11 @@ function __onTrackErrorEvent(error) {
 }
 
 function __onTrackSeekEvent(progress) {
-    const self = this;
+    const self = this,
+        tracksWithMedia = self.tracks.filter(track => !!track.fields.media_url);
 
     // prevent excess seek events from firing
-    var promises = self.tracks.map(track => {
+    let promises = tracksWithMedia.map(track => {
         var defer = $.Deferred();
 
         try {
@@ -232,7 +240,7 @@ function __onTrackSeekEvent(progress) {
     $.when(promises).done(() => {
         self.pause();
 
-        self.tracks.forEach(track => {
+        tracksWithMedia.forEach(track => {
             track.__audio.seekTo(progress);
             track.__audio.on("seek", __onTrackSeekEvent.bind(self));
         });
@@ -255,14 +263,19 @@ function __onTrackLoadingEvent(track, progress) {
 
 function __updateSongDurations() {
     const self = this;
-
-    var $timer = self.$element.find(".media-player__control--duration");
+    let $timer = self.$element.find(".media-player__control--duration");
 
     self.longestTrack = self.getLongestTrack();
+
+    // no tracks to media duration from
+    if (!self.longestTrack) {
+        return;
+    }
+
     self.songCurrentSeek = self.longestTrack.__audio.getCurrentTime();
     self.songDuration = self.longestTrack.__audio.getDuration();
 
-    var durationDateTime = bm.utils.secondsToDateTime(self.songDuration),
+    let durationDateTime = bm.utils.secondsToDateTime(self.songDuration),
         seekDateTime = bm.utils.secondsToDateTime(self.songCurrentSeek);
 
     function dateTimeToMediaTime(dateTime) {
@@ -288,6 +301,6 @@ function __handleTrackMuteClick(event) {
 
     self.toggleTrackMute(track);
 
-    $trackControl.find("a").toggleClass("btn-default", !track.__audio.isMuted);
-    $trackControl.find("a").toggleClass("btn-primary", track.__audio.isMuted);
+    $trackControl.find("button").toggleClass("btn-default", !track.__audio.isMuted);
+    $trackControl.find("button").toggleClass("btn-primary", track.__audio.isMuted);
 }

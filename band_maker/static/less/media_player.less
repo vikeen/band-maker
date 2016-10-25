@@ -1,18 +1,4 @@
 .media-player {
-
-    .media-player__controls {
-        padding: 0;
-        list-style: none;
-        margin-top: 20px;
-    }
-
-    .media-player__control {
-        margin-right: 10px;
-        float: left;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
     .progress {
         margin-top: 15px;
     }
@@ -20,46 +6,69 @@
     .progress-bar {
         transition: none;
     }
+}
 
-    .media-player__track {
-        &:first-of-type {
-            .media-player__track-waveform,
-            .media-player__track-title {
-                padding-top: 15px;
-            }
+.media-player__controls {
+    padding: 0;
+    list-style: none;
+    margin-top: 20px;
+}
+
+.media-player__control {
+    margin-right: 10px;
+    float: left;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.media-player__track {
+    min-height: 45px;
+
+    &:first-of-type {
+        .media-player__track-waveform,
+        .media-player__track-title {
+            padding-top: 15px;
         }
+    }
 
-        &:last-of-type {
-            .media-player__track-waveform {
-                padding-bottom: 15px;
-            }
+    &:last-of-type {
+        .media-player__track-waveform {
+            padding-bottom: 15px;
         }
     }
 
-    .media-player__track-waveform-container {
-        background: #555;
-    }
+    &.media-player__track--no-media {
+        height: 60px;
 
-    .media-player__track-title {
-        text-align: right;
-        font-weight: bold;
-        margin-top: 7px;
+        .media-player__track-waveform-container {
+            height: 60px;
+        }
     }
+}
 
-    .media-player__track-title-controls {
-        padding: 0;
-        list-style: none;
-        display: inline;
-        float: right;
-    }
+.media-player__track-waveform-container {
+    background: #555;
+}
 
-    .media-player__track-title-control {
-        float: left;
-        margin-left: 10px;
-    }
+.media-player__track-title {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 7px;
+}
 
-    .media-player__track-title-control .btn {
-        padding: 3px 6px;
-        display: inline;
-    }
+.media-player__track-title-controls {
+    padding: 0;
+    list-style: none;
+    display: inline;
+    float: right;
+}
+
+.media-player__track-title-control {
+    float: left;
+    margin-left: 10px;
+}
+
+.media-player__track-title-control .btn {
+    padding: 3px 6px;
+    display: inline;
 }

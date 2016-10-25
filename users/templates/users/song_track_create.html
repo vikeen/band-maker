@@ -26,6 +26,34 @@
             {% endif %}
         </div>
         <div class="form-group">
+            <script>
+                $(document).ready(function () {
+                    var $publicCheckBox = $("#id_public");
+
+                    function publicClickHandler () {
+                        var $element = $(this),
+                            trackIsPublic = $element.prop("checked");
+
+                        if (trackIsPublic) {
+                            $(".js-track-upload-widget").hide();
+                            $(".js-track-upload__media-url").val(undefined);
+                            $(".js-track-upload__media-file-name").val(undefined);
+                        } else {
+                            $(".js-track-upload-widget").show();
+                        }
+                    }
+
+                    publicClickHandler.bind($publicCheckBox)();
+                    $publicCheckBox.on("click", publicClickHandler);
+                });
+            </script>
+            <label for="id_public">Public {% render_field form.public %}</label>
+            <span class="help-block">A public tracks allows other users to upload their work and collaborate with your song</span>
+            {% if form.public.errors %}
+                <p class="errors">{{ form.public.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group js-track-upload-widget">
             <label for="id_track">Audio File</label>
             <div class="bm-track-upload-container"
                  data-bm-widget="track-upload"
@@ -34,12 +62,12 @@
                        value="{{ track.media_url }}" required="required"/>
 
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-xs-8 col-sm-4">
                         <input type="text" class="js-track-upload__media-file-name form-control" name="media_name"
                                required="required" readonly="readonly"
                                value="{{ track.media_name }}"/>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-xs-4 col-sm-8">
                     <span class="btn btn-success fileinput-button">
                         <i class="glyphicon glyphicon-file"></i>&nbsp;Upload File
                         <input type="file" class="js-track-upload__media" id="id_track" name="dummy_files"

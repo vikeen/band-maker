@@ -73,7 +73,7 @@ class SongDelete(LoginRequiredMixin, generic.DeleteView):
 
 class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
     model = Track
-    fields = ['instrument', 'media_url', 'media_name']
+    fields = ['instrument', 'media_url', 'media_name', 'public']
     template_name = 'users/song_track_create.html'
 
     def form_valid(self, form):
@@ -99,7 +99,7 @@ class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
 
 class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Track
-    fields = ['instrument', 'media_url', 'media_name']
+    fields = ['instrument', 'media_url', 'media_name', 'public']
     template_name = 'users/song_track_update.html'
     context_object_name = 'track'
 
@@ -113,10 +113,9 @@ class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('users:song_track_update', kwargs={
+        return reverse_lazy('users:song_update', kwargs={
             'username': self.kwargs['username'],
-            'song_id': self.kwargs['song_id'],
-            'track_id': self.kwargs['track_id']
+            'song_id': self.kwargs['song_id']
         })
 
 
