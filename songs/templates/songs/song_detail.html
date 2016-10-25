@@ -35,9 +35,9 @@
 {#                    <i class="glyphicon glyphicon-download"></i> Download#}
 {#                </span>#}
 {#            </a>#}
-            <section class="media-player___tracks">
+            <section class="clearfix media-player___tracks">
                 {% for track in tracks %}
-                    <article class="row media-player__track" data-track-id="{{ track.pk }}">
+                    <article class="media-player__track" data-track-id="{{ track.pk }}">
                         <div class="media-player__track-title-container col-sm-4">
                             <div class="media-player__track-title">
                                 {{ track.instrument }}
