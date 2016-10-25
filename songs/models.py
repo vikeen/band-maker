@@ -18,3 +18,16 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TrackRequest(models.Model):
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    media_url = models.CharField(max_length=500)
+    media_name = models.CharField(max_length=500, null=True, blank=True)
+    status = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    track = models.ForeignKey(Track, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'songs_track_requests'
