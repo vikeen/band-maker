@@ -28,7 +28,8 @@
 .media-player__track.media-player__track--no-media {
   height: 60px;
 }
-.media-player__track.media-player__track--no-media .media-player__track-waveform-container {
+.media-player__track.media-player__track--no-media .media-player__track-waveform-container,
+.media-player__track.media-player__track--no-media .media-player__track-waveform {
   height: 60px;
 }
 .media-player__track-waveform-container {
@@ -52,6 +53,9 @@
 .media-player__track-title-control .btn {
   padding: 3px 6px;
   display: inline;
+}
+.media-player__submit-track {
+  margin-top: 10px;
 }
 .jumbotron {
   background: #532f8c;
@@ -90,6 +94,14 @@ form .errors {
   color: #a94442;
   padding: 5px;
   margin-top: 5px;
+}
+.song__requested-tracks {
+  padding: 0;
+  list-style: none;
+}
+.song__requested-track {
+  margin-right: 10px;
+  float: left;
 }
 .song__meta {
   list-style: none;

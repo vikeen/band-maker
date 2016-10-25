@@ -18,7 +18,12 @@ class Index(generic.ListView):
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        return Song.objects.filter(published=True)
+        requesting_tracks = self.request.GET.get('requesting_tracks') == 'true'
+
+        if requesting_tracks:
+            return Song.objects.filter(published=False, tracks__public=True)
+        else:
+            return Song.objects.filter(published=True)
 
 
 class Detail(generic.DetailView):
@@ -38,7 +43,7 @@ def download(request, pk):
     s3_client = boto3.client('s3')
 
     song = Song.objects.get(pk=pk)
-    tracks = song.tracks.all()
+    downloadable_tracks = song.tracks.exclude(public=True)
 
     temp_download_dir = mkdtemp()
 
@@ -49,7 +54,7 @@ def download(request, pk):
 
     logging.info('download song: [%s] with title: [%s]' % (song.id, song.title))
 
-    for track in tracks:
+    for track in downloadable_tracks:
         s3_track_file_path = '%s/tracks/%s' % (song.created_by, track.media_name)
         temp_download_file_path = os.path.join(temp_download_dir, track.media_name)
         logging.info('downloading track [%s] to [%s]' % (s3_track_file_path, temp_download_file_path))

@@ -22,6 +22,15 @@
                     {% if song.description %}
                         <p class="song__description">{{ song.description | truncatechars:100 }}</p>
                     {% endif %}
+                    <ul class="song__requested-tracks">
+                        {% for track in song.tracks.all %}
+                            {% if track.public %}
+                                <li class="song__requested-track">
+                                    <span class="label label-default">{{ track.instrument }}</span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             <ul class="song__meta clearfix">
