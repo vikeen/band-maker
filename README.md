@@ -1,16 +1,13 @@
 # Band Maker
 
-A barebones Python app, which can easily be deployed to Heroku.
-
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
-
-## Running Locally
-
-Make sure you have Python [installed properly](http://install.python-guide.org).  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
-
 ### Depencies
 
+* [Python](http://install.python-guide.org)
+* [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup)
+* Node
+
 ```sh
+$ npm install
 $ pip install -r requirements.txt
 ```
 
@@ -30,10 +27,8 @@ $ python manage.py collectstatic
 
 ### Development
 
-
-`python manage.py runserver` - Server
-`gulp` - Frontend Assets
-
+* `python manage.py runserver` - Server
+* `gulp` - Frontend Assets
 
 Your app should now be running on [localhost:8000](http://localhost:8000/).
 
