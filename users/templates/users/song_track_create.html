@@ -47,8 +47,8 @@
                     $publicCheckBox.on("click", publicClickHandler);
                 });
             </script>
-            <label for="id_public">Public {% render_field form.public %}</label>
-            <span class="help-block">A public tracks allows other users to upload their work and collaborate with your song</span>
+            <label for="id_public">Request Tracks {% render_field form.public %}</label>
+            <span class="help-block">Allow other users to upload their work and collaborate with your song</span>
             {% if form.public.errors %}
                 <p class="errors">{{ form.public.errors.as_text }}</p>
             {% endif %}
