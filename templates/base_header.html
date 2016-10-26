@@ -21,7 +21,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if user.id %}
                     <li>
-                        <a href="/songs?requesting_tracks=true">Record</a>
+                        <a href="/songs?requesting_tracks=on">Record</a>
                     </li>
                     <li>
                         <a href="{% url 'users:songs' user.username %}">My Songs</a>

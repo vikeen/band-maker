@@ -5,42 +5,62 @@
 {% block title %}Songs{% endblock %}
 
 {% block content %}
-    <h1>Songs</h1>
-    <hr/>
-    {% for song in song_list %}
-        <div class="list-group-item">
-            <div class="media">
-                <div class="media-left">
-                    <a href="{% url 'users:songs' song.created_by %}">
-                        <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h2 class="media-heading song__title">
-                        <a href="{% url "songs:detail" song.id %}">{{ song.title }}</a>
-                    </h2>
-                    {% if song.description %}
-                        <p class="song__description">{{ song.description | truncatechars:100 }}</p>
-                    {% endif %}
-                    <ul class="song__requested-tracks clearfix">
-                        {% for track in song.tracks.all %}
-                            {% if track.public %}
-                                <li class="song__requested-track">
-                                    <span class="label label-default">{{ track.instrument }}</span>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                    <ul class="song__meta clearfix">
-                        <li>
-                            <i class="glyphicon glyphicon-heart"></i> {{ song.likes }}
-                        </li>
-                        <li>
-                            <i class="glyphicon glyphicon-music"></i> {{ song.views }}
-                        </li>
-                    </ul>
-                </div>
+    <form class="form form-inline" action="{% url 'songs:index' %}" method="GET">
+        <fieldset>
+            <legend>
+                <h1>Songs</h1>
+            </legend>
+            <div class="form-group">
+                <label>Requesting Tracks
+                    <input type="checkbox" name="requesting_tracks"
+                           {% if request.GET.requesting_tracks %}checked{% endif %}/>
+                </label>
             </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </fieldset>
+    </form>
+
+
+    <div class="panel panel-default content-block">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+            {% for song in song_list %}
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{% url 'users:songs' song.created_by %}">
+                            <img src="{% gravatar_url song.created_by.email 50 %}"
+                                 title="{{ song.created_by.username }}"/>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading song__title">
+                            <a href="{% url "songs:detail" song.id %}">{{ song.title }}</a>
+                        </h2>
+                        {% if song.description %}
+                            <p class="song__description">{{ song.description | truncatechars:100 }}</p>
+                        {% endif %}
+                        <ul class="song__requested-tracks clearfix">
+                            {% for track in song.tracks.all %}
+                                {% if track.public %}
+                                    <li class="song__requested-track">
+                                        <span class="label label-default">{{ track.instrument }}</span>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        <ul class="song__meta clearfix">
+                            <li>
+                                <i class="glyphicon glyphicon-heart"></i> {{ song.likes }}
+                            </li>
+                            <li>
+                                <i class="glyphicon glyphicon-music"></i> {{ song.views }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

@@ -18,7 +18,7 @@ class Index(generic.ListView):
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        requesting_tracks = self.request.GET.get('requesting_tracks') == 'true'
+        requesting_tracks = self.request.GET.get('requesting_tracks')
 
         if requesting_tracks:
             return Song.objects.filter(published=False, tracks__public=True).distinct("id")
