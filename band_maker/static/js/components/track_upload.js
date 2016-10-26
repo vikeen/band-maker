@@ -1,5 +1,5 @@
 export class TrackUpload {
-    constructor($element, track) {
+    constructor($element, track, song) {
         const self = this;
 
         self.$element = $element;
@@ -7,6 +7,9 @@ export class TrackUpload {
         self.$mediaUrlInput = self.$element.find(".js-track-upload__media-url");
         self.$mediaFileName = self.$element.find(".js-track-upload__media-file-name");
         self.track = track;
+        self.song = song;
+
+        console.log(self);
 
         $element.find("input[type='file']").on("change", function () {
             const $element = $(this);
@@ -33,7 +36,7 @@ function __getSignedRequest(file) {
     const self = this;
 
     $.ajax({
-        url: "/tracks/upload",
+        url: "/songs/" + self.song.pk + "/tracks/upload",
         type: "get",
         data: {
             "file_name": file.name,

@@ -1,7 +1,19 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
 
-from tracks.models import Track
+
+class Track(models.Model):
+    instrument = models.CharField(max_length=100)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    media_url = models.CharField(max_length=500, null=True, blank=True)
+    media_name = models.CharField(max_length=500, null=True, blank=True)
+    public = models.BooleanField(default=False)
+    likes = models.IntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    uuid = models.UUIDField(default=uuid.uuid4)
 
 
 class Song(models.Model):
@@ -15,6 +27,7 @@ class Song(models.Model):
     media_url = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField(max_length=500, null=True, blank=True)
     published = models.BooleanField(default=False)
+    uuid = models.UUIDField(default=uuid.uuid4)
 
     def __str__(self):
         return self.title

@@ -24,8 +24,11 @@ function __initializeTrackUpload() {
     $("[data-bm-widget='track-upload']").each(function () {
         const $element = $(this);
         let track = $element.data("bmWidgetTrackUploadTrack");
-        track = track ? track[0] : undefined;
+        let song = $element.data("bmWidgetTrackUploadSong");
 
-        new bm.components.TrackUpload($element, track);
+        track = track ? track[0] : undefined;
+        song = song ? song[0] : undefined;
+
+        new bm.components.TrackUpload($element, track, song);
     })
 }

@@ -7,7 +7,8 @@ from django.views import generic
 from django.http import HttpResponse
 from django.core import serializers
 from django.core.files.base import File
-
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from .models import Song
 from tempfile import mkdtemp
 from shutil import rmtree
@@ -55,7 +56,7 @@ def download(request, pk):
     logging.info('download song: [%s] with title: [%s]' % (song.id, song.title))
 
     for track in downloadable_tracks:
-        s3_track_file_path = '%s/tracks/%s' % (song.created_by, track.media_name)
+        s3_track_file_path = '%s/songs/%s/tracks/%s' % (song.created_by, song.uuid, track.media_name)
         temp_download_file_path = os.path.join(temp_download_dir, track.media_name)
         logging.info('downloading track [%s] to [%s]' % (s3_track_file_path, temp_download_file_path))
 
@@ -80,3 +81,31 @@ def download(request, pk):
     rmtree(temp_download_dir)
 
     return response
+
+
+@login_required
+def track_upload(request, pk):
+    s3_bucket = os.environ.get('S3_BUCKET')
+
+    song = Song.objects.get(pk=pk)
+
+    s3_file_path = "%s/songs/%s/tracks/%s" % (request.user.username, song.uuid, request.GET['file_name'])
+    file_type = request.GET['file_type']
+
+    s3_client = boto3.client('s3')
+
+    presigned_post = s3_client.generate_presigned_post(
+        Bucket=s3_bucket,
+        Key=s3_file_path,
+        Fields={"acl": "public-read", "Content-Type": file_type},
+        Conditions=[
+            {"acl": "public-read"},
+            {"Content-Type": file_type}
+        ],
+        ExpiresIn=3600
+    )
+
+    return JsonResponse({
+        'data': presigned_post,
+        'url': 'https://%s.s3.amazonaws.com/%s' % (s3_bucket, s3_file_path)
+    })

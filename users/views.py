@@ -4,8 +4,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
-from songs.models import Song
-from tracks.models import Track
+from songs.models import Song, Track
 
 
 class SongsView(generic.ListView):
@@ -88,6 +87,7 @@ class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(SongTrackCreate, self).get_context_data(**kwargs)
         context['song'] = Song.objects.get(id=self.kwargs['song_id'])
+        context['song_json'] = serializers.serialize("json", [context['song'], ])
         return context
 
     def get_success_url(self):
@@ -110,6 +110,7 @@ class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
         context = super(SongTrackUpdate, self).get_context_data(**kwargs)
         context['song'] = Song.objects.get(id=self.kwargs['song_id'])
         context['track_json'] = serializers.serialize("json", [context['track'], ])
+        context['song_json'] = serializers.serialize("json", [context['song'], ])
         return context
 
     def get_success_url(self):

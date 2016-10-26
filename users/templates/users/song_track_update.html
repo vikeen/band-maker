@@ -59,7 +59,8 @@
             <label for="id_track">Audio File</label>
             <div class="bm-track-upload-container"
                  data-bm-widget="track-upload"
-                 data-bm-widget-track-upload-track="{{ track_json }}">
+                 data-bm-widget-track-upload-track="{{ track_json }}"
+                 data-bm-widget-track-upload-song="{{ song_json }}">
                 <input type="hidden" class="js-track-upload__media-url" id="id_track_url" name="media_url"
                        value="{{ track.media_url }}" required="required"/>
 
