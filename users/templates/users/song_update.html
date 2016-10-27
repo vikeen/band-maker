@@ -54,7 +54,7 @@
                         <section class="row media-player___tracks">
                             {% for track in tracks %}
                                 <article
-                                        class="media-player__track col-xs-12 {% if not track.media_url %}media-player__track--no-media{% endif %}"
+                                        class="media-player__track col-xs-12 {% if not track.audio_url %}media-player__track--no-media{% endif %}"
                                         data-track-id="{{ track.pk }}">
                                     <div class="media-player__track-title-container col-sm-4">
                                         <div class="media-player__track-title">
@@ -62,13 +62,13 @@
                                             <ul class="media-player__track-title-controls clearfix">
                                                 <li class="media-player__track-title-control media-player__track-title-control--mute">
                                                     <button type="button" class="btn btn-default"
-                                                            {% if not track.media_url %}disabled{% endif %}>
+                                                            {% if not track.audio_url %}disabled{% endif %}>
                                                         <i class="glyphicon glyphicon-volume-off"></i>
                                                     </button>
                                                 </li>
                                                 <li class="media-player__track-title-control media-player__track-title-control--solo">
                                                     <button type="button" class="btn btn-default"
-                                                            {% if not track.media_url %}disabled{% endif %}>
+                                                            {% if not track.audio_url %}disabled{% endif %}>
                                                         <i class="glyphicon glyphicon-headphones"></i>
                                                     </button>
                                                 </li>

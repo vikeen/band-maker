@@ -15,7 +15,7 @@
         <div class="alert alert-danger">Please correct the errors below:</div>
     {% endif %}
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <legend>Edit Track</legend>
         <div class="form-group">
@@ -28,25 +28,23 @@
         <div class="form-group">
             <script>
                 $(document).ready(function () {
-                    var $publicCheckBox = $("#id_public");
+                    $(document).ready(function () {
+                        var $publicCheckBox = $("#id_public");
 
-                    function publicClickHandler() {
-                        var $element = $(this),
+                        function publicClickHandler() {
+                            var $element = $(this),
                                 trackIsPublic = $element.prop("checked");
 
-                        if (trackIsPublic) {
-                            $(".js-track-upload-widget").hide();
-                            $(".media-player").hide();
-                            $(".js-track-upload__media-url").val(undefined);
-                            $(".js-track-upload__media-file-name").val(undefined);
-                        } else {
-                            $(".js-track-upload-widget").show();
-                            $(".media-player").show();
+                            if (trackIsPublic) {
+                                $(".js-audio-file-container").hide();
+                            } else {
+                                $(".js-audio-file-container").show();
+                            }
                         }
-                    }
 
-                    publicClickHandler.bind($publicCheckBox)();
-                    $publicCheckBox.on("click", publicClickHandler);
+                        publicClickHandler.bind($publicCheckBox)();
+                        $publicCheckBox.on("click", publicClickHandler);
+                    });
                 });
             </script>
             <label for="id_public">Request Tracks {% render_field form.public %}</label>
@@ -55,69 +53,9 @@
                 <p class="errors">{{ form.public.errors.as_text }}</p>
             {% endif %}
         </div>
-        <div class="form-group js-track-upload-widget">
+        <div class="form-group js-audio-file-container">
             <label for="id_track">Audio File</label>
-            <div class="bm-track-upload-container"
-                 data-bm-widget="track-upload"
-                 data-bm-widget-track-upload-track="{{ track_json }}"
-                 data-bm-widget-track-upload-song="{{ song_json }}">
-                <input type="hidden" class="js-track-upload__media-url" id="id_track_url" name="media_url"
-                       value="{{ track.media_url }}" required="required"/>
-
-                <div class="row">
-                    <div class="col-sm-4">
-                        <input type="text" class="js-track-upload__media-file-name form-control" name="media_name"
-                               required="required" readonly="readonly"
-                               value="{{ track.media_name }}"/>
-                    </div>
-                    <div class="col-sm-8">
-                    <span class="btn btn-success fileinput-button">
-                        <i class="glyphicon glyphicon-file"></i>&nbsp;Upload File
-                        <input type="file" class="js-track-upload__media" id="id_track" name="dummy_files"
-                               accept=".mp3">
-                    </span>
-                    </div>
-                </div>
-                {% if form.media_name.errors %}
-                    <p class="errors">{{ form.media_name.errors.as_text }}</p>
-                {% endif %}
-                {% if form.media_url.errors %}
-                    <p class="errors">{{ form.media_url.errors.as_text }}</p>
-                {% endif %}
-            </div>
-        </div>
-        <hr/>
-        <script>
-            $(document).ready(function () {
-                window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ track_json | safe}});
-            })
-        </script>
-        <div class="media-player">
-            <section class="media-player___tracks clearfix">
-                <article class="media-player__track" data-track-id="{{ track.pk }}">
-                    <div class="media-player__track-waveform-container col-sm-12">
-                        <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
-                    </div>
-                </article>
-                <div class="media-player__progress">
-                    <div class="progress">
-                        <div id="progress" class="progress-bar" role="progressbar"></div>
-                    </div>
-                </div>
-            </section>
-            <ul class="media-player__controls clearfix">
-                <li class="media-player__control media-player__control--restart">
-                    <i class="glyphicon glyphicon-step-backward"></i>
-                </li>
-                <li class="media-player__control media-player__control--play">
-                    <i class="glyphicon glyphicon-play"></i>
-                </li>
-                <li class="media-player__control media-player__control--pause">
-                    <i class="glyphicon glyphicon-pause"></i>
-                </li>
-                <li class="media-player__control media-player__control--duration"></li>
-            </ul>
-            <hr/>
+            <input type="file" class="js-track-upload__media" id="id_track" name="audio" accept=".mp3"/>
         </div>
         <div class="form-group">
             <button id="submit-track" class="btn btn-primary" type="submit">Save</button>

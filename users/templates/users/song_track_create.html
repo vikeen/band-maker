@@ -15,7 +15,7 @@
         <div class="alert alert-danger">Please correct the errors below:</div>
     {% endif %}
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <legend>Create Track</legend>
         <div class="form-group">
@@ -30,16 +30,14 @@
                 $(document).ready(function () {
                     var $publicCheckBox = $("#id_public");
 
-                    function publicClickHandler () {
+                    function publicClickHandler() {
                         var $element = $(this),
                             trackIsPublic = $element.prop("checked");
 
                         if (trackIsPublic) {
-                            $(".js-track-upload-widget").hide();
-                            $(".js-track-upload__media-url").val(undefined);
-                            $(".js-track-upload__media-file-name").val(undefined);
+                            $(".js-audio-file-container").hide();
                         } else {
-                            $(".js-track-upload-widget").show();
+                            $(".js-audio-file-container").show();
                         }
                     }
 
@@ -53,35 +51,9 @@
                 <p class="errors">{{ form.public.errors.as_text }}</p>
             {% endif %}
         </div>
-        <div class="form-group js-track-upload-widget">
+        <div class="form-group js-audio-file-container">
             <label for="id_track">Audio File</label>
-            <div class="bm-track-upload-container"
-                 data-bm-widget="track-upload"
-                 data-bm-widget-track-upload-song="{{ song_json}}">
-                <input type="hidden" class="js-track-upload__media-url" id="id_track_url" name="media_url"
-                       value="{{ track.media_url }}" required="required"/>
-
-                <div class="row">
-                    <div class="col-xs-8 col-sm-4">
-                        <input type="text" class="js-track-upload__media-file-name form-control" name="media_name"
-                               required="required" readonly="readonly"
-                               value="{{ track.media_name }}"/>
-                    </div>
-                    <div class="col-xs-4 col-sm-8">
-                    <span class="btn btn-success fileinput-button">
-                        <i class="glyphicon glyphicon-file"></i>&nbsp;Upload File
-                        <input type="file" class="js-track-upload__media" id="id_track" name="dummy_files"
-                               accept=".mp3">
-                    </span>
-                    </div>
-                </div>
-                {% if form.media_name.errors %}
-                    <p class="errors">{{ form.media_name.errors.as_text }}</p>
-                {% endif %}
-                {% if form.media_url.errors %}
-                    <p class="errors">{{ form.media_url.errors.as_text }}</p>
-                {% endif %}
-            </div>
+            <input type="file" class="js-track-upload__media" id="id_track" name="audio" accept=".mp3"/>
         </div>
         <div class="form-group">
             <button id="submit-track" class="btn btn-primary" type="submit">Save</button>

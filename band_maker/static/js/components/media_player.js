@@ -92,7 +92,7 @@ export class MediaPlayer {
 
     getLongestTrack() {
         const self = this,
-            tracksWithMedia = self.tracks.filter(track => !!track.fields.media_url);
+            tracksWithMedia = self.tracks.filter(track => !!track.fields.audio_url);
 
         let longestTrack = undefined;
 
@@ -129,7 +129,7 @@ export class MediaPlayer {
 function __createAudioWave(track) {
     const self = this;
 
-    if (track.fields.media_url) {
+    if (track.fields.audio_url) {
         self.trackLoadingProgressMap[track.pk] = 0;
         var ctx = document.createElement('canvas').getContext('2d');
         var linGrad = ctx.createLinearGradient(0, 64, 0, 200);
@@ -154,7 +154,7 @@ function __createAudioWave(track) {
         });
         wavesurfer.on('seek', __onTrackSeekEvent.bind(self));
 
-        wavesurfer.load(track.fields.media_url);
+        wavesurfer.load(track.fields.audio_url);
 
         track.__audio = wavesurfer;
     } else {
@@ -220,7 +220,7 @@ function __onTrackErrorEvent(error) {
 
 function __onTrackSeekEvent(progress) {
     const self = this,
-        tracksWithMedia = self.tracks.filter(track => !!track.fields.media_url);
+        tracksWithMedia = self.tracks.filter(track => !!track.fields.audio_url);
 
     // prevent excess seek events from firing
     let promises = tracksWithMedia.map(track => {

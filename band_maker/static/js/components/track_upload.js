@@ -93,7 +93,7 @@ function __uploadFileSuccess(file, url) {
     // reinitialize any associated media players
     if (window.bm.mediaPlayer) {
         self.track.fields.media_name = file.name;
-        self.track.fields.media_url = url;
+        self.track.fields.audio_url = url;
 
         window.bm.mediaPlayer.replaceTrackById(self.track.pk, self.track);
     }
