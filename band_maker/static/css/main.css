@@ -36,7 +36,7 @@
   background: #555;
 }
 .media-player__track-title {
-  text-align: right;
+  text-align: left;
   font-weight: bold;
   margin-top: 7px;
 }
@@ -89,6 +89,9 @@
 }
 .jumbotron .lang-logo img {
   max-width: 100%;
+}
+.container {
+  width: 1200px !important;
 }
 form .errors {
   color: #a94442;
