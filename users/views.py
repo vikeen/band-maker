@@ -91,18 +91,23 @@ class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
             form.instance.audio_content_type = None
             form.instance.audio_size = None
         else:
-            s3_bucket = os.environ.get('S3_BUCKET')
-            s3_client = boto3.client('s3')
-            s3_track_file_path = '%s/songs/%s/tracks/%s' % (user, song.uuid, audio_file.name)
-
             form.instance.public = False
-            form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
-            form.instance.audio_name = audio_file.name
-            form.instance.audio_content_type = audio_file.content_type
-            form.instance.audio_size = audio_file.size
 
-            # TODO: try catch here
-            s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path)
+            if audio_file:
+                s3_bucket = os.environ.get('S3_BUCKET')
+                s3_client = boto3.client('s3')
+                s3_track_file_path = '%s/songs/%s/tracks/%s' % (user, song.uuid, audio_file.name)
+
+                form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
+                form.instance.audio_name = audio_file.name
+                form.instance.audio_content_type = audio_file.content_type
+                form.instance.audio_size = audio_file.size
+
+                # TODO: try catch here
+                s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
+                    'ACL': 'public-read',
+                    'ContentType': audio_file.content_type
+                })
 
         form.instance.created_by = user
 
@@ -144,18 +149,23 @@ class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
             form.instance.audio_content_type = None
             form.instance.audio_size = None
         else:
-            s3_bucket = os.environ.get('S3_BUCKET')
-            s3_client = boto3.client('s3')
-            s3_track_file_path = '%s/songs/%s/tracks/%s' % (user, song.uuid, audio_file.name)
-
             form.instance.public = False
-            form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
-            form.instance.audio_name = audio_file.name
-            form.instance.audio_content_type = audio_file.content_type
-            form.instance.audio_size = audio_file.size
 
-            # TODO: try catch here
-            s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path)
+            if audio_file:
+                s3_bucket = os.environ.get('S3_BUCKET')
+                s3_client = boto3.client('s3')
+                s3_track_file_path = '%s/songs/%s/tracks/%s' % (user, song.uuid, audio_file.name)
+
+                form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
+                form.instance.audio_name = audio_file.name
+                form.instance.audio_content_type = audio_file.content_type
+                form.instance.audio_size = audio_file.size
+
+                # TODO: try catch here
+                s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
+                    'ACL': 'public-read',
+                    'ContentType': audio_file.content_type
+                })
 
         form.instance.created_by = user
 
