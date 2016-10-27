@@ -56,8 +56,8 @@ def download(request, pk):
     logging.info('download song: [%s] with title: [%s]' % (song.id, song.title))
 
     for track in downloadable_tracks:
-        s3_track_file_path = '%s/songs/%s/tracks/%s' % (song.created_by, song.uuid, track.media_name)
-        temp_download_file_path = os.path.join(temp_download_dir, track.media_name)
+        s3_track_file_path = '%s/songs/%s/tracks/%s' % (song.created_by, song.uuid, track.audio_name)
+        temp_download_file_path = os.path.join(temp_download_dir, track.audio_name)
         logging.info('downloading track [%s] to [%s]' % (s3_track_file_path, temp_download_file_path))
 
         s3_client.download_file(
@@ -65,7 +65,7 @@ def download(request, pk):
             Key=s3_track_file_path,
             Filename=temp_download_file_path)
 
-        archive.write(temp_download_file_path, track.media_name)
+        archive.write(temp_download_file_path, track.audio_name)
 
     logging.info('zip file created name: [%s] at path: [%s]' % (archive_file_name, archive_file_path))
     archive.close()
