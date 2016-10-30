@@ -7,13 +7,13 @@
 {% block content %}
     <ol class="breadcrumb">
         <li><a href="{% url 'users:songs' user.username %}">My Songs</a></li>
-        <li><a href="{% url 'users:song_update' user.username object.id %}">{{ object.title }}</a></li>
+        <li><a href="{% url 'songs:edit' object.id %}">{{ object.title }}</a></li>
         <li class="active">Delete</li>
     </ol>
     <form class="form" action="" method="post">
         {% csrf_token %}
         <p>Are you sure you want to delete "{{ object.title }}"?</p>
-        <a href="{% url 'users:song_update' user.username object.id %}">Cancel</a>
+        <a href="{% url 'songs:edit' object.id %}">Cancel</a>
         <button type="submit" class="btn btn-danger">Confirm</button>
     </form>
 {% endblock %}

@@ -18,7 +18,7 @@
             <article class="list-group">
                 {% for song in published_song_list %}
                     {% if request.resolver_match.kwargs.username == user.username %}
-                        <a href="{% url 'users:song_update' user.username song.id %}" class="list-group-item">
+                        <a href="{% url 'songs:edit' song.id %}" class="list-group-item">
                     {% else %}
                         <a href="{% url 'songs:detail' song.id %}" class="list-group-item">
                     {% endif %}
@@ -39,7 +39,7 @@
             <h2>Work In Progress</h2>
             {% for song in unpublished_song_list %}
                 {% if request.resolver_match.kwargs.username == user.username %}
-                    <a href="{% url 'users:song_update' user.username song.id %}" class="list-group-item">
+                    <a href="{% url 'songs:edit' song.id %}" class="list-group-item">
                 {% else %}
                     <a href="{% url 'songs:detail' song.id %}" class="list-group-item">
                 {% endif %}

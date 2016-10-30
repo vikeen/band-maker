@@ -9,7 +9,7 @@ from django.core.files.base import File
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views import generic
 from .models import Song
 from tempfile import mkdtemp
@@ -64,6 +64,26 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
         return reverse_lazy('users:songs', kwargs={
             'username': self.request.user
         })
+
+
+class Update(LoginRequiredMixin, generic.UpdateView):
+    model = Song
+    fields = ["title", 'description', 'published']
+    template_name = 'songs/song_update.html'
+    context_object_name = 'song'
+
+    def get_success_url(self):
+        return reverse('songs:edit', kwargs={
+            'username': self.request.user,
+            'song_id': self.kwargs['pk']
+        })
+
+    def get_context_data(self, **kwargs):
+        context = super(Update, self).get_context_data(**kwargs)
+        song = context['song']
+        context['tracks'] = song.tracks.all()
+        context['tracks_json'] = serializers.serialize("json", context['tracks'])
+        return context
 
 
 def download(request, pk):

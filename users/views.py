@@ -25,29 +25,6 @@ class SongsView(generic.ListView):
         return context
 
 
-class SongUpdate(LoginRequiredMixin, generic.UpdateView):
-    model = Song
-    fields = ["title", 'description', 'published']
-    template_name = 'users/song_update.html'
-    context_object_name = 'song'
-
-    def get_object(self, queryset=None):
-        return Song.objects.get(pk=self.kwargs['song_id'])
-
-    def get_success_url(self):
-        return reverse('users:song_update', kwargs={
-            'username': self.kwargs['username'],
-            'song_id': self.kwargs['song_id']
-        })
-
-    def get_context_data(self, **kwargs):
-        context = super(SongUpdate, self).get_context_data(**kwargs)
-        song = context['song']
-        context['tracks'] = song.tracks.all()
-        context['tracks_json'] = serializers.serialize("json", context['tracks'])
-        return context
-
-
 class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
     model = Track
     fields = ['instrument', 'public']
@@ -99,9 +76,8 @@ class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('users:song_update', kwargs={
-            'username': self.kwargs['username'],
-            'song_id': self.kwargs['song_id']
+        return reverse_lazy('songs:edit', kwargs={
+            'pk': self.kwargs['song_id']
         })
 
 
@@ -157,9 +133,8 @@ class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('users:song_update', kwargs={
-            'username': self.kwargs['username'],
-            'song_id': self.kwargs['song_id']
+        return reverse_lazy('songs:edit', kwargs={
+            'pk': self.kwargs['song_id']
         })
 
 
@@ -177,7 +152,6 @@ class SongTrackDelete(LoginRequiredMixin, generic.DeleteView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('users:song_update', kwargs={
-            'username': self.kwargs['username'],
-            'song_id': self.kwargs['song_id']
+        return reverse_lazy('songs:edit', kwargs={
+            'pk': self.kwargs['song_id']
         })
