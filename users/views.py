@@ -78,22 +78,3 @@ class SongTrackUpdate(LoginRequiredMixin, generic.UpdateView):
         return reverse_lazy('songs:edit', kwargs={
             'pk': self.kwargs['song_id']
         })
-
-
-class SongTrackDelete(LoginRequiredMixin, generic.DeleteView):
-    model = Track
-    template_name = 'users/song_track_confirm_delete.html'
-    context_object_name = 'track'
-
-    def get_object(self, queryset=None):
-        return Track.objects.get(pk=self.kwargs['track_id'])
-
-    def get_context_data(self, **kwargs):
-        context = super(SongTrackDelete, self).get_context_data(**kwargs)
-        context['song'] = Song.objects.get(id=self.kwargs['song_id'])
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy('songs:edit', kwargs={
-            'pk': self.kwargs['song_id']
-        })

@@ -142,6 +142,25 @@ class TrackCreate(LoginRequiredMixin, generic.CreateView):
         })
 
 
+class TrackDelete(LoginRequiredMixin, generic.DeleteView):
+    model = Track
+    template_name = 'songs/track_confirm_delete.html'
+    context_object_name = 'track'
+
+    def get_object(self, queryset=None):
+        return Track.objects.get(pk=self.kwargs['track_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackDelete, self).get_context_data(**kwargs)
+        context['song'] = Song.objects.get(id=self.kwargs['pk'])
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
 @login_required()
 def download(request, pk):
     s3_bucket = os.environ.get('S3_BUCKET')

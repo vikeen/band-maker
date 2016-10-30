@@ -8,6 +8,4 @@ urlpatterns = [
 
     url(r'^songs/(?P<song_id>[0-9]+)/tracks/(?P<track_id>[0-9]+)/edit', views.SongTrackUpdate.as_view(),
         name="song_track_update"),
-    url(r'^songs/(?P<song_id>[0-9]+)/tracks/(?P<track_id>[0-9]+)/delete', views.SongTrackDelete.as_view(),
-        name="song_track_delete")
 ]
