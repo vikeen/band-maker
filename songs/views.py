@@ -56,6 +56,16 @@ class Create(LoginRequiredMixin, generic.CreateView):
         })
 
 
+class Delete(LoginRequiredMixin, generic.DeleteView):
+    model = Song
+    template_name = 'songs/song_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('users:songs', kwargs={
+            'username': self.request.user
+        })
+
+
 def download(request, pk):
     s3_bucket = os.environ.get('S3_BUCKET')
     s3_client = boto3.client('s3')

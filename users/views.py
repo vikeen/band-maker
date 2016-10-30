@@ -48,16 +48,6 @@ class SongUpdate(LoginRequiredMixin, generic.UpdateView):
         return context
 
 
-class SongDelete(LoginRequiredMixin, generic.DeleteView):
-    model = Song
-    template_name = 'users/song_confirm_delete.html'
-
-    def get_success_url(self):
-        return reverse_lazy('users:songs', kwargs={
-            'username': self.kwargs['username']
-        })
-
-
 class SongTrackCreate(LoginRequiredMixin, generic.CreateView):
     model = Track
     fields = ['instrument', 'public']

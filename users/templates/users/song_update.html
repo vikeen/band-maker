@@ -119,7 +119,7 @@
         </div>
         </div>
         <hr/>
-        <a class="btn btn-danger" href="{% url 'users:song_delete' user.username song.id %}">
+        <a class="btn btn-danger" href="{% url 'songs:delete' song.id %}">
             <i class="glyphicon glyphicon-trash"></i> Delete
         </a>
     </form>
