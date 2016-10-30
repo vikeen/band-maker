@@ -8,10 +8,14 @@
     width: @site-width !important;
 }
 
+.site-footer {
+    margin-top: @margin-large;
+}
+
 form .errors {
     color: @color-danger;
-    padding: 5px;
-    margin-top: 5px;
+    padding: @padding-extra-small;
+    margin-top: @margin-extra-small;
 }
 
 .song__requested-tracks {
@@ -20,23 +24,23 @@ form .errors {
 }
 
 .song__requested-track {
-    margin-right: 10px;
+    margin-right: @margin-small;
     float: left;
 }
 
 .song__meta {
     list-style: none;
     padding-left: 0;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: @margin-extra-small;
+    margin-bottom: @margin-extra-small;
     display: block;
 }
 
 .song__meta li {
     float: left;
-    margin-right: 20px;
+    margin-right: @margin-large;
 }
 
 .content-block {
-    margin-top: 15px;
+    margin-top: @margin-default;
 }

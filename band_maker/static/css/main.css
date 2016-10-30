@@ -40,11 +40,17 @@
 .media-player__track:first-of-type .media-player__track-waveform-container {
   height: 60px;
 }
+.media-player__track:first-of-type .media-player__track-waveform {
+  padding-top: 15px;
+}
 .media-player__track:last-of-type {
   height: 60px;
 }
 .media-player__track:last-of-type .media-player__track-waveform-container {
   height: 60px;
+}
+.media-player__track:last-of-type .media-player__track-waveform {
+  padding-bottom: 15px;
 }
 .media-player__track-waveform-container {
   height: 45px;
@@ -116,6 +122,9 @@
 }
 .container {
   width: 1200px !important;
+}
+.site-footer {
+  margin-top: 20px;
 }
 form .errors {
   color: #a94442;

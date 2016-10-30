@@ -1,5 +1,6 @@
 @import (reference) "./includes/_measurements";
 
+@media-player-height: 45px;
 @media-player-width: @site-width;
 @media-player-track-title-width: 85px;
 @media-player-track-controls-width: 85px;
@@ -13,7 +14,7 @@
     .progress {
         padding: 0;
         width: @media-player-waveform-container-width;
-        margin-top: 15px;
+        margin-top: @margin-default;
         margin-left: @media-player-controls-offset;
     }
 
@@ -25,12 +26,12 @@
 .media-player__controls {
     padding: 0;
     list-style: none;
-    margin-top: 20px;
+    margin-top: @margin-large;
     margin-left: @media-player-controls-offset;
     width: @media-player-waveform-container-width;
 
     .media-player__control {
-        margin-right: 10px;
+        margin-right: @margin-small;
         float: left;
         font-size: 20px;
         cursor: pointer;
@@ -38,7 +39,7 @@
 }
 
 .media-player__track {
-    height: 45px;
+    height: @media-player-height;
     width: 100%;
 
     .media-player__track-waveform-container,
@@ -49,33 +50,41 @@
     }
 
     &:first-of-type {
-        height: 60px;
+        height: @media-player-height + @padding-default;
 
         .media-player__track-waveform-container {
-            height: 60px;
+            height: @media-player-height + @padding-default;
+        }
+
+        .media-player__track-waveform {
+            padding-top: @padding-default;
         }
     }
 
     &:last-of-type {
-        height: 60px;
+        height: @media-player-height + @padding-default;
 
         .media-player__track-waveform-container {
-            height: 60px;
+            height: @media-player-height + @padding-default;
+        }
+
+        .media-player__track-waveform {
+            padding-bottom: @padding-default;
         }
     }
 }
 
 .media-player__track-waveform-container {
-    height: 45px;
+    height: @media-player-height;
     background: #555;
     width: @media-player-waveform-container-width;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: @padding-default;
+    padding-right: @padding-default;
     display: inline-block;
 }
 
 .media-player__track-title {
-    height: 45px;
+    height: @media-player-height;
     font-weight: bold;
     margin: 0;
     vertical-align: middle;
@@ -84,7 +93,7 @@
 }
 
 .media-player__track-controls {
-    height: 45px;
+    height: @media-player-height;
     padding: 0;
     list-style: none;
     margin: 0;
@@ -94,7 +103,7 @@
 
 .media-player__track-control {
     float: left;
-    margin-left: 10px;
+    margin-left: @margin-small;
 }
 
 .media-player__track-control .btn {
@@ -104,6 +113,6 @@
 
 .media-player .media-player__track--no-media {
     .media-player__track-waveform {
-        padding-top: 15px; // leave space for the request button
+        padding-top: @padding-default; // leave space for the request button
     }
 }
