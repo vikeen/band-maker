@@ -59,7 +59,7 @@
                             data-track-id="{{ track.pk }}">
 
                         <div class="media-player__track-title">
-                            <a href="{% url 'users:song_track_update' user.username song.id track.pk %}">{{ track.instrument }}</a>
+                            <a href="{% url 'songs:track_update' song.id track.pk %}">{{ track.instrument }}</a>
                         </div>
                         <ul class="media-player__track-controls clearfix">
                             <li class="media-player__track-control media-player__track-control--mute">

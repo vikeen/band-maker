@@ -16,5 +16,7 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/tracks/create', views.TrackCreate.as_view(), name="track_create"),
     url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/delete', views.TrackDelete.as_view(),
         name="track_delete"),
+    url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/edit', views.TrackUpdate.as_view(),
+        name="track_update"),
     url(r'^(?P<pk>[0-9]+)/tracks/upload/$', views.track_upload, name='track_upload')
 ]
