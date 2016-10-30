@@ -3,12 +3,14 @@ import os
 import boto3
 import logging
 
-from django.views import generic
 from django.http import HttpResponse
 from django.core import serializers
 from django.core.files.base import File
 from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
+from django.views import generic
 from .models import Song
 from tempfile import mkdtemp
 from shutil import rmtree
@@ -37,6 +39,21 @@ class Detail(generic.DetailView):
         context['tracks'] = song.tracks.all()
         context['tracks_json'] = serializers.serialize('json', context['tracks'])
         return context
+
+
+class Create(LoginRequiredMixin, generic.CreateView):
+    model = Song
+    fields = ['title', 'description']
+    template_name = 'songs/song_create.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super(Create, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('users:songs', kwargs={
+            'username': self.request.user
+        })
 
 
 def download(request, pk):

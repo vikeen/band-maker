@@ -25,21 +25,6 @@ class SongsView(generic.ListView):
         return context
 
 
-class SongCreate(LoginRequiredMixin, generic.CreateView):
-    model = Song
-    fields = ['title', 'description']
-    template_name = 'users/song_create.html'
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super(SongCreate, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('users:songs', kwargs={
-            'username': self.kwargs['username']
-        })
-
-
 class SongUpdate(LoginRequiredMixin, generic.UpdateView):
     model = Song
     fields = ["title", 'description', 'published']
