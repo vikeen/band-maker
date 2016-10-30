@@ -16,7 +16,7 @@ export class MediaPlayer {
         $controls.$pause.on("click", self.pause.bind(self));
         $controls.$restart.on("click", self.restart.bind(self));
 
-        self.$element.find(".media-player__track-title-control--mute").on("click", __handleTrackMuteClick.bind(self));
+        self.$element.find(".media-player__track-control--mute").on("click", __handleTrackMuteClick.bind(self));
     }
 
     loadTracks(tracks) {

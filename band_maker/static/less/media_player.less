@@ -1,6 +1,20 @@
+@import (reference) "./includes/_measurements";
+
+@media-player-width: @site-width;
+@media-player-track-title-width: 85px;
+@media-player-track-controls-width: 85px;
+@media-player-waveform-container-width: @media-player-width - @media-player-track-title-width - @media-player-track-controls-width - 30px;
+@media-player-controls-offset: @media-player-track-title-width + @media-player-track-controls-width;
+
 .media-player {
+    margin: 0 auto;
+    width: @media-player-width;
+
     .progress {
+        padding: 0;
+        width: @media-player-waveform-container-width;
         margin-top: 15px;
+        margin-left: @media-player-controls-offset;
     }
 
     .progress-bar {
@@ -12,68 +26,84 @@
     padding: 0;
     list-style: none;
     margin-top: 20px;
-}
+    margin-left: @media-player-controls-offset;
+    width: @media-player-waveform-container-width;
 
-.media-player__control {
-    margin-right: 10px;
-    float: left;
-    font-size: 20px;
-    cursor: pointer;
+    .media-player__control {
+        margin-right: 10px;
+        float: left;
+        font-size: 20px;
+        cursor: pointer;
+    }
 }
 
 .media-player__track {
-    min-height: 45px;
+    height: 45px;
+    width: 100%;
+
+    .media-player__track-waveform-container,
+    .media-player__track-title,
+    .media-player__track-controls {
+        display: inline-block;
+        vertical-align: middle;
+    }
 
     &:first-of-type {
-        .media-player__track-waveform,
-        .media-player__track-title {
-            padding-top: 15px;
+        height: 60px;
+
+        .media-player__track-waveform-container {
+            height: 60px;
         }
     }
 
     &:last-of-type {
-        .media-player__track-waveform {
-            padding-bottom: 15px;
-        }
-    }
-
-    &.media-player__track--no-media {
         height: 60px;
 
-        .media-player__track-waveform-container,
-        .media-player__track-waveform {
+        .media-player__track-waveform-container {
             height: 60px;
         }
     }
 }
 
 .media-player__track-waveform-container {
+    height: 45px;
     background: #555;
+    width: @media-player-waveform-container-width;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: inline-block;
 }
 
 .media-player__track-title {
-    text-align: left;
+    height: 45px;
     font-weight: bold;
-    margin-top: 7px;
+    margin: 0;
+    vertical-align: middle;
+    width: @media-player-track-title-width;
+    display: inline-block;
 }
 
-.media-player__track-title-controls {
+.media-player__track-controls {
+    height: 45px;
     padding: 0;
     list-style: none;
-    display: inline;
-    float: right;
+    margin: 0;
+    width: @media-player-track-controls-width;
+    display: inline-block;
 }
 
-.media-player__track-title-control {
+.media-player__track-control {
     float: left;
     margin-left: 10px;
 }
 
-.media-player__track-title-control .btn {
+.media-player__track-control .btn {
     padding: 3px 6px;
     display: inline;
 }
 
-.media-player__submit-track {
-    margin-top: 10px;
+.media-player .media-player__track--no-media {
+    .media-player__track-waveform {
+        padding-top: 15px; // leave space for the request button
+    }
 }
