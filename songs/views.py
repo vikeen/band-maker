@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.views import generic
 from .models import Song, Track
+from .mixins import HasAccessToSongMixin
 from tempfile import mkdtemp
 from shutil import rmtree
 
@@ -57,7 +58,9 @@ class Create(LoginRequiredMixin, generic.CreateView):
         })
 
 
-class Delete(LoginRequiredMixin, generic.DeleteView):
+class Delete(LoginRequiredMixin,
+             HasAccessToSongMixin,
+             generic.DeleteView):
     model = Song
     template_name = 'songs/song_confirm_delete.html'
 
@@ -67,7 +70,9 @@ class Delete(LoginRequiredMixin, generic.DeleteView):
         })
 
 
-class Update(LoginRequiredMixin, generic.UpdateView):
+class Update(LoginRequiredMixin,
+             HasAccessToSongMixin,
+                generic.UpdateView):
     model = Song
     fields = ["title", 'description', 'published']
     template_name = 'songs/song_update.html'
