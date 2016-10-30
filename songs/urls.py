@@ -12,5 +12,7 @@ urlpatterns = [
 
     url(r'^(?P<pk>[0-9]+)/download$', views.download, name='download'),
 
+    # tracks
+    url(r'^(?P<pk>[0-9]+)/tracks/create', views.TrackCreate.as_view(), name="track_create"),
     url(r'^(?P<pk>[0-9]+)/tracks/upload/$', views.track_upload, name='track_upload')
 ]

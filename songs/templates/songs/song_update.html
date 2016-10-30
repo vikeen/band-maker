@@ -113,7 +113,7 @@
             <a href="{% url 'songs:download' song.id %}" class="btn btn-primary">
                 <i class="glyphicon glyphicon-download"></i> Download
             </a>
-            <a href="{% url "users:song_track_create" user.username song.id %}" class="btn btn-warning">
+            <a href="{% url "songs:track_create" song.id %}" class="btn btn-warning">
                 <i class="glyphicon glyphicon-plus"></i> Add Track
             </a>
         </div>
