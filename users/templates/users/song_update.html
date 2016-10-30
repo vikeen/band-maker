@@ -45,7 +45,8 @@
             <button class="btn btn-primary" type="submit">Save</button>
         </div>
         <hr/>
-        <div class="media-player content-block">
+        {% if tracks %}
+            <div class="media-player content-block">
             <section class="media-player___tracks">
                 <script>
                     $(document).ready(function () {
@@ -102,14 +103,20 @@
                 </li>
                 <li class="media-player__control media-player__control--duration"></li>
             </ul>
-            <div class="panel-footer">
-                <a href="{% url 'songs:download' song.id %}" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-download"></i> Download
-                </a>
-                <a href="{% url "users:song_track_create" user.username song.id %}" class="btn btn-warning">
-                    <i class="glyphicon glyphicon-plus"></i> Add Track
-                </a>
-            </div>
+        {% else %}
+            <p>
+                <i class="glyphicon glyphicon-music"></i>
+                <b>No tracks uploaded yet</b>
+            </p>
+        {% endif %}
+        <div class="panel-footer">
+            <a href="{% url 'songs:download' song.id %}" class="btn btn-primary">
+                <i class="glyphicon glyphicon-download"></i> Download
+            </a>
+            <a href="{% url "users:song_track_create" user.username song.id %}" class="btn btn-warning">
+                <i class="glyphicon glyphicon-plus"></i> Add Track
+            </a>
+        </div>
         </div>
         <hr/>
         <a class="btn btn-danger" href="{% url 'users:song_delete' user.username song.id %}">
