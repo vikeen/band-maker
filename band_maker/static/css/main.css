@@ -59,6 +59,12 @@
   padding-left: 15px;
   padding-right: 15px;
   display: inline-block;
+  position: relative;
+}
+.media-player__track-changer {
+  position: absolute;
+  top: 5px;
+  z-index: 100;
 }
 .media-player__track-title {
   height: 45px;

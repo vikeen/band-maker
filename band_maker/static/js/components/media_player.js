@@ -1,8 +1,9 @@
 export class MediaPlayer {
-    constructor($element, tracks) {
+    constructor($element, tracks, trackRequests) {
         const self = this;
 
         self.$element = $element;
+        self.trackRequests = trackRequests;
 
         self.loadTracks(tracks);
 
@@ -17,6 +18,8 @@ export class MediaPlayer {
         $controls.$restart.on("click", self.restart.bind(self));
 
         self.$element.find(".media-player__track-control--mute").on("click", __handleTrackMuteClick.bind(self));
+        self.$element.find(".media-player__track-changer").on("change", __handleTrackRequestChange.bind(self));
+        self.$element.find(".media-player__track-changer").change();
     }
 
     loadTracks(tracks) {
@@ -303,4 +306,16 @@ function __handleTrackMuteClick(event) {
 
     $trackControl.find("button").toggleClass("btn-default", !track.__audio.isMuted);
     $trackControl.find("button").toggleClass("btn-primary", track.__audio.isMuted);
+}
+
+function __handleTrackRequestChange(event) {
+    const self = this,
+        $trackControl = $(event.currentTarget),
+        trackId = $trackControl.parents(".media-player__track").data("trackId"),
+        track = self.getTrackById(trackId);
+
+    $trackControl.parents(".media-player__track--no-media").removeClass("media-player__track--no-media");
+
+    track.fields.audio_url = $trackControl.val();
+    self.replaceTrackById(trackId, track);
 }

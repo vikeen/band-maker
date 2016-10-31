@@ -89,12 +89,6 @@ class Update(LoginRequiredMixin,
         context['tracks'] = song.tracks.all()
         context['tracks_json'] = serializers.serialize("json", context['tracks'])
 
-        context['track_requests'] = {}
-
-        for track in context['tracks']:
-            track_requests = TrackRequest.objects.filter(track_id=track.pk)
-            context['track_requests'][track.pk] = serializers.serialize("json", track_requests)
-
         return context
 
 
