@@ -53,6 +53,7 @@
                         window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}});
                     })
                 </script>
+{#            {{ track_requests }}#}
                 {% for track in tracks %}
                     <article
                             class="media-player__track {% if not track.audio_url %}media-player__track--no-media{% endif %}"
@@ -78,8 +79,7 @@
                         <div class="media-player__track-waveform-container">
                             <div id="waveform-{{ track.pk }}" class="media-player__track-waveform">
                                 {% if not track.audio_url %}
-                                    <a class="btn btn-success btn-xs media-player__submit-track-request">Submit
-                                        Track</a>
+
                                 {% endif %}
                             </div>
                         </div>

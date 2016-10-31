@@ -37,7 +37,9 @@ class Song(models.Model):
 
 class TrackRequest(models.Model):
     STATUS = {
-        'PENDING': 0
+        'PENDING': 0,
+        'APPROVED': 1,
+        'DECLINED': 2
     }
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
