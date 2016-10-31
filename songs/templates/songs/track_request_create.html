@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}Create Track{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'users:songs' user.username %}">My Songs</a></li>
+        <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
+        <li><a href="#">{{ track.instrument }}</a></li>
+        <li class="active">Create Request</li>
+    </ol>
+
+    {% if form.errors %}
+        <div class="alert alert-danger">Please correct the errors below:</div>
+    {% endif %}
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <legend>Create Track Request</legend>
+        <div class="form-group js-audio-file-container">
+            <label for="id_track">Audio File</label>
+            <input type="file" class="js-track-upload__media" id="id_track" name="audio" accept=".mp3"/>
+        </div>
+        <div class="form-group">
+            <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+{% endblock %}

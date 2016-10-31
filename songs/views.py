@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.views import generic
-from .models import Song, Track
+from .models import Song, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack
 from tempfile import mkdtemp
 from shutil import rmtree
@@ -229,8 +229,53 @@ class TrackUpdate(LoginRequiredMixin,
         })
 
 
+class TrackRequestCreate(LoginRequiredMixin,
+                         generic.CreateView):
+    model = TrackRequest
+    fields = []
+    template_name = 'songs/track_request_create.html'
+
+    def form_valid(self, form):
+        audio_file = self.request.FILES.get('audio')
+        user = self.request.user
+        song = Song.objects.get(pk=self.kwargs['pk'])
+
+        s3_bucket = os.environ.get('S3_BUCKET')
+        s3_client = boto3.client('s3')
+        s3_track_file_path = '%s/songs/%s/requests/%s' % (user, song.uuid, audio_file.name)
+
+        form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
+        form.instance.audio_name = audio_file.name
+        form.instance.audio_content_type = audio_file.content_type
+        form.instance.audio_size = audio_file.size
+        form.instance.status = 0
+        form.instance.created_by = user
+        form.instance.track_id = self.kwargs['track_id']
+
+        # TODO: try catch here
+        s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
+            'ACL': 'public-read',
+            'ContentType': audio_file.content_type
+        })
+
+        form.save()
+
+        return redirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackRequestCreate, self).get_context_data(**kwargs)
+        context['track'] = Track.objects.get(pk=self.kwargs['track_id'])
+        context['song'] = Song.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def get_success_url(self):
+        return reverse('songs:detail', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
 @login_required()
-def download(request, pk):
+def download_song(request, pk):
     s3_bucket = os.environ.get('S3_BUCKET')
     s3_client = boto3.client('s3')
 
@@ -272,31 +317,3 @@ def download(request, pk):
     rmtree(temp_download_dir)
 
     return response
-
-
-@login_required
-def track_upload(request, pk):
-    s3_bucket = os.environ.get('S3_BUCKET')
-
-    song = Song.objects.get(pk=pk)
-
-    s3_file_path = "%s/songs/%s/tracks/%s" % (request.user.username, song.uuid, request.GET['file_name'])
-    file_type = request.GET['file_type']
-
-    s3_client = boto3.client('s3')
-
-    presigned_post = s3_client.generate_presigned_post(
-        Bucket=s3_bucket,
-        Key=s3_file_path,
-        Fields={"acl": "public-read", "Content-Type": file_type},
-        Conditions=[
-            {"acl": "public-read"},
-            {"Content-Type": file_type}
-        ],
-        ExpiresIn=3600
-    )
-
-    return JsonResponse({
-        'data': presigned_post,
-        'url': 'https://%s.s3.amazonaws.com/%s' % (s3_bucket, s3_file_path)
-    })

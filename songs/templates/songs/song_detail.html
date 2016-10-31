@@ -54,7 +54,8 @@
                         <div class="media-player__track-waveform-container">
                             <div id="waveform-{{ track.pk }}" class="media-player__track-waveform">
                                 {% if not track.audio_url %}
-                                    <a class="btn btn-success btn-xs media-player__submit-track-request">Submit
+                                    <a class="btn btn-success btn-xs media-player__submit-track-request"
+                                       href="{% url 'songs:track_request_create' song.pk track.pk %}">Submit
                                         Track</a>
                                 {% endif %}
                             </div>
