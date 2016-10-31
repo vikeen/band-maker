@@ -36,6 +36,10 @@ class Song(models.Model):
 
 
 class TrackRequest(models.Model):
+    STATUS = {
+        'PENDING': 0
+    }
+
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     audio_url = models.CharField(max_length=500)
     audio_name = models.CharField(max_length=500, null=True, blank=True)

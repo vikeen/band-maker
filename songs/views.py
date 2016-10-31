@@ -248,7 +248,7 @@ class TrackRequestCreate(LoginRequiredMixin,
         form.instance.audio_name = audio_file.name
         form.instance.audio_content_type = audio_file.content_type
         form.instance.audio_size = audio_file.size
-        form.instance.status = 0
+        form.instance.status = TrackRequest.STATUS['PENDING']
         form.instance.created_by = user
         form.instance.track_id = self.kwargs['track_id']
 
