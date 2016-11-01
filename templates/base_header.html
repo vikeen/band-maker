@@ -31,16 +31,16 @@
                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li>
-                                <a href="{% url 'django.contrib.auth.views.logout' %}">Log Out</a>
+                                <a href="{% url 'logout' %}">Log Out</a>
                             </li>
                         </ul>
                     </li>
                 {% else %}
                     <li>
-                        <a href="/accounts/register">Sign Up</a>
+                        <a href="{% url 'registration' %}">Sign Up</a>
                     </li>
                     <li>
-                        <a href="{% url 'django.contrib.auth.views.login' %}">Log In</a>
+                        <a href="{% url 'login' %}">Log In</a>
                     </li>
                 {% endif %}
             </ul>

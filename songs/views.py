@@ -6,7 +6,6 @@ import logging
 from django.http import HttpResponse
 from django.core import serializers
 from django.core.files.base import File
-from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
