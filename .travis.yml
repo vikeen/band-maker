@@ -1,13 +1,11 @@
 language: python
 python:
   - "2.7"
-install: "pip install -r requirements.txt"
+services: postgresql
+install:
+  - pip install -r requirements.txt
 before_script:
   - psql -c "CREATE DATABASE band_maker;" - U postgres
-  - psql -c "CREATE ROLE band_maker_user with PASSWORD 'password';" - U postgres
-  - psql -c "ALTER ROLE band_maker_user with LOGIN;" - U postgres
-  - psql -c "ALTER ROLE band_maker_user WITH CREATEDB" - U postgres
-  - psql -c "ALTER DATABASE band_maker OWNER TO band_maker_user;" - U postgres
   - python manage.py migrate
 script:
   - python manage.py test
