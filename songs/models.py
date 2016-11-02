@@ -20,6 +20,9 @@ class Track(models.Model):
                                max_length=100)
     uuid = models.UUIDField(default=uuid.uuid4)
 
+    def get_license_information(self):
+        return license[self.license]
+
 
 class Song(models.Model):
     title = models.CharField(max_length=200)

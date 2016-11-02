@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load widget_tweaks %}
-
 {% block title %}Edit Track{% endblock %}
 
 {% block content %}
@@ -11,62 +9,9 @@
         <li class="active">{{ track.instrument }}</li>
     </ol>
 
-    {% if form.errors %}
-        <div class="alert alert-danger">Please correct the errors below:</div>
-    {% endif %}
-
     <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
         <legend>Edit Track</legend>
-        <div class="form-group">
-            <label for="id_instrument">Instrument</label>
-            {% render_field form.instrument class+="form-control" required="required" %}
-            {% if form.title.errors %}
-                <p class="errors">{{ form.instrument.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <script>
-                $(document).ready(function () {
-                    $(document).ready(function () {
-                        var $publicCheckBox = $("#id_public");
-
-                        function publicClickHandler() {
-                            var $element = $(this),
-                                    trackIsPublic = $element.prop("checked");
-
-                            if (trackIsPublic) {
-                                $(".js-audio-file-container").hide();
-                            } else {
-                                $(".js-audio-file-container").show();
-                            }
-                        }
-
-                        publicClickHandler.bind($publicCheckBox)();
-                        $publicCheckBox.on("click", publicClickHandler);
-                    });
-                });
-            </script>
-            <label for="id_public">Request Tracks {% render_field form.public %}</label>
-            <span class="help-block">Allow other users to upload their work and collaborate with your song</span>
-            {% if form.public.errors %}
-                <p class="errors">{{ form.public.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group js-audio-file-container">
-            <label for="id_track">Audio File</label>
-            <input type="file" class="js-track-upload__media" id="id_track" name="audio" accept=".mp3"/>
-        </div>
-        <div class="form-group">
-            <label for="id_license">License</label>
-            {% render_field form.license class+="form-control" %}
-            {% if form.license.errors %}
-                <p class="errors">{{ form.license.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
-        </div>
+        {% include 'songs/track_form.html' %}
         <hr/>
         <div class="form-group">
             <a class="btn btn-danger" href="{% url 'songs:track_delete' song.id track.id %}">
