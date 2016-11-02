@@ -307,6 +307,9 @@ def download_song(request, pk):
 
         archive.write(temp_download_file_path, track.audio_name)
 
+    # add license to the download zip
+    archive.writestr('LICENSE.txt', license[song.license]['text'])
+
     logging.info('zip file created name: [%s] at path: [%s]' % (archive_file_name, archive_file_path))
     archive.close()
 
