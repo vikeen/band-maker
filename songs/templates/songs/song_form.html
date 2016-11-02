@@ -42,10 +42,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{{ song.get_license_information.name }}</h4>
-                    <a href="{{ form.get_license_information.link }}" target="_blank">canonical URL for the
+                    <a href="{{ song.get_license_information.link }}" target="_blank">canonical URL for the
                         license</a>
                 </div>
-                <pre>{{ form.get_license_information.text }}</pre>
+                <pre>{{ song.get_license_information.text }}</pre>
             </div>
         </div>
     </div>
