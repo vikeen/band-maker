@@ -33,6 +33,13 @@
             {% endif %}
         </div>
         <div class="form-group">
+            <label for="id_license">License</label>
+            {% render_field form.license class+="form-control" %}
+            {% if form.license.errors %}
+                <p class="errors">{{ form.license.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        <div class="form-group">
             <label for="id_published">Published
                 {% render_field form.published %}
             </label>

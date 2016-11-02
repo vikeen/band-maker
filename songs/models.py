@@ -15,6 +15,8 @@ class Track(models.Model):
     likes = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
+                               max_length=100)
     uuid = models.UUIDField(default=uuid.uuid4)
 
 
@@ -29,6 +31,8 @@ class Song(models.Model):
     media_url = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField(max_length=500, null=True, blank=True)
     published = models.BooleanField(default=False)
+    license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
+                               max_length=100)
     uuid = models.UUIDField(default=uuid.uuid4)
 
     def __str__(self):
@@ -50,6 +54,8 @@ class TrackRequest(models.Model):
     status = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
+                               max_length=100)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
 
     class Meta:

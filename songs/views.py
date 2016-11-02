@@ -44,7 +44,7 @@ class Detail(generic.DetailView):
 
 class Create(LoginRequiredMixin, generic.CreateView):
     model = Song
-    fields = ['title', 'description']
+    fields = ['title', 'description', 'license']
     template_name = 'songs/song_create.html'
 
     def form_valid(self, form):
@@ -73,7 +73,7 @@ class Update(LoginRequiredMixin,
              HasAccessToSongMixin,
              generic.UpdateView):
     model = Song
-    fields = ["title", 'description', 'published']
+    fields = ["title", 'description', 'license', 'published']
     template_name = 'songs/song_update.html'
     context_object_name = 'song'
 
@@ -95,7 +95,7 @@ class TrackCreate(LoginRequiredMixin,
                   HasAccessToSongMixin,
                   generic.CreateView):
     model = Track
-    fields = ['instrument', 'public']
+    fields = ['instrument', 'license', 'public']
     template_name = 'songs/track_create.html'
 
     def form_valid(self, form):
@@ -174,7 +174,7 @@ class TrackUpdate(LoginRequiredMixin,
                   HasAccessToTrack,
                   generic.UpdateView):
     model = Track
-    fields = ['instrument', 'public']
+    fields = ['instrument', 'license', 'public']
     template_name = 'songs/track_update.html'
     context_object_name = 'track'
 

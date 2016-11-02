@@ -8,7 +8,7 @@
     <ol class="breadcrumb">
         <li><a href="{% url 'users:songs' user.username %}">My Songs</a></li>
         <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
-        <li class="active">Edit Track</li>
+        <li class="active">{{ track.instrument }}</li>
     </ol>
 
     {% if form.errors %}
@@ -33,7 +33,7 @@
 
                         function publicClickHandler() {
                             var $element = $(this),
-                                trackIsPublic = $element.prop("checked");
+                                    trackIsPublic = $element.prop("checked");
 
                             if (trackIsPublic) {
                                 $(".js-audio-file-container").hide();
@@ -56,6 +56,13 @@
         <div class="form-group js-audio-file-container">
             <label for="id_track">Audio File</label>
             <input type="file" class="js-track-upload__media" id="id_track" name="audio" accept=".mp3"/>
+        </div>
+        <div class="form-group">
+            <label for="id_license">License</label>
+            {% render_field form.license class+="form-control" %}
+            {% if form.license.errors %}
+                <p class="errors">{{ form.license.errors.as_text }}</p>
+            {% endif %}
         </div>
         <div class="form-group">
             <button id="submit-track" class="btn btn-primary" type="submit">Save</button>
