@@ -401,4 +401,8 @@ Creative Commons may be contacted at creativecommons.org.
 '''
 
 license = defaultdict(lambda: cc_by_4)
-license['cc-by-4.0'] = cc_by_4
+license['cc-by-4.0'] = {
+    'name': 'Creative Commons Attribution 4.0',
+    'text': cc_by_4,
+    'link': 'https://creativecommons.org/licenses/by/4.0/'
+}

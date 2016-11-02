@@ -10,36 +10,8 @@
         <li class="active">Create Song</li>
     </ol>
 
-    {% if form.errors %}
-        <div class="alert alert-danger">Please correct the errors below:</div>
-    {% endif %}
-
     <form action="" method="post">
-        {% csrf_token %}
         <legend>Create Song</legend>
-        <div class="form-group">
-            <label for="id_title">Title</label>
-            {% render_field form.title class+="form-control" required="required" %}
-            {% if form.title.errors %}
-                <p class="errors">{{ form.title.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="id_description">Description</label>
-            {% render_field form.description class+="form-control" %}
-            {% if form.description.errors %}
-                <p class="errors">{{ form.description.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <label for="id_license">License</label>
-            {% render_field form.license class+="form-control" %}
-            {% if form.license.errors %}
-                <p class="errors">{{ form.license.errors.as_text }}</p>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <button id="submit-song" class="btn btn-primary" type="submit">Save</button>
-        </div>
+        {% include 'songs/song_form.html' %}
     </form>
 {% endblock %}

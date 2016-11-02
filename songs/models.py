@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.contrib.auth.models import User
+from .licenses import license
 
 
 class Track(models.Model):
@@ -37,6 +38,9 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_license_information(self):
+        return license[self.license]
 
 
 class TrackRequest(models.Model):

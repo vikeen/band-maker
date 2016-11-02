@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.views import generic
+from .licenses import license
 from .models import Song, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack
 from tempfile import mkdtemp
@@ -46,6 +47,9 @@ class Create(LoginRequiredMixin, generic.CreateView):
     model = Song
     fields = ['title', 'description', 'license']
     template_name = 'songs/song_create.html'
+
+    def get_license_information(self):
+        return license[self.license]
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
