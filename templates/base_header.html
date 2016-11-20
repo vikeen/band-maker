@@ -20,28 +20,28 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.id %}
-                    <li>
-                        <a href="/songs?requesting_tracks=on">Record</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'users:songs' user.username %}">My Songs</a>
-                    </li>
-                    <li class="dropdown">
-                        <img id="dropdownMenu1" class="gravatar clickable" src="{% gravatar_url user.email 50 %}"
-                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li>
-                                <a href="{% url 'logout' %}">Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
+                <li>
+                    <a href="/songs?requesting_tracks=on">Record</a>
+                </li>
+                <li>
+                    <a href="{% url 'users:songs' user.username %}">My Songs</a>
+                </li>
+                <li class="dropdown">
+                    <img id="dropdownMenu1" class="gravatar clickable" src="{% gravatar_url user.email 50 %}"
+                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li>
+                            <a href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    </ul>
+                </li>
                 {% else %}
-                    <li>
-                        <a href="{% url 'registration' %}">Sign Up</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'login' %}">Log In</a>
-                    </li>
+                <li>
+                    <a href="{% url 'registration' %}">Sign Up</a>
+                </li>
+                <li>
+                    <a href="{% url 'login' %}">Log In</a>
+                </li>
                 {% endif %}
             </ul>
         </div>

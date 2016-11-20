@@ -8,7 +8,12 @@
 
 ```sh
 $ npm install
-$ pip install -r requirements.txt
+$ npm install -g gulp
+$ sudo apt install python3-pip
+$ python3.5 -m venv venv
+$ source ./venv/bin/activate
+$ sudo apt-get install libpq-dev
+$ pip3 install -r requirements.txt
 ```
 
 ### Database
@@ -17,18 +22,18 @@ $ pip install -r requirements.txt
 CREATE DATABASE band_maker;
 CREATE ROLE band_maker_user with PASSWORD 'password';
 ALTER ROLE band_maker_user with LOGIN;
-ALTER ROLE band_maker_user WITH CREATEDB
+ALTER ROLE band_maker_user WITH CREATEDB;
 ALTER DATABASE band_maker OWNER TO band_maker_user;
 ```
 
 ```sh
-$ python manage.py migrate
-$ python manage.py collectstatic
+$ python3 manage.py migrate
+$ python3 manage.py collectstatic
 ```
 
 ### Development
 
-* `python manage.py runserver` - Server
+* `python3 manage.py runserver` - Server
 * `gulp` - Frontend Assets
 
 Your app should now be running on [localhost:8000](http://localhost:8000/).
