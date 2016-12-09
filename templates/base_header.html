@@ -15,13 +15,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/songs">Listen</a>
+                    <a href="{% url 'songs:index' %}">Listen</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.id %}
                 <li>
-                    <a href="/songs?requesting_tracks=on">Record</a>
+                    <a href="{% url 'songs:index' %}?requesting_tracks=on">Record</a>
                 </li>
                 <li>
                     <a href="{% url 'users:songs' user.username %}">My Songs</a>
