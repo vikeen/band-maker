@@ -7,7 +7,7 @@ import home.views
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', home.views.index, name='indexindex'),
+    url(r'^$', home.views.index, name='index'),
     url(r'^accounts/login', auth_views.login, {'template_name': 'registration/login.html'}, name='login'),
     url(r'^accounts/logout', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
     url(r'^accounts/registration', registration_views.RegistrationView.as_view(), name='registration'),
