@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}My Songs{% endblock %}
+
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">{{ request.resolver_match.kwargs.username }}</a></li>
+        <li class="active">Songs</li>
+    </ol>
+
+    {% if request.resolver_match.kwargs.username == user.username %}
+        <a class="btn btn-primary" href="{% url 'songs:create' %}">Create Song</a>
+    {% endif %}
+{% endblock %}

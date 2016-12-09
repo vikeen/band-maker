@@ -47,6 +47,7 @@ class Create(LoginRequiredMixin, generic.CreateView):
     model = Song
     fields = ['title', 'description', 'license']
     template_name = 'songs/song_create.html'
+    success_url = ''
 
     def get_license_information(self):
         return license[self.license]
@@ -56,8 +57,8 @@ class Create(LoginRequiredMixin, generic.CreateView):
         return super(Create, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('users:songs', kwargs={
-            'username': self.request.user
+        return reverse('songs:edit', kwargs={
+            'pk': self.object.pk
         })
 
 
@@ -68,7 +69,7 @@ class Delete(LoginRequiredMixin,
     template_name = 'songs/song_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse_lazy('users:songs', kwargs={
+        return reverse_lazy('users:detail', kwargs={
             'username': self.request.user
         })
 

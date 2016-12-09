@@ -12,6 +12,6 @@ urlpatterns = [
     url(r'^accounts/logout', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
     url(r'^accounts/registration', registration_views.RegistrationView.as_view(), name='registration'),
     url(r'^songs/', include('songs.urls')),
-    url(r'^users/(?P<username>[\w]+)/', include('users.urls')),
+    url(r'^users/', include('users.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]

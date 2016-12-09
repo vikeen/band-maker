@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit - {{ user.username }}{% endblock %}
+
+{% block content %}
+    <form action="" method="post" class="form-horizontal">
+        {% include 'users/user_form.html' %}
+    </form>
+{% endblock %}

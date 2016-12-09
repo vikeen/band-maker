@@ -43,9 +43,9 @@ class Create(SongTestCase):
             'description': 'song description'
         })
 
-        self.assertRedirects(response, reverse('users:songs', kwargs={'username': self.user}))
-
         song = Song.objects.filter(created_by=self.user).first()
+
+        self.assertRedirects(response, reverse('songs:edit', kwargs={'pk': song.pk}))
 
         self.assertEqual(song.title, 'Song')
         self.assertEqual(song.description, 'song description')

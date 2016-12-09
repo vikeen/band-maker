@@ -6,7 +6,7 @@
 
 {% block content %}
     <ol class="breadcrumb">
-        <li><a href="{% url 'users:songs' user.username %}">My Songs</a></li>
+        <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
         <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
         <li><a href="{% url 'songs:track_update' song.id track.id %}">{{ track.instrument }}</a></li>
         <li class="active">Delete</li>
