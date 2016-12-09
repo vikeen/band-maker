@@ -10,10 +10,10 @@
 $ npm install
 $ npm install -g gulp
 $ sudo apt install python3-pip
-$ python3.5 -m venv venv
+$ python3 -m venv venv
 $ source ./venv/bin/activate
 $ sudo apt-get install libpq-dev
-$ pip3 install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ### Database
@@ -27,13 +27,13 @@ ALTER DATABASE band_maker OWNER TO band_maker_user;
 ```
 
 ```sh
-$ python3 manage.py migrate
-$ python3 manage.py collectstatic
+$ python manage.py migrate
+$ python manage.py collectstatic
 ```
 
 ### Development
 
-* `python3 manage.py runserver` - Server
+* `python manage.py runserver` - Server
 * `gulp` - Frontend Assets
 
 Your app should now be running on [localhost:8000](http://localhost:8000/).
