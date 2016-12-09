@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-pills">
+                <li role="presentation">
+                    <a href="{% url 'users:edit' user.username %}">Profile</a>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="{% url 'users:skill_index' user.username %}">Skills</a>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <a href="{% url 'users:skill_create' user.username %}" class="btn btn-primary">
+                <i class="glyphicon glyphicon-plus"></i> Add Skill
+            </a>
+            <div class="skills">
+                {% for skill in skill_list %}
+                    <span class="badge skill">
+                        {{ skill.get_name_display }}
+                        <a href="{% url 'users:skill_delete' user.username skill.pk %}" class="skill-addon">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </span>
+                {% endfor %}
+
+            </div>
+        </div>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.views import generic
 from songs.models import Song
+from .models import Skill
 
 
 class Detail(generic.DetailView):
@@ -36,7 +37,44 @@ class Update(generic.UpdateView):
         })
 
 
-class SongsView(generic.ListView):
+class SkillIndex(generic.ListView):
+    model = Skill
+    context_object_name = 'skill_list'
+    template_name = 'skill_list'
+
+    def get_queryset(self):
+        return Skill.objects.filter(user__username=self.kwargs['username'])
+
+
+class SkillCreate(generic.CreateView):
+    model = Skill
+    fields = ['name']
+    template_name = 'users/skill_create.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(SkillCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('users:skill_index', kwargs={
+            'username': self.request.user.username
+        })
+
+
+class SkillDelete(generic.DeleteView):
+    model = Song
+    template_name = 'users/skill_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        return Skill.objects.get(pk=self.kwargs['skill_id'])
+
+    def get_success_url(self):
+        return reverse('users:skill_index', kwargs={
+            'username': self.request.user
+        })
+
+
+class SongView(generic.ListView):
     template_name = 'users/songs.html'
     context_object_name = 'published_song_list'
 
@@ -44,7 +82,7 @@ class SongsView(generic.ListView):
         return Song.objects.filter(created_by__username=self.kwargs['username'], published=True)
 
     def get_context_data(self, **kwargs):
-        context = super(SongsView, self).get_context_data(**kwargs)
+        context = super(SongView, self).get_context_data(**kwargs)
         context['unpublished_song_list'] = Song.objects.filter(created_by__username=self.kwargs['username'],
                                                                published=False)
 

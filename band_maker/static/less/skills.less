@@ -1,0 +1,24 @@
+@import (reference) "./includes/_colors";
+@import (reference) "./includes/_measurements";
+
+.skills {
+    margin-top: @margin-default;
+}
+
+.skill {
+    padding: @padding-small;
+    margin-right: @margin-small;
+
+    &:last-of-type {
+        margin-right: 0;
+    }
+}
+
+.skill-addon {
+    &:extend(.text-color--inverse);
+    margin-left: @margin-extra-small;
+
+    &:focus, &:active, &:hover {
+        &:extend(.text-color--inverse);
+    }
+}

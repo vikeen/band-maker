@@ -1,3 +1,9 @@
+.skill-addon,
+.skill-addon:focus,
+.skill-addon:active,
+.skill-addon:hover {
+  color: white;
+}
 .media-player {
   margin: 0 auto;
   width: 1200px;
@@ -92,6 +98,19 @@
 }
 .media-player .media-player__track--no-media .media-player__track-waveform {
   padding-top: 15px;
+}
+.skills {
+  margin-top: 15px;
+}
+.skill {
+  padding: 10px;
+  margin-right: 10px;
+}
+.skill:last-of-type {
+  margin-right: 0;
+}
+.skill-addon {
+  margin-left: 5px;
 }
 .jumbotron {
   background: #532f8c;
