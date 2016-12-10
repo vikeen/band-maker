@@ -7,11 +7,11 @@
         <div class="panel-heading">
             <ul class="nav nav-pills">
                 <li role="presentation" class="active">
-                    <a href="{% url 'users:edit' user.username %}">Profile</a>
+                    <a href="{% url 'users:account-edit' user.username %}">Public Profile</a>
                 </li>
-                <li role="presentation">
-                    <a href="{% url 'users:skill_index' user.username %}">Skills</a>
-                </li>
+{#                <li role="presentation">#}
+{#                    <a href="{% url 'users:skill' user.username %}">Skills</a>#}
+{#                </li>#}
             </ul>
         </div>
         <div class="panel-body">

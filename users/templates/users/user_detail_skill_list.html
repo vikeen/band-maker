@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ view_user.username }} | Songs{% endblock %}
+
+{% block content %}
+    <div class="user-profile row">
+        <div class="col-sm-3">
+            {% include 'users/user_detail_sidebar.html' %}
+        </div>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li role="presentation">
+                    <a href="{% url 'users:profile-detail' view_user.username %}">Overview</a>
+                </li>
+                <li role="presentation">
+                    <a href="{% url 'users:profile-songs' view_user.username %}">
+                        Songs <span class="badge">{{ view_user.song_set.all.count }}</span>
+                    </a>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="{% url 'users:profile-skills' view_user.username %}">
+                        Skills <span class="badge">{{ view_user.skill_set.all.count }}</span>
+                    </a>
+                </li>
+            </ul>
+            <section class="user-profile__skill-list content-block">
+                <table class="table table-bordered">
+                    <thread>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                    {% for skill in skill_list %}
+                        <tr>
+                            <td>
+                                {{ skill.get_name_display }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+
+

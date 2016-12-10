@@ -9,7 +9,7 @@
         <div class="panel-heading">
             <ul class="nav nav-pills">
                 <li role="presentation">
-                    <a href="{% url 'users:edit' user.username %}">Profile</a>
+                    <a href="{% url 'users:account-edit' user.username %}">Profile</a>
                 </li>
                 <li role="presentation" class="active">
                     <a href="{% url 'users:skill_index' user.username %}">Skills</a>
