@@ -36,6 +36,9 @@
                                 <li>
                                     <a href="{% url 'users:detail' user.username %}">Your Profile</a>
                                 </li>
+                                <li>
+                                    <a href="{% url 'users:songs' user.username %}">Your Songs</a>
+                                </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="{% url 'users:edit' user.username %}">Account Settings</a>
