@@ -49,51 +49,52 @@ class ProfileSkillIndex(generic.ListView):
         return context
 
 
-class AccountUpdate(generic.UpdateView):
+class AccountProfileUpdate(generic.UpdateView):
     model = User
     fields = ['first_name', 'last_name', 'email']
-    template_name = 'users/user_update.html'
+    template_name = 'users/user_account_profile_update.html'
 
     def get_object(self, queryset=None):
         return User.objects.get(username=self.request.user.username)
 
     def get_success_url(self):
-        return reverse('users:account-edit', kwargs={
+        return reverse('users:account_edit', kwargs={
             'username': self.kwargs['username']
         })
-#
-# class SkillIndex(generic.ListView):
-#     model = Skill
-#     context_object_name = 'skill_list'
-#     template_name = 'skill_list'
-#
-#     def get_queryset(self):
-#         return Skill.objects.filter(user__username=self.kwargs['username'])
-#
-#
-# class SkillCreate(generic.CreateView):
-#     model = Skill
-#     fields = ['name']
-#     template_name = 'users/skill_create.html'
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         return super(SkillCreate, self).form_valid(form)
-#
-#     def get_success_url(self):
-#         return reverse('users:skill_index', kwargs={
-#             'username': self.request.user.username
-#         })
-#
-#
-# class SkillDelete(generic.DeleteView):
-#     model = Song
-#     template_name = 'users/skill_confirm_delete.html'
-#
-#     def get_object(self, queryset=None):
-#         return Skill.objects.get(pk=self.kwargs['skill_id'])
-#
-#     def get_success_url(self):
-#         return reverse('users:skill_index', kwargs={
-#             'username': self.request.user
-#         })
+
+
+class AccountSkillIndex(generic.ListView):
+    model = Skill
+    context_object_name = 'skill_list'
+    template_name = 'users/user_account_skill_list.html'
+
+    def get_queryset(self):
+        return Skill.objects.filter(user__username=self.kwargs['username'])
+
+
+class AccountSkillCreate(generic.CreateView):
+    model = Skill
+    fields = ['name']
+    template_name = 'users/user_account_skill_create.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(AccountSkillCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('users:account_skills', kwargs={
+            'username': self.request.user.username
+        })
+
+
+class AccountSkillDelete(generic.DeleteView):
+    model = Song
+    template_name = 'users/user_account_skill_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        return Skill.objects.get(pk=self.kwargs['skill_id'])
+
+    def get_success_url(self):
+        return reverse('users:account_skills', kwargs={
+            'username': self.request.user
+        })

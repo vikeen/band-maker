@@ -29,7 +29,7 @@
             {% for song in song_list %}
                 <div class="media">
                     <div class="media-left">
-                        <a href="{% url 'users:profile-detail' song.created_by %}">
+                        <a href="{% url 'users:profile_detail' song.created_by %}">
                             <img src="{% gravatar_url song.created_by.email 50 %}"
                                  title="{{ song.created_by.username }}"/>
                         </a>

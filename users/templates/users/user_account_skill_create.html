@@ -1,22 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit - {{ user.username }}{% endblock %}
+{% block title %}Create Skill{% endblock %}
 
 {% block content %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <ul class="nav nav-pills">
-                <li role="presentation" class="active">
-                    <a href="{% url 'users:account-edit' user.username %}">Public Profile</a>
+                <li role="presentation">
+                    <a href="{% url 'users:account_edit' user.username %}">Profile</a>
                 </li>
-{#                <li role="presentation">#}
-{#                    <a href="{% url 'users:skill' user.username %}">Skills</a>#}
-{#                </li>#}
+                <li role="presentation" class="active">
+                    <a href="{% url 'users:account_skills' user.username %}">Skills</a>
+                </li>
             </ul>
         </div>
         <div class="panel-body">
             <form action="" method="post" class="form-horizontal">
-                {% include 'users/user_form.html' %}
+                <legend>Create Skill</legend>
+                {% include 'users/user_account_skill_form.html' %}
             </form>
         </div>
+    </div>
 {% endblock %}

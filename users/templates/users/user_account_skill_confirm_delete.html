@@ -9,10 +9,10 @@
         <div class="panel-heading">
             <ul class="nav nav-pills">
                 <li role="presentation">
-                    <a href="{% url 'users:account-edit' user.username %}">Profile</a>
+                    <a href="{% url 'users:account_edit' user.username %}">Profile</a>
                 </li>
                 <li role="presentation" class="active">
-                    <a href="{% url 'users:skill_index' user.username %}">Skills</a>
+                    <a href="{% url 'users:account_skills' user.username %}">Skills</a>
                 </li>
             </ul>
         </div>
@@ -21,7 +21,7 @@
                 <legend>Delete Skill"</legend>
                 {% csrf_token %}
                 <p>Are you sure you want to delete the skill, "{{ skill.get_name_display }}"?</p>
-                <a href="{% url 'users:skill_index' user.username %}">Cancel</a>
+                <a href="{% url 'users:account_skills' user.username %}">Cancel</a>
                 <button type="submit" class="btn btn-danger">Confirm</button>
             </form>
         </div>

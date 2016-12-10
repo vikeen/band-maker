@@ -69,7 +69,7 @@ class Delete(LoginRequiredMixin,
     template_name = 'songs/song_confirm_delete.html'
 
     def get_success_url(self):
-        return reverse_lazy('users:profile-detail', kwargs={
+        return reverse_lazy('users:profile_detail', kwargs={
             'username': self.request.user
         })
 

@@ -4,7 +4,7 @@
 
 {% block content %}
     <ol class="breadcrumb">
-        <li><a href="{% url 'users:profile-detail' user.username %}">My Songs</a></li>
+        <li><a href="{% url 'users:profile_detail' user.username %}">My Songs</a></li>
         <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
         <li class="active">Create Track</li>
     </ol>

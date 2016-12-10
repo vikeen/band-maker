@@ -10,15 +10,15 @@
         <div class="col-sm-9">
             <ul class="nav nav-tabs">
                 <li role="presentation">
-                    <a href="{% url 'users:profile-detail' view_user.username %}">Overview</a>
+                    <a href="{% url 'users:profile_detail' view_user.username %}">Overview</a>
                 </li>
                 <li role="presentation">
-                    <a href="{% url 'users:profile-songs' view_user.username %}">
+                    <a href="{% url 'users:profile_songs' view_user.username %}">
                         Songs <span class="badge">{{ view_user.song_set.all.count }}</span>
                     </a>
                 </li>
                 <li role="presentation" class="active">
-                    <a href="{% url 'users:profile-skills' view_user.username %}">
+                    <a href="{% url 'users:profile_skills' view_user.username %}">
                         Skills <span class="badge">{{ view_user.skill_set.all.count }}</span>
                     </a>
                 </li>
