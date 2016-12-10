@@ -145,6 +145,9 @@
 .jumbotron .lang-logo img {
   max-width: 100%;
 }
+.clickable {
+  cursor: pointer !important;
+}
 .container {
   width: 1200px !important;
 }
@@ -177,4 +180,11 @@ form .errors {
 }
 .content-block {
   margin-top: 15px;
+}
+.site-header .gravatar img {
+  margin-top: 8px;
+}
+.site-header .gravatar .dropdown-icon {
+  vertical-align: middle;
+  margin-top: 5px;
 }

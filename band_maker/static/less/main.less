@@ -4,6 +4,7 @@
 @import "./media_player";
 @import "./skills";
 @import "./theme";
+@import "./_utilities";
 
 .container {
     width: @site-width !important;
@@ -44,4 +45,15 @@ form .errors {
 
 .content-block {
     margin-top: @margin-default;
+}
+
+.site-header .gravatar {
+    img {
+        margin-top: 8px;
+    }
+
+    .dropdown-icon {
+        vertical-align: middle;
+        margin-top: 5px;
+    }
 }

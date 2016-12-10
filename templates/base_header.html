@@ -1,52 +1,59 @@
 {% load gravatar %}
 
-<nav class="navbar navbar-default navbar-static-top navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'index' %}">Band Maker</a>
+<header class="site-header">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'index' %}">Band Maker</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'songs:index' %}">Listen</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.id %}
+                        <li>
+                            <a href="{% url 'songs:index' %}?requesting_tracks=on">Contribute</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'songs:create' %}">Create</a>
+                        </li>
+                        <li class="dropdown gravatar clickable">
+                            <img id="dropdownMenu1" src="{% gravatar_url user.email 35 %}"
+                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
+                            <i class="glyphicon glyphicon-chevron-down dropdown-icon"></i>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>
+                                    <a href="{% url 'users:detail' user.username %}">Your Profile</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="{% url 'users:edit' user.username %}">Account Settings</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'logout' %}">Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'registration' %}">Sign Up</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'login' %}">Log In</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="{% url 'songs:index' %}">Listen</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.id %}
-                    <li>
-                        <a href="{% url 'songs:index' %}?requesting_tracks=on">Contribute</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'songs:create' %}">Create</a>
-                    </li>
-                    <li class="dropdown">
-                        <img id="dropdownMenu1" class="gravatar clickable" src="{% gravatar_url user.email 50 %}"
-                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"/>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li>
-                                <a href="{% url 'users:edit' user.username %}">My Account</a>
-                            </li>
-                            <li>
-                                <a href="{% url 'logout' %}">Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="{% url 'registration' %}">Sign Up</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'login' %}">Log In</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</nav>
+    </nav>
+</header>
