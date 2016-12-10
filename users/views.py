@@ -7,19 +7,11 @@ from .models import Skill
 
 class Detail(generic.DetailView):
     model = User
-    template_name = 'users/user_detail.html'
+    template_name = 'users/user_detail_overview.html'
     context_object_name = 'view_user'
 
     def get_object(self, queryset=None):
         return User.objects.get(username=self.kwargs['username'])
-
-    def get_context_data(self, **kwargs):
-        context = super(Detail, self).get_context_data(**kwargs)
-        context['published_song_list'] = Song.objects.filter(created_by__username=self.kwargs['username'],
-                                                             published=True)
-        context['unpublished_song_list'] = Song.objects.filter(created_by__username=self.kwargs['username'],
-                                                               published=False)
-        return context
 
 
 class Update(generic.UpdateView):
@@ -38,7 +30,7 @@ class Update(generic.UpdateView):
 
 
 class SongIndex(generic.DetailView):
-    template_name = 'users/user_songs.html'
+    template_name = 'users/user_detail_song_list.html'
     context_object_name = 'view_user'
 
     def get_object(self, queryset=None):

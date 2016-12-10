@@ -41,8 +41,8 @@ Your app should now be running on [localhost:8000](http://localhost:8000/).
 ## Deploying to Heroku
 
 ```sh
-$ gulp build
 $ git push heroku master
+$ heroku run python manage.py collectstatic
 $ heroku run python manage.py migrate
 $ heroku open
 ```

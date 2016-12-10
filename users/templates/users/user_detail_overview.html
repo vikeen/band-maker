@@ -1,27 +1,11 @@
 {% extends 'base.html' %}
-{% load gravatar %}
 
-{% block title %}{{ view_user.username }}{% endblock %}
+{% block title %}{{ view_user.username }} | Overview{% endblock %}
 
 {% block content %}
     <div class="user-profile row">
         <div class="col-sm-3">
-            <img src="{% gravatar_url view_user.email 250 %}" class="user-profile__avatar"
-                 title="{{ view_user.username }}"/>
-            <h2>
-                {{ view_user.username }}
-                <br/>
-                {% if view_user.first_name %}
-                    <small>{{ view_user.first_name }} {{ view_user.last_name }}</small>
-                {% endif %}
-            </h2>
-            <hr/>
-            <ul class="user-profile__meta">
-                <li class="user-profile__meta-data">
-                    <i class="glyphicon glyphicon-time user-profile__meta-data-icon"></i>
-                    Joined on {{ view_user.date_joined | date:"M d, Y" }}
-                </li>
-            </ul>
+            {% include 'users/user_detail_sidebar.html' %}
         </div>
         <div class="col-sm-9">
             <ul class="nav nav-tabs">
