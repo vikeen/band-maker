@@ -31,11 +31,10 @@
                     </button>
                 </div>
             </form>
-            <hr/>
             <section class="user-profile__song-list">
                 {% for song in song_list %}
                     <article class="user-profile__song">
-                        <h4>
+                        <h4 class="user-profile__song-title">
                             <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
                         </h4>
                         <p class="song__description">{{ song.description | truncatechars:100 }}</p>
@@ -44,7 +43,6 @@
                                 Updated {{ song.updated | timesince }} ago
                         </span>
                     </article>
-                    <hr/>
                 {% endfor %}
             </section>
         </div>

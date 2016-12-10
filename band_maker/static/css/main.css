@@ -157,9 +157,20 @@
 }
 .user-profile__song-search {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .user-profile__song-search input[type="text"] {
   width: 300px;
+}
+.user-profile__song {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+.user-profile__song:first-child {
+  border-top: 1px solid #eee;
+}
+.user-profile__song-title {
+  margin-top: 0;
 }
 .container {
   width: 1200px !important;

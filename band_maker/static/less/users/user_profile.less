@@ -1,4 +1,8 @@
-.user-profile {}
+@import (reference) "../includes/_colors";
+@import (reference) "../includes/_measurements";
+
+.user-profile {
+}
 
 .user-profile__avatar {
     border-radius: 5px;
@@ -18,9 +22,23 @@
 }
 
 .user-profile__song-search {
-    margin-top: 20px;
+    margin-top: @margin-large;
+    margin-bottom: @margin-large;
 
     input[type="text"] {
         width: 300px;
     }
+}
+
+.user-profile__song {
+    padding: @padding-default;
+    border-bottom: @border-width-extra-small solid @color-gray-light;
+
+    &:first-child {
+        border-top: @border-width-extra-small solid @color-gray-light;
+    }
+}
+
+.user-profile__song-title {
+    margin-top: 0;
 }
