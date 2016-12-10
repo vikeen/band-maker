@@ -37,6 +37,30 @@ class Update(generic.UpdateView):
         })
 
 
+class SongIndex(generic.DetailView):
+    template_name = 'users/user_songs.html'
+    context_object_name = 'view_user'
+
+    def get_object(self, queryset=None):
+        return User.objects.get(username=self.kwargs['username'])
+
+    def get_context_data(self, **kwargs):
+        context = super(SongIndex, self).get_context_data(**kwargs)
+
+        song_list_filter = {
+            'created_by__username': self.kwargs['username']
+        }
+
+        title = self.request.GET.get('title')
+
+        if title:
+            song_list_filter['title__icontains'] = self.request.GET.get('title')
+
+        context['song_list'] = Song.objects.filter(**song_list_filter)
+
+        return context
+
+
 class SkillIndex(generic.ListView):
     model = Skill
     context_object_name = 'skill_list'
@@ -72,18 +96,3 @@ class SkillDelete(generic.DeleteView):
         return reverse('users:skill_index', kwargs={
             'username': self.request.user
         })
-
-
-class SongView(generic.ListView):
-    template_name = 'users/songs.html'
-    context_object_name = 'published_song_list'
-
-    def get_queryset(self):
-        return Song.objects.filter(created_by__username=self.kwargs['username'], published=True)
-
-    def get_context_data(self, **kwargs):
-        context = super(SongView, self).get_context_data(**kwargs)
-        context['unpublished_song_list'] = Song.objects.filter(created_by__username=self.kwargs['username'],
-                                                               published=False)
-
-        return context

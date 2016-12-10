@@ -148,13 +148,19 @@
 .skill-addon {
   margin-left: 5px;
 }
-.user-detail__avatar {
+.user-profile__avatar {
   width: 100%;
   border-radius: 5px;
 }
-.user-detail__meta {
+.user-profile__meta {
   list-style: none;
   padding: 0;
+}
+.user-profile__song-search {
+  margin-top: 20px;
+}
+.user-profile__song-search input[type="text"] {
+  width: 300px;
 }
 .container {
   width: 1200px !important;

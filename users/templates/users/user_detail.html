@@ -4,9 +4,9 @@
 {% block title %}{{ view_user.username }}{% endblock %}
 
 {% block content %}
-    <div class="user-detail row">
+    <div class="user-profile row">
         <div class="col-sm-3">
-            <img src="{% gravatar_url view_user.email 250 %}" class="user-detail__avatar"
+            <img src="{% gravatar_url view_user.email 250 %}" class="user-profile__avatar"
                  title="{{ view_user.username }}"/>
             <h2>
                 {{ view_user.username }}
@@ -16,51 +16,61 @@
                 {% endif %}
             </h2>
             <hr/>
-            <ul class="user-detail__meta">
-                <li class="user-detail__meta-data">
-                    <i class="glyphicon glyphicon-time user-detail__meta-data-icon"></i>
-                    Joined on {{ view_user.date_joined | date:"M d, Y"}}
+            <ul class="user-profile__meta">
+                <li class="user-profile__meta-data">
+                    <i class="glyphicon glyphicon-time user-profile__meta-data-icon"></i>
+                    Joined on {{ view_user.date_joined | date:"M d, Y" }}
                 </li>
             </ul>
         </div>
         <div class="col-sm-9">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2 class="panel-title">Songs</h2>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <section class="col-sm-6">
-                            <h3>Published</h3>
-                            <ul class="list-group">
-                                {% for song in published_song_list %}
-                                    <li class="list-group-item">
-                                        {% if request.resolver_match.kwargs.username == user.username %}
-                                            <a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a>
-                                        {% else %}
-                                            <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </section>
-                        <section class="col-sm-6">
-                            <h3>Work In Progress</h3>
-                            <ul class="list-group">
-                                {% for song in unpublished_song_list %}
-                                    <li class="list-group-item">
-                                        {% if request.resolver_match.kwargs.username == user.username %}
-                                            <a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a>
-                                        {% else %}
-                                            <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>
-                                        {% endif %}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </section>
-                    </div>
-                </div>
-            </div>
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active">
+                    <a href="{% url 'users:detail' view_user.username %}">Overview</a>
+                </li>
+                <li role="presentation">
+                    <a href="{% url 'users:songs' view_user.username %}">
+                        Songs <span class="badge">{{ view_user.song_set.all.count }}</span>
+                    </a>
+                </li>
+            </ul>
+            {#            <div class="panel panel-default">#}
+            {#                <div class="panel-heading">#}
+            {#                    <h2 class="panel-title">Songs</h2>#}
+            {#                </div>#}
+            {#                <div class="panel-body">#}
+            {#                    <div class="row">#}
+            {#                        <section class="col-sm-6">#}
+            {#                            <h3>Published</h3>#}
+            {#                            <ul class="list-group">#}
+            {#                                {% for song in published_song_list %}#}
+            {#                                    <li class="list-group-item">#}
+            {#                                        {% if request.resolver_match.kwargs.username == user.username %}#}
+            {#                                            <a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a>#}
+            {#                                        {% else %}#}
+            {#                                            <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>#}
+            {#                                        {% endif %}#}
+            {#                                    </li>#}
+            {#                                {% endfor %}#}
+            {#                            </ul>#}
+            {#                        </section>#}
+            {#                        <section class="col-sm-6">#}
+            {#                            <h3>Work In Progress</h3>#}
+            {#                            <ul class="list-group">#}
+            {#                                {% for song in unpublished_song_list %}#}
+            {#                                    <li class="list-group-item">#}
+            {#                                        {% if request.resolver_match.kwargs.username == user.username %}#}
+            {#                                            <a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a>#}
+            {#                                        {% else %}#}
+            {#                                            <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>#}
+            {#                                        {% endif %}#}
+            {#                                    </li>#}
+            {#                                {% endfor %}#}
+            {#                            </ul>#}
+            {#                        </section>#}
+            {#                    </div>#}
+            {#                </div>#}
         </div>
+    </div>
     </div>
 {% endblock %}

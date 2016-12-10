@@ -4,9 +4,9 @@ from . import views
 
 app_name = 'users'
 urlpatterns = [
-    url(r'^(?P<username>[\w]+)/songs/$', views.SongView.as_view(), name='songs'),
     url(r'^(?P<username>[\w]+)/$', views.Detail.as_view(), name='detail'),
     url(r'^(?P<username>[\w]+)/edit$', views.Update.as_view(), name='edit'),
+    url(r'^(?P<username>[\w]+)/songs/$', views.SongIndex.as_view(), name='songs'),
 
     # skills
     url(r'^(?P<username>[\w]+)/skill/$', views.SkillIndex.as_view(), name='skill_index'),

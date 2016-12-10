@@ -3,11 +3,6 @@
 {% block title %}Create Song{% endblock %}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
-        <li class="active">Create Song</li>
-    </ol>
-
     <form action="" method="post">
         <legend>Create Song</legend>
         {% include 'songs/song_form.html' %}

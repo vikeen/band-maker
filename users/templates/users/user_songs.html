@@ -1,15 +1,70 @@
-{% extends "base.html" %}
-{% load staticfiles %}
+{% extends 'base.html' %}
+{% load gravatar %}
 
 {% block title %}My Songs{% endblock %}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="#">{{ request.resolver_match.kwargs.username }}</a></li>
-        <li class="active">Songs</li>
-    </ol>
-
-    {% if request.resolver_match.kwargs.username == user.username %}
-        <a class="btn btn-primary" href="{% url 'songs:create' %}">Create Song</a>
-    {% endif %}
+    <div class="user-profile">
+        <div class="col-sm-3">
+            <img src="{% gravatar_url view_user.email 250 %}" class="user-profile__avatar"
+                 title="{{ view_user.username }}"/>
+            <h2>
+                {{ view_user.username }}
+                <br/>
+                {% if view_user.first_name %}
+                    <small>{{ view_user.first_name }} {{ view_user.last_name }}</small>
+                {% endif %}
+            </h2>
+            <hr/>
+            <ul class="user-profile__meta">
+                <li class="user-profile__meta-data">
+                    <i class="glyphicon glyphicon-time user-profile__meta-data-icon"></i>
+                    Joined on {{ view_user.date_joined | date:"M d, Y" }}
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li role="presentation">
+                    <a href="{% url 'users:detail' view_user.username %}">Overview</a>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="{% url 'users:songs' view_user.username %}">
+                        Songs <span class="badge">{{ view_user.song_set.all.count }}</span>
+                    </a>
+                </li>
+            </ul>
+            <form class="user-profile__song-search form-inline" action="{% url 'users:songs' view_user.username %}"
+                  method="GET">
+                <div class="form-group">
+                    <input type="text" id="id_title" name="title" class="form-control" placeholder="Search songs..."
+                           value="{{ request.GET.title }}"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i>
+                        Search
+                    </button>
+                </div>
+            </form>
+            <hr/>
+            <section class="user-profile__song-list">
+                {% for song in song_list %}
+                    <article class="user-profile__song">
+                        <h4>
+                            <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
+                        </h4>
+                        <p class="song__description">{{ song.description | truncatechars:100 }}</p>
+                        <span>
+                            <i class="glyphicon glyphicon-time"></i>
+                                Updated {{ song.updated | timesince }} ago
+                        </span>
+                    </article>
+                    <hr/>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
 {% endblock %}
+
+
