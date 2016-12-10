@@ -42,6 +42,15 @@
                             <i class="glyphicon glyphicon-time"></i>
                                 Updated {{ song.updated | timesince }} ago
                         </span>
+                        {% if request.user == view_user %}
+                            <ul class="user-profile__song-admin-widgets">
+                                <li class="user-profile__song-admin-widget">
+                                    <a href="{% url 'songs:edit' song.pk %}" class="btn btn-primary btn-xs">
+                                        <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
+                                    </a>
+                                </li>
+                            </ul>
+                        {% endif %}
                     </article>
                 {% endfor %}
             </section>

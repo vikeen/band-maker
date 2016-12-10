@@ -16,10 +16,14 @@
             </a>
         </div>
         <div class="media-body">
-            <h1 class="media-heading song__title">{{ song.title }}</h1>
-            {% if song.description %}
-                <p class="song__description">{{ song.description }}</p>
-            {% endif %}
+            <h1 class="media-heading song__title">{{ song.title }}
+                {% if request.user == song.created_by %}
+                    <a href="{% url 'songs:edit' song.pk %}" class="btn btn-primary btn-xs">
+                        <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
+                    </a>
+                {% endif %}
+            </h1>
+            <p class="song__description">{{ song.description }}</p>
         </div>
     </div>
 

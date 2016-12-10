@@ -8,7 +8,7 @@
   cursor: pointer !important;
 }
 .jumbotron {
-  background: #532f8c;
+  background: #337ab7;
   color: white;
   padding-bottom: 80px;
 }
@@ -163,6 +163,7 @@
   width: 300px;
 }
 .user-profile__song {
+  position: relative;
   padding: 15px;
   border-bottom: 1px solid #eee;
 }
@@ -171,6 +172,13 @@
 }
 .user-profile__song-title {
   margin-top: 0;
+}
+.user-profile__song-admin-widgets {
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 .container {
   width: 1200px !important;

@@ -31,6 +31,7 @@
 }
 
 .user-profile__song {
+    position: relative;
     padding: @padding-default;
     border-bottom: @border-width-extra-small solid @color-gray-light;
 
@@ -42,3 +43,16 @@
 .user-profile__song-title {
     margin-top: 0;
 }
+
+.user-profile__song-admin-widgets {
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    top: @padding-default;
+    right: @padding-default;
+}
+
+//.user-profile__song-admin-widget {
+//    &:extend(.bg-color--primary);
+//    &:extend(.text-color--inverse);
+//}
