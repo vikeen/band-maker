@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django_gravatar',
     'songs.apps.SongsConfig',
     'users.apps.UsersConfig',
+    'accounts.apps.AccountsConfig',
     'registration.backends.simple',
     'home'
 )

@@ -34,6 +34,6 @@
             <input type="submit" value="Comment" id="id_submit" class="btn btn-primary"/>
         </form>
     {% else %}
-        <p>Please <a href="{% url 'login' %}">log in</a> to leave a comment.</p>
+        <p>Please <a href="{% url 'accounts:login' %}">log in</a> to leave a comment.</p>
     {% endif %}
 </div>

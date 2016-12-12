@@ -41,19 +41,19 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="{% url 'users:account_edit' user.username %}">Account Settings</a>
+                                    <a href="{% url 'accounts:edit' %}">Account Settings</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'logout' %}">Log Out</a>
+                                    <a href="{% url 'accounts:logout' %}">Log Out</a>
                                 </li>
                             </ul>
                         </li>
                     {% else %}
                         <li>
-                            <a href="{% url 'registration' %}">Sign Up</a>
+                            <a href="{% url 'accounts:registration' %}">Sign Up</a>
                         </li>
                         <li>
-                            <a href="{% url 'login' %}">Log In</a>
+                            <a href="{% url 'accounts:login' %}">Log In</a>
                         </li>
                     {% endif %}
                 </ul>
