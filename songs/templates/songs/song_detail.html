@@ -1,5 +1,6 @@
 {% extends "songs/song_base.html" %}
 {% load gravatar %}
+{% load comments %}
 
 {% block title %}{{ song.title }}{% endblock %} }}
 
@@ -26,7 +27,6 @@
             <p class="song__description">{{ song.description }}</p>
         </div>
     </div>
-
     {% if tracks %}
         <script>
             $(document).ready(function () {
@@ -93,4 +93,10 @@
             </a>
         </div>
     {% endif %}
+    <div class="comments">
+        {% get_comment_count for song as song_comment_count %}
+        <h3 class="comments__title">Comments ({{ song_comment_count }})</h3>
+        {% render_comment_form for song %}
+        {% render_comment_list for song %}
+    </div>
 {% endblock %}

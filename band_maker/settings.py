@@ -32,8 +32,10 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'django_comments',
     'django_gravatar',
     'songs.apps.SongsConfig',
     'users.apps.UsersConfig',
@@ -51,6 +53,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+SITE_ID = 1
 
 ROOT_URLCONF = 'band_maker.urls'
 

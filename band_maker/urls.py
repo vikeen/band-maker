@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^accounts/login', auth_views.login, {'template_name': 'registration/login.html'}, name='login'),
     url(r'^accounts/logout', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
     url(r'^accounts/registration', registration_views.RegistrationView.as_view(), name='registration'),
+    url(r'^comments/', include('django_comments.urls')),
     url(r'^songs/', include('songs.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^admin/', include(admin.site.urls)),

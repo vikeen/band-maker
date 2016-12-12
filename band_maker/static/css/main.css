@@ -180,6 +180,21 @@
   top: 15px;
   right: 15px;
 }
+.comments #id_honeypot {
+  display: none;
+}
+.comments__comment-form #id_submit {
+  margin-left: 60px;
+}
+.comments__comment-list {
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-top: 1px solid #eee;
+}
+.comments__comment {
+  margin-top: 15px;
+}
 .container {
   width: 1200px !important;
 }

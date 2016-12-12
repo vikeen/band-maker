@@ -8,6 +8,7 @@ curtsies==0.2.9
 decorator==4.0.10
 dj-database-url==0.4.0
 Django==1.9.2
+django-contrib-comments==1.7.3
 django-gravatar2==1.4.0
 django-registration==2.1.2
 django-widget-tweaks==1.4.1

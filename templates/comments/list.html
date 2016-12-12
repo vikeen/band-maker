@@ -1,0 +1,25 @@
+{% load gravatar %}
+
+<section class="comments__comment-list">
+    {% for comment in comment_list %}
+        <article class="comments__comment" id="c{{ comment.id }}">
+            <div class="media">
+                <div class="media-left">
+                    <a href="{% url 'users:profile_detail' comment.user.username %}"
+                       title="{{ comment.user.username }}">
+                        <img src="{% gravatar_url comment.user.email 50 %}"
+                             alt="{{ comment.user.username }}"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading">
+                        <a href="{% url 'users:profile_detail' comment.user.username %}">{{ comment.user.username }}</a>
+                        <small>{{ comment.submit_date | timesince }}</small>
+                    </div>
+                    <p>{{ comment.comment }}</p>
+                </div>
+            </div>
+
+        </article>
+    {% endfor %}
+</section>

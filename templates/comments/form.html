@@ -1,0 +1,39 @@
+{% load widget_tweaks %}
+{% load comments %}
+{% load gravatar %}
+
+<div class="comments__comment-form">
+    {% if user.is_authenticated %}
+        {% get_comment_form for object as form %}
+        <form action="{% comment_form_target %}" method="POST" class="form-horizontal">
+            {% csrf_token %}
+            {{ form.honeypot }}
+            {{ form.content_type }}
+            {{ form.object_pk }}
+            {{ form.timestamp }}
+            {{ form.security_hash }}
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="{% url 'users:profile_detail' user.username %}">
+                                <img src="{% gravatar_url user.email 50 %}"
+                                     title="{{ user.username }}"/>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            {% render_field form.comment class+="form-control" placeholder="Add a comment" rows="3" required="required" %}
+                            {% if form.comment.errors %}
+                                <p class="errors">{{ form.comment.errors.as_text }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <input type="hidden" name="next" value="{{ request.path }}"/>
+            <input type="submit" value="Comment" id="id_submit" class="btn btn-primary"/>
+        </form>
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">log in</a> to leave a comment.</p>
+    {% endif %}
+</div>
