@@ -13,7 +13,7 @@ from django.shortcuts import redirect
 from django.views import generic
 from .licenses import license
 from .models import Song, Track, TrackRequest
-from .mixins import HasAccessToSongMixin, HasAccessToTrack
+from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin
 from tempfile import mkdtemp
 from shutil import rmtree
 
@@ -31,16 +31,25 @@ class Index(generic.ListView):
             return Song.objects.all()
 
 
-class Detail(generic.DetailView):
+class Detail(MediaPlayerMixin,
+             generic.DetailView):
     model = Song
     context_object_name = 'song'
 
-    def get_context_data(self, **kwargs):
-        context = super(Detail, self).get_context_data(**kwargs)
-        song = context['song']
-        context['tracks'] = song.track_set.all()
-        context['tracks_json'] = serializers.serialize('json', context['tracks'])
-        return context
+
+class Update(LoginRequiredMixin,
+             HasAccessToSongMixin,
+             MediaPlayerMixin,
+             generic.UpdateView):
+    model = Song
+    fields = ["title", 'description', 'license', 'published']
+    template_name = 'songs/song_update.html'
+    context_object_name = 'song'
+
+    def get_success_url(self):
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
 
 
 class Create(LoginRequiredMixin, generic.CreateView):
@@ -72,28 +81,6 @@ class Delete(LoginRequiredMixin,
         return reverse_lazy('users:profile_detail', kwargs={
             'username': self.request.user
         })
-
-
-class Update(LoginRequiredMixin,
-             HasAccessToSongMixin,
-             generic.UpdateView):
-    model = Song
-    fields = ["title", 'description', 'license', 'published']
-    template_name = 'songs/song_update.html'
-    context_object_name = 'song'
-
-    def get_success_url(self):
-        return reverse('songs:edit', kwargs={
-            'pk': self.kwargs['pk']
-        })
-
-    def get_context_data(self, **kwargs):
-        context = super(Update, self).get_context_data(**kwargs)
-        song = context['song']
-        context['tracks'] = song.track_set.all()
-        context['tracks_json'] = serializers.serialize("json", context['tracks'])
-
-        return context
 
 
 class TrackCreate(LoginRequiredMixin,
