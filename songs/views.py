@@ -26,9 +26,9 @@ class Index(generic.ListView):
         requesting_tracks = self.request.GET.get('requesting_tracks')
 
         if requesting_tracks:
-            return Song.objects.filter(published=False, tracks__public=True).distinct("id")
+            return Song.objects.filter(track__public=True).distinct("id")
         else:
-            return Song.objects.filter(published=True)
+            return Song.objects.all()
 
 
 class Detail(generic.DetailView):
@@ -38,7 +38,7 @@ class Detail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(Detail, self).get_context_data(**kwargs)
         song = context['song']
-        context['tracks'] = song.tracks.all()
+        context['tracks'] = song.track_set.all()
         context['tracks_json'] = serializers.serialize('json', context['tracks'])
         return context
 
@@ -90,7 +90,7 @@ class Update(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(Update, self).get_context_data(**kwargs)
         song = context['song']
-        context['tracks'] = song.tracks.all()
+        context['tracks'] = song.track_set.all()
         context['tracks_json'] = serializers.serialize("json", context['tracks'])
 
         return context
@@ -135,10 +135,9 @@ class TrackCreate(LoginRequiredMixin,
                 })
 
         form.instance.created_by = user
+        form.instance.song = song
 
-        track = form.save()
-        song.tracks.add(track)
-        song.save()
+        form.save()
 
         return redirect(self.get_success_url())
 
@@ -284,7 +283,7 @@ def download_song(request, pk):
     s3_client = boto3.client('s3')
 
     song = Song.objects.get(pk=pk)
-    downloadable_tracks = song.tracks.exclude(public=True)
+    downloadable_tracks = song.track_set.exclude(public=True)
 
     temp_download_dir = mkdtemp()
 

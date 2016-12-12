@@ -42,7 +42,7 @@
                             <p class="song__description">{{ song.description | truncatechars:100 }}</p>
                         {% endif %}
                         <ul class="song__requested-tracks clearfix">
-                            {% for track in song.tracks.all %}
+                            {% for track in song.track_set.all %}
                                 {% if track.public %}
                                     <li class="song__requested-track">
                                         <span class="label label-default">{{ track.instrument }}</span>

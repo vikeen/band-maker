@@ -5,25 +5,6 @@ from django.contrib.auth.models import User
 from .licenses import license
 
 
-class Track(models.Model):
-    instrument = models.CharField(max_length=100)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    audio_url = models.CharField(max_length=500, null=True, blank=True)
-    audio_name = models.CharField(max_length=500, null=True, blank=True)
-    audio_size = models.IntegerField(null=True, blank=True)
-    audio_content_type = models.CharField(max_length=100, null=True, blank=True)
-    public = models.BooleanField(default=False)
-    likes = models.IntegerField(default=0)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
-                               max_length=100)
-    uuid = models.UUIDField(default=uuid.uuid4)
-
-    def get_license_information(self):
-        return license[self.license]
-
-
 class Song(models.Model):
     title = models.CharField(max_length=200)
     likes = models.IntegerField(default=0)
@@ -31,7 +12,6 @@ class Song(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    tracks = models.ManyToManyField(Track)
     media_url = models.CharField(max_length=500, null=True, blank=True)
     description = models.TextField(max_length=500, null=True, blank=True)
     published = models.BooleanField(default=False)
@@ -41,6 +21,26 @@ class Song(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_license_information(self):
+        return license[self.license]
+
+
+class Track(models.Model):
+    instrument = models.CharField(max_length=100)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    audio_url = models.CharField(max_length=500, null=True, blank=True)
+    audio_name = models.CharField(max_length=500, null=True, blank=True)
+    audio_size = models.IntegerField(null=True, blank=True)
+    audio_content_type = models.CharField(max_length=100, null=True, blank=True)
+    public = models.BooleanField(default=False)
+    likes = models.IntegerField(default=0)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
+                               max_length=100)
+    uuid = models.UUIDField(default=uuid.uuid4)
 
     def get_license_information(self):
         return license[self.license]
