@@ -20,6 +20,9 @@ urlpatterns = [
         name="track_update"),
 
     # track requests
-    url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/create', views.TrackRequestCreate.as_view(),
+    url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/create$', views.TrackRequestCreate.as_view(),
+        name="track_request_create"),
+    url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/(?P<track_request_id>[0-9]+)$',
+        views.TrackRequestDetail.as_view(),
         name="track_request_create")
 ]

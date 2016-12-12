@@ -13,7 +13,7 @@ from django.shortcuts import redirect
 from django.views import generic
 from .licenses import license
 from .models import Song, Track, TrackRequest
-from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin
+from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin, SongMixin
 from tempfile import mkdtemp
 from shutil import rmtree
 
@@ -85,6 +85,7 @@ class Delete(LoginRequiredMixin,
 
 class TrackCreate(LoginRequiredMixin,
                   HasAccessToSongMixin,
+                  SongMixin,
                   generic.CreateView):
     model = Track
     fields = ['instrument', 'license', 'public']
@@ -128,12 +129,6 @@ class TrackCreate(LoginRequiredMixin,
 
         return redirect(self.get_success_url())
 
-    def get_context_data(self, **kwargs):
-        context = super(TrackCreate, self).get_context_data(**kwargs)
-        context['song'] = Song.objects.get(id=self.kwargs['pk'])
-        context['song_json'] = serializers.serialize("json", [context['song'], ])
-        return context
-
     def get_success_url(self):
         return reverse_lazy('songs:edit', kwargs={
             'pk': self.kwargs['pk']
@@ -142,18 +137,12 @@ class TrackCreate(LoginRequiredMixin,
 
 class TrackDelete(LoginRequiredMixin,
                   HasAccessToTrack,
+                  SongMixin,
                   generic.DeleteView):
     model = Track
     template_name = 'songs/track_confirm_delete.html'
     context_object_name = 'track'
-
-    def get_object(self, queryset=None):
-        return Track.objects.get(pk=self.kwargs['track_id'])
-
-    def get_context_data(self, **kwargs):
-        context = super(TrackDelete, self).get_context_data(**kwargs)
-        context['song'] = Song.objects.get(id=self.kwargs['pk'])
-        return context
+    pk_url_kwarg = 'track_id'
 
     def get_success_url(self):
         return reverse_lazy('songs:edit', kwargs={
@@ -163,11 +152,13 @@ class TrackDelete(LoginRequiredMixin,
 
 class TrackUpdate(LoginRequiredMixin,
                   HasAccessToTrack,
+                  SongMixin,
                   generic.UpdateView):
     model = Track
     fields = ['instrument', 'license', 'public']
     template_name = 'songs/track_update.html'
     context_object_name = 'track'
+    pk_url_kwarg = 'track_id'
 
     def form_valid(self, form):
         audio_file = self.request.FILES.get('audio')
@@ -204,12 +195,8 @@ class TrackUpdate(LoginRequiredMixin,
 
         return super(TrackUpdate, self).form_valid(form)
 
-    def get_object(self, queryset=None):
-        return Track.objects.get(pk=self.kwargs['track_id'])
-
     def get_context_data(self, **kwargs):
         context = super(TrackUpdate, self).get_context_data(**kwargs)
-        context['song'] = Song.objects.get(pk=self.kwargs['pk'])
         context['track_json'] = serializers.serialize("json", [context['track'], ])
         context['song_json'] = serializers.serialize("json", [context['song'], ])
         return context
@@ -221,6 +208,7 @@ class TrackUpdate(LoginRequiredMixin,
 
 
 class TrackRequestCreate(LoginRequiredMixin,
+                         SongMixin,
                          generic.CreateView):
     model = TrackRequest
     fields = []
@@ -255,13 +243,21 @@ class TrackRequestCreate(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(TrackRequestCreate, self).get_context_data(**kwargs)
         context['track'] = Track.objects.get(pk=self.kwargs['track_id'])
-        context['song'] = Song.objects.get(pk=self.kwargs['pk'])
         return context
 
     def get_success_url(self):
         return reverse('songs:detail', kwargs={
             'pk': self.kwargs['pk']
         })
+
+
+class TrackRequestDetail(LoginRequiredMixin,
+                         SongMixin,
+                         generic.DetailView):
+    model = TrackRequest
+    template_name = 'songs/track_request_detail.html'
+    context_object_name = 'track_request'
+    pk_url_kwarg = 'track_request_id'
 
 
 @login_required()

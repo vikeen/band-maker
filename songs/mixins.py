@@ -44,6 +44,13 @@ class HasAccessToTrack(object):
             return redirect(self.get_redirect_url())
 
 
+class SongMixin(ContextMixin):
+    def get_context_data(self, **kwargs):
+        context = super(SongMixin, self).get_context_data(**kwargs)
+        context['song'] = Song.objects.get(pk=self.kwargs['pk'])
+        return context
+
+
 class MediaPlayerMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super(MediaPlayerMixin, self).get_context_data(**kwargs)
