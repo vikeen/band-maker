@@ -8,19 +8,21 @@
             {% include 'users/user_detail_sidebar.html' %}
         </div>
         <div class="col-sm-9">
-            {% include 'users/user_detail_navigation.html' with active_link='skills' %}
+            {% include 'users/user_detail_navigation.html' with active_link='track_requests' %}
             <section class="user-profile__skill-list content-block">
                 <table class="table table-bordered">
                     <thread>
                         <tr>
-                            <th>Name</th>
+                            <th>Song</th>
+                            <th>Instrument</th>
                         </tr>
                     </thread>
                     <tbody>
-                    {% for skill in skill_list %}
+                    {% for track_request in track_request_list %}
                         <tr>
+                            <td>{{ track_request.track.song.title }}</td>
                             <td>
-                                {{ skill.get_name_display }}
+                                {{ track_request.track.instrument }}
                             </td>
                         </tr>
                     {% endfor %}

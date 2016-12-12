@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.views import generic
-from songs.models import Song
+from songs.models import Song, TrackRequest
 from .models import Skill
 
 
@@ -12,6 +12,12 @@ class ProfileDetail(generic.DetailView):
 
     def get_object(self, queryset=None):
         return User.objects.get(username=self.kwargs['username'])
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileDetail, self).get_context_data(**kwargs)
+        context['view_user'] = User.objects.get(username=self.kwargs['username'])
+        context = set_user_stats_context(context['view_user'], context)
+        return context
 
 
 class ProfileSongIndex(generic.ListView):
@@ -33,6 +39,7 @@ class ProfileSongIndex(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ProfileSongIndex, self).get_context_data(**kwargs)
         context['view_user'] = User.objects.get(username=self.kwargs['username'])
+        context = set_user_stats_context(context['view_user'], context)
         return context
 
 
@@ -46,6 +53,22 @@ class ProfileSkillIndex(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ProfileSkillIndex, self).get_context_data(**kwargs)
         context['view_user'] = User.objects.get(username=self.kwargs['username'])
+        context = set_user_stats_context(context['view_user'], context)
+        return context
+
+
+class ProfileTrackRequestIndex(generic.ListView):
+    model = TrackRequest
+    template_name = 'users/user_detail_track_request_list.html'
+    context_object_name = 'track_request_list'
+
+    def get_queryset(self):
+        return TrackRequest.objects.filter(track__song__created_by__username=self.kwargs['username'])
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileTrackRequestIndex, self).get_context_data(**kwargs)
+        context['view_user'] = User.objects.get(username=self.kwargs['username'])
+        context = set_user_stats_context(context['view_user'], context)
         return context
 
 
@@ -98,3 +121,11 @@ class AccountSkillDelete(generic.DeleteView):
         return reverse('users:account_skills', kwargs={
             'username': self.request.user
         })
+
+
+def set_user_stats_context(user, context):
+    context['song_track_request_count'] = TrackRequest.objects.filter(
+        track__created_by=user).count()
+    context['skill_count'] = user.skill_set.count()
+    context['song_count'] = user.song_set.count()
+    return context
