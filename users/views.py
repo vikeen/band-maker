@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.views import generic
 from songs.models import Song, TrackRequest
 from .models import Skill
+from .mixins import ProfileMixin
 
 
-class ProfileDetail(generic.DetailView):
+class ProfileDetail(ProfileMixin, generic.DetailView):
     model = User
     template_name = 'users/user_detail_overview.html'
     context_object_name = 'view_user'
@@ -13,14 +14,8 @@ class ProfileDetail(generic.DetailView):
     def get_object(self, queryset=None):
         return User.objects.get(username=self.kwargs['username'])
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileDetail, self).get_context_data(**kwargs)
-        context['view_user'] = User.objects.get(username=self.kwargs['username'])
-        context = set_user_stats_context(context['view_user'], context)
-        return context
 
-
-class ProfileSongIndex(generic.ListView):
+class ProfileSongIndex(ProfileMixin, generic.ListView):
     template_name = 'users/user_detail_song_list.html'
     context_object_name = 'song_list'
 
@@ -36,40 +31,22 @@ class ProfileSongIndex(generic.ListView):
 
         return Song.objects.filter(**song_list_filter)
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileSongIndex, self).get_context_data(**kwargs)
-        context['view_user'] = User.objects.get(username=self.kwargs['username'])
-        context = set_user_stats_context(context['view_user'], context)
-        return context
 
-
-class ProfileSkillIndex(generic.ListView):
+class ProfileSkillIndex(ProfileMixin, generic.ListView):
     template_name = 'users/user_detail_skill_list.html'
     context_object_name = 'skill_list'
 
     def get_queryset(self):
         return User.objects.get(username=self.kwargs['username']).skill_set.all()
 
-    def get_context_data(self, **kwargs):
-        context = super(ProfileSkillIndex, self).get_context_data(**kwargs)
-        context['view_user'] = User.objects.get(username=self.kwargs['username'])
-        context = set_user_stats_context(context['view_user'], context)
-        return context
 
-
-class ProfileTrackRequestIndex(generic.ListView):
+class ProfileTrackRequestIndex(ProfileMixin, generic.ListView):
     model = TrackRequest
     template_name = 'users/user_detail_track_request_list.html'
     context_object_name = 'track_request_list'
 
     def get_queryset(self):
         return TrackRequest.objects.filter(track__song__created_by__username=self.kwargs['username'])
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileTrackRequestIndex, self).get_context_data(**kwargs)
-        context['view_user'] = User.objects.get(username=self.kwargs['username'])
-        context = set_user_stats_context(context['view_user'], context)
-        return context
 
 
 class AccountProfileUpdate(generic.UpdateView):
@@ -121,11 +98,3 @@ class AccountSkillDelete(generic.DeleteView):
         return reverse('users:account_skills', kwargs={
             'username': self.request.user
         })
-
-
-def set_user_stats_context(user, context):
-    context['song_track_request_count'] = TrackRequest.objects.filter(
-        track__created_by=user).count()
-    context['skill_count'] = user.skill_set.count()
-    context['song_count'] = user.song_set.count()
-    return context
