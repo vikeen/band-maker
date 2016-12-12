@@ -5,14 +5,7 @@
 {% block content %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <ul class="nav nav-pills">
-                <li role="presentation">
-                    <a href="{% url 'users:account_edit' user.username %}">Profile</a>
-                </li>
-                <li role="presentation" class="active">
-                    <a href="{% url 'users:account_skills' user.username %}">Skills</a>
-                </li>
-            </ul>
+            {% include 'users/user_account_navigation.html' with active_link='skills' %}
         </div>
         <div class="panel-body">
             <form action="" method="post" class="form-horizontal">

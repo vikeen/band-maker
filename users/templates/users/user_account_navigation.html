@@ -1,0 +1,8 @@
+<ul class="nav nav-pills">
+    <li role="presentation" {% if active_link == 'profile' %}class="active"{% endif %}>
+        <a href="{% url 'users:account_edit' user.username %}">Public Profile</a>
+    </li>
+    <li role="presentation" {% if active_link == 'skills' %}class="active"{% endif %}>
+        <a href="{% url 'users:account_skills' user.username %}">Skills</a>
+    </li>
+</ul>

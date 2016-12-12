@@ -9,42 +9,6 @@
         </div>
         <div class="col-sm-9">
             {% include 'users/user_detail_navigation.html' with active_link='overview' %}
-            {#            <div class="panel panel-default">#}
-            {#                <div class="panel-heading">#}
-            {#                    <h2 class="panel-title">Songs</h2>#}
-            {#                </div>#}
-            {#                <div class="panel-body">#}
-            {#                    <div class="row">#}
-            {#                        <section class="col-sm-6">#}
-            {#                            <h3>Published</h3>#}
-            {#                            <ul class="list-group">#}
-            {#                                {% for song in published_song_list %}#}
-            {#                                    <li class="list-group-item">#}
-            {#                                        {% if request.resolver_match.kwargs.username == user.username %}#}
-            {#                                            <a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a>#}
-            {#                                        {% else %}#}
-            {#                                            <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>#}
-            {#                                        {% endif %}#}
-            {#                                    </li>#}
-            {#                                {% endfor %}#}
-            {#                            </ul>#}
-            {#                        </section>#}
-            {#                        <section class="col-sm-6">#}
-            {#                            <h3>Work In Progress</h3>#}
-            {#                            <ul class="list-group">#}
-            {#                                {% for song in unpublished_song_list %}#}
-            {#                                    <li class="list-group-item">#}
-            {#                                        {% if request.resolver_match.kwargs.username == user.username %}#}
-            {#                                            <a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a>#}
-            {#                                        {% else %}#}
-            {#                                            <a href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>#}
-            {#                                        {% endif %}#}
-            {#                                    </li>#}
-            {#                                {% endfor %}#}
-            {#                            </ul>#}
-            {#                        </section>#}
-            {#                    </div>#}
-            {#                </div>#}
         </div>
     </div>
     </div>
