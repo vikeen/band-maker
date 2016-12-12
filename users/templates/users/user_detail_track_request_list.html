@@ -15,6 +15,8 @@
                         <tr>
                             <th>Song</th>
                             <th>Instrument</th>
+                            <th>Status</th>
+                            <th>Created</th>
                         </tr>
                     </thread>
                     <tbody>
@@ -24,6 +26,8 @@
                             <td>
                                 {{ track_request.track.instrument }}
                             </td>
+                            <td>{{ track_request.get_status_display }}</td>
+                            <td>{{ track_request.created }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

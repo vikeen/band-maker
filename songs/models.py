@@ -47,18 +47,18 @@ class Song(models.Model):
 
 
 class TrackRequest(models.Model):
-    STATUS = {
-        'PENDING': 0,
-        'APPROVED': 1,
-        'DECLINED': 2
-    }
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('declined', 'Declined')
+    )
 
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     audio_url = models.CharField(max_length=500)
     audio_name = models.CharField(max_length=500, null=True, blank=True)
     audio_size = models.IntegerField(null=True, blank=True)
     audio_content_type = models.CharField(max_length=100, null=True, blank=True)
-    status = models.IntegerField(default=0)
+    status = models.CharField(default='pending', max_length=100, choices=STATUS_CHOICES)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
