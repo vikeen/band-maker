@@ -15,29 +15,29 @@ class SongTestCase(TestCase):
         self.client.login(username='user', password='password')
 
 
-class Index(SongTestCase):
+class IndexSongTextCase(SongTestCase):
     def test_song_list_loads(self):
         response = self.client.get(reverse("songs:index"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'songs/song_list.html')
 
 
-class Create(SongTestCase):
+class CreateSongTestCase(SongTestCase):
     def setUp(self):
-        return super(Create, self).setUp()
+        return super(CreateSongTestCase, self).setUp()
 
     def test_song_create_denies_anonymous(self):
         response = self.client.get(reverse("songs:create"))
         self.assertRedirects(response, '%s/?next=%s' % (reverse('accounts:login'), reverse("songs:create")))
 
     def test_song_create_loads(self):
-        super(Create, self).login()
+        super(CreateSongTestCase, self).login()
         response = self.client.get(reverse("songs:create"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'songs/song_create.html')
 
     def test_song_create_submits(self):
-        super(Create, self).login()
+        super(CreateSongTestCase, self).login()
         response = self.client.post(reverse("songs:create"), {
             'title': 'song title',
             'description': 'song description',
@@ -54,9 +54,9 @@ class Create(SongTestCase):
         self.assertEqual(song.created_by, self.user)
 
 
-class Delete(SongTestCase):
+class DeleteSongTestCase(SongTestCase):
     def setUp(self):
-        super(Delete, self).setUp()
+        super(DeleteSongTestCase, self).setUp()
         self.song = Song.objects.create(title='title', description='description', created_by=self.user)
 
     def test_song_delete_denies_anonymous(self):
@@ -73,7 +73,7 @@ class Delete(SongTestCase):
         self.assertRedirects(response, reverse('songs:detail', kwargs={'pk': self.song.pk}))
 
     def test_song_delete_submits(self):
-        super(Delete, self).login()
+        super(DeleteSongTestCase, self).login()
         response = self.client.post(reverse('songs:delete', kwargs={'pk': self.song.pk}))
 
         self.assertRedirects(response, reverse('users:profile_detail', kwargs={
@@ -86,9 +86,9 @@ class Delete(SongTestCase):
             self.assertRaises(ObjectDoesNotExist)
 
 
-class Update(SongTestCase):
+class UpdateSongTestCase(SongTestCase):
     def setUp(self):
-        super(Update, self).setUp()
+        super(UpdateSongTestCase, self).setUp()
         self.song = Song.objects.create(title='song title', description='song description', created_by=self.user)
 
     def test_song_update_denies_anonymous(self):
@@ -105,7 +105,7 @@ class Update(SongTestCase):
         self.assertRedirects(response, reverse('songs:detail', kwargs={'pk': self.song.pk}))
 
     def test_song_update_submits(self):
-        super(Update, self).login()
+        super(UpdateSongTestCase, self).login()
         response = self.client.post(reverse("songs:edit", kwargs={'pk': self.song.pk}), {
             'title': 'new song title',
             'description': 'new song description',
