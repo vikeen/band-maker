@@ -12,6 +12,8 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.views import generic
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_protect
 from .licenses import license
 from .models import Song, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin, SongMixin
@@ -270,6 +272,40 @@ class TrackRequestDetail(LoginRequiredMixin,
 
 
 @login_required()
+@require_http_methods(["POST"])
+@csrf_protect
+def approve_track_request(request, *args, **kwargs):
+    track_request = TrackRequest.objects.get(pk=kwargs['track_request_id'])
+    track = track_request.track
+
+    # TODO: move s3 resource as well
+    track.audio_content_type = track_request.audio_content_type
+    track.audio_name = track_request.audio_name
+    track.audio_size = track_request.audio_size
+    track.audio_url = track_request.audio_url
+    track.public = False
+    track.created_by = track_request.created_by
+    track.save()
+
+    track_request.status = 'approved'
+    track_request.save()
+
+    return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
+
+
+@login_required()
+@require_http_methods(["POST"])
+@csrf_protect
+def decline_track_request(request, *args, **kwargs):
+    track_request = TrackRequest.objects.get(pk=kwargs['track_request_id'])
+    track_request.status = 'declined'
+    track_request.save()
+
+    return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
+
+
+@login_required()
+@require_http_methods(["GET"])
 def download_song(request, pk):
     s3_bucket = os.environ.get('S3_BUCKET')
     s3_client = boto3.client('s3')

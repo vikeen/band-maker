@@ -24,5 +24,9 @@ urlpatterns = [
         name="track_request_create"),
     url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/(?P<track_request_id>[0-9]+)$',
         views.TrackRequestDetail.as_view(),
-        name="track_request_detail")
+        name="track_request_detail"),
+    url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/(?P<track_request_id>[0-9]+)/approve$',
+        views.approve_track_request, name="track_request_approve"),
+    url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/(?P<track_request_id>[0-9]+)/decline$',
+        views.decline_track_request, name="track_request_decline")
 ]
