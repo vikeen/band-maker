@@ -298,10 +298,13 @@ def approve_track_request(request, *args, **kwargs):
 @csrf_protect
 def decline_track_request(request, *args, **kwargs):
     track_request = TrackRequest.objects.get(pk=kwargs['track_request_id'])
+
     track_request.status = 'declined'
     track_request.save()
 
-    return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
+    return redirect(reverse('users:profile_track_requests', kwargs={
+        'username': request.user.username
+    }))
 
 
 @login_required()
