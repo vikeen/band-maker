@@ -13,8 +13,8 @@
                 <table class="table table-bordered">
                     <thread>
                         <tr>
+                            <th>Track</th>
                             <th>Song</th>
-                            <th>Instrument</th>
                             <th>Status</th>
                             <th>Created</th>
                         </tr>
@@ -23,12 +23,12 @@
                     {% for track_request in track_request_list %}
                         <tr>
                             <td>
+                                <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                            </td>
+                            <td>
                                 <a href="{% url 'songs:detail' track_request.track.song.pk %}">
                                     {{ track_request.track.song.title }}
                                 </a>
-                            </td>
-                            <td>
-                                {{ track_request.track.instrument }}
                             </td>
                             <td>{{ track_request.get_status_display }}</td>
                             <td>{{ track_request.created }}</td>

@@ -9,6 +9,7 @@ from django.core.files.base import File
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.views import generic
 from .licenses import license
@@ -198,7 +199,6 @@ class TrackUpdate(LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(TrackUpdate, self).get_context_data(**kwargs)
         context['track_json'] = serializers.serialize("json", [context['track'], ])
-        context['song_json'] = serializers.serialize("json", [context['song'], ])
         return context
 
     def get_success_url(self):
@@ -258,6 +258,15 @@ class TrackRequestDetail(LoginRequiredMixin,
     template_name = 'songs/track_request_detail.html'
     context_object_name = 'track_request'
     pk_url_kwarg = 'track_request_id'
+
+    def get_context_data(self, **kwargs):
+        context = super(TrackRequestDetail, self).get_context_data(**kwargs)
+
+        # only grab confirmed tracks and the track which is being viewed for a request
+        context['tracks'] = context['song'].track_set.filter(Q(public=False) | Q(pk=self.kwargs['track_id']))
+        context['tracks_json'] = serializers.serialize("json", context['tracks'])
+        context['track_request_json'] = serializers.serialize("json", [context['track_request'], ])
+        return context
 
 
 @login_required()

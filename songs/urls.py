@@ -24,5 +24,5 @@ urlpatterns = [
         name="track_request_create"),
     url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/(?P<track_request_id>[0-9]+)$',
         views.TrackRequestDetail.as_view(),
-        name="track_request_create")
+        name="track_request_detail")
 ]

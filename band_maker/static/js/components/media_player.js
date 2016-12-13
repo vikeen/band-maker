@@ -3,9 +3,11 @@ export class MediaPlayer {
         const self = this;
 
         self.$element = $element;
-        self.trackRequests = trackRequests;
+        self.tracks = tracks || [];
+        self.trackRequests = trackRequests || [];
 
-        self.loadTracks(tracks);
+
+        self.loadTracks();
 
         const $controls = {
             '$restart': self.$element.find('.media-player__control--restart'),
@@ -22,12 +24,13 @@ export class MediaPlayer {
         self.$element.find(".media-player__track-changer").change();
     }
 
-    loadTracks(tracks) {
+    loadTracks() {
         const self = this;
 
         self.trackLoadingProgressMap = {};
 
-        self.tracks = tracks.map(__createAudioWave.bind(self));
+        __loadTrackRequests.bind(self)();
+        self.tracks = self.tracks.map(__createAudioWave.bind(self));
     }
 
     replaceTrackById(trackId, newTrack) {
@@ -194,6 +197,20 @@ function __createAudioWave(track) {
 // //     // PRIVATE API
 // //
 // //
+
+function __loadTrackRequests() {
+    const self = this;
+
+    self.trackRequests.forEach(trackRequest => {
+        const matchingTrack = self.tracks.filter(track => {
+            return track.pk === trackRequest.fields.track
+        })[0];
+
+        if (matchingTrack) {
+            matchingTrack.fields.audio_url = trackRequest.fields.audio_url;
+        }
+    });
+}
 
 function __onTrackReadyEvent(track) {
     const self = this;
