@@ -1,0 +1,102 @@
+{% load gravatar %}
+
+{% if tracks %}
+    <script>
+        $(document).ready(function () {
+            window.bm.mediaPlayer = new bm.components.MediaPlayer(
+                $(".media-player"),
+                    {% if tracks_json %}{{ tracks_json | safe }}{% else %}[]{% endif %},
+                    {% if track_request_json %}{{ track_request_json | safe }}{% else %}[]{% endif %});
+        })
+    </script>
+    <div class="media-player content-block">
+        <section class="media-player___tracks">
+            {% for track in tracks %}
+                <article
+                        class="media-player__track {% if not track.audio_url %}media-player__track--no-media{% endif %}"
+                        data-track-id="{{ track.pk }}">
+                    <div class="media-player__track-metadata">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="{% url 'users:profile_detail' track.created_by.username %}">
+                                    <img src="{% gravatar_url track.created_by.email 40 %}"
+                                         alt="{{ track.created_by.username }}"/>
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                {% if song.created_by == request.user %}
+                                    <a href="{% url 'songs:track_update' song.pk track.pk %}">
+                                        {{ track.instrument }}
+                                    </a>
+                                {% else %}
+                                    {{ track.instrument }}
+                                {% endif %}
+                                <ul class="media-player__track-controls clearfix">
+                                    <li class="media-player__track-control media-player__track-control--mute">
+                                        <button type="button"
+                                                class="btn btn-default media-player__track-control-action"
+                                                {% if not track.audio_url %}disabled{% endif %}>
+                                            <i class="glyphicon glyphicon-volume-off"></i>
+                                        </button>
+                                    </li>
+                                    <li class="media-player__track-control media-player__track-control--solo">
+                                        <button type="button"
+                                                class="btn btn-default media-player__track-control-action"
+                                                {% if not track.audio_url %}disabled{% endif %}>
+                                            <i class="glyphicon glyphicon-headphones"></i>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media-player__track-waveform-container">
+                        <div id="waveform-{{ track.pk }}" class="media-player__track-waveform">
+                            {% if not track.audio_url %}
+                                <a class="btn btn-success btn-xs media-player__submit-track-request"
+                                   href="{% url 'songs:track_request_create' song.pk track.pk %}">Submit
+                                    Track</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+        <div class="media-player__progress">
+            <div class="progress">
+                <div id="progress" class="progress-bar" role="progressbar"></div>
+            </div>
+        </div>
+        <ul class="media-player__controls clearfix">
+            <li class="media-player__control media-player__control--restart">
+                <i class="glyphicon glyphicon-step-backward"></i>
+            </li>
+            <li class="media-player__control media-player__control--play">
+                <i class="glyphicon glyphicon-play"></i>
+            </li>
+            <li class="media-player__control media-player__control--pause">
+                <i class="glyphicon glyphicon-pause"></i>
+            </li>
+            <li class="media-player__control media-player__control--duration"></li>
+        </ul>
+    </div>
+    {% if show_actions %}
+        <div class="well">
+            <a href="{% url 'songs:download' song.pk %}">
+                <button type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-download"></i> Download
+                </button>
+            </a>
+            {% if add_track_action and song.created_by == request.user %}
+                <a href="{% url "songs:track_create" song.id %}" class="btn btn-warning">
+                    <i class="glyphicon glyphicon-plus"></i> Add Track
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% else %}
+    <p class="text-center">
+        <i class="glyphicon glyphicon-music"></i>
+        <b>No tracks uploaded yet</b>
+    </p>
+{% endif %}
