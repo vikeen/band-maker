@@ -8,6 +8,7 @@ from django.core import serializers
 from django.core.files.base import File
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Q
 from django.shortcuts import redirect
@@ -50,6 +51,7 @@ class Update(LoginRequiredMixin,
     context_object_name = 'song'
 
     def get_success_url(self):
+        messages.success(self.request, 'Updated %s.' % self.object.title)
         return reverse('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
@@ -69,6 +71,7 @@ class Create(LoginRequiredMixin,
         return super(Create, self).form_valid(form)
 
     def get_success_url(self):
+        messages.success(self.request, 'Created %s.' % self.object.title)
         return reverse('songs:edit', kwargs={
             'pk': self.object.pk
         })
@@ -81,6 +84,7 @@ class Delete(LoginRequiredMixin,
     template_name = 'songs/song_confirm_delete.html'
 
     def get_success_url(self):
+        messages.success(self.request, 'Deleted %s.' % self.object.title)
         return reverse('users:profile_detail', kwargs={
             'username': self.request.user
         })
@@ -128,11 +132,10 @@ class TrackCreate(LoginRequiredMixin,
         form.instance.created_by = user
         form.instance.song = song
 
-        form.save()
-
-        return redirect(self.get_success_url())
+        return super(TrackCreate, self).form_valid(form)
 
     def get_success_url(self):
+        messages.success(self.request, 'Created track - %s.' % self.object.instrument)
         return reverse_lazy('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
@@ -148,6 +151,7 @@ class TrackDelete(LoginRequiredMixin,
     pk_url_kwarg = 'track_id'
 
     def get_success_url(self):
+        messages.success(self.request, 'Deleted track - %s.' % self.object.instrument)
         return reverse_lazy('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
@@ -204,6 +208,7 @@ class TrackUpdate(LoginRequiredMixin,
         return context
 
     def get_success_url(self):
+        messages.success(self.request, 'Updated track - %s.' % self.object.instrument)
         return reverse_lazy('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
