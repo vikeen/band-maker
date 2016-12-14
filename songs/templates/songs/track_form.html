@@ -47,32 +47,32 @@
         <input type="file" class="js-track-upload__media" id="id_track" name="audio" accept=".mp3"/>
     </div>
 </div>
-<div class="form-group row">
-    <div class="col-sm-6">
-        <label for="id_license">License</label>
-        {% render_field form.license class+="form-control" %}
-        <span class="help-block">
-                    <a href="#" data-toggle="modal" data-target="#licenseModal">view license details</a>
-                </span>
-        {% if form.license.errors %}
-            <p class="errors">{{ form.license.errors.as_text }}</p>
-        {% endif %}
-        <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">{{ track.get_license_information.name }}</h4>
-                        <a href="{{ track.get_license_information.link }}" target="_blank">canonical URL for the
-                            license</a>
-                    </div>
-                    <pre>{{ track.get_license_information.text }}</pre>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{#<div class="form-group row">#}
+{#    <div class="col-sm-6">#}
+{#        <label for="id_license">License</label>#}
+{#        {% render_field form.license class+="form-control" %}#}
+{#        <span class="help-block">#}
+{#                    <a href="#" data-toggle="modal" data-target="#licenseModal">view license details</a>#}
+{#                </span>#}
+{#        {% if form.license.errors %}#}
+{#            <p class="errors">{{ form.license.errors.as_text }}</p>#}
+{#        {% endif %}#}
+{#        <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog">#}
+{#            <div class="modal-dialog" role="document">#}
+{#                <div class="modal-content">#}
+{#                    <div class="modal-header">#}
+{#                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span#}
+{#                                aria-hidden="true">&times;</span></button>#}
+{#                        <h4 class="modal-title">{{ track.get_license_information.name }}</h4>#}
+{#                        <a href="{{ track.get_license_information.link }}" target="_blank">canonical URL for the#}
+{#                            license</a>#}
+{#                    </div>#}
+{#                    <pre>{{ track.get_license_information.text }}</pre>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
 <div class="form-group">
     <button class="btn btn-primary" type="submit">Save</button>
 </div>

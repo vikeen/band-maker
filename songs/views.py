@@ -46,7 +46,7 @@ class Update(LoginRequiredMixin,
              MediaPlayerMixin,
              generic.UpdateView):
     model = Song
-    fields = ["title", 'description', 'license', 'published']
+    fields = ["title", 'description', 'published']
     template_name = 'songs/song_update.html'
     context_object_name = 'song'
 
@@ -60,7 +60,7 @@ class Update(LoginRequiredMixin,
 class Create(LoginRequiredMixin,
              generic.CreateView):
     model = Song
-    fields = ['title', 'description', 'license']
+    fields = ['title', 'description']
     template_name = 'songs/song_create.html'
 
     def get_license_information(self):
@@ -95,7 +95,7 @@ class TrackCreate(LoginRequiredMixin,
                   SongMixin,
                   generic.CreateView):
     model = Track
-    fields = ['instrument', 'license', 'public']
+    fields = ['instrument', 'public']
     template_name = 'songs/track_create.html'
 
     def form_valid(self, form):
@@ -162,7 +162,7 @@ class TrackUpdate(LoginRequiredMixin,
                   SongMixin,
                   generic.UpdateView):
     model = Track
-    fields = ['instrument', 'license', 'public']
+    fields = ['instrument', 'public']
     template_name = 'songs/track_update.html'
     context_object_name = 'track'
     pk_url_kwarg = 'track_id'
@@ -346,7 +346,7 @@ def download_song(request, pk):
         archive.write(temp_download_file_path, track.audio_name)
 
     # add license to the download zip
-    archive.writestr('LICENSE.txt', license[song.license]['text'])
+    # archive.writestr('LICENSE.txt', license[song.license]['text'])
 
     logging.info('zip file created name: [%s] at path: [%s]' % (archive_file_name, archive_file_path))
     archive.close()

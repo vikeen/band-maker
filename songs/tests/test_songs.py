@@ -9,7 +9,8 @@ from ..models import Song
 class SongTestCase(TestCase):
     def setUp(self):
         self.user_creator = User.objects.create_user(
-            username='creator', email='creator@email.com', password='password')
+            username='creator',
+            email='creator@email.com', password='password')
         self.user_contributor = User.objects.create_user(
             username='contributor', email='contributor@gmail.com', password='password')
 
