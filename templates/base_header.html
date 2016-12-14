@@ -22,7 +22,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.id %}
                         <li>
-                            <a href="{% url 'songs:index' %}?requesting_tracks=on">Contribute</a>
+                            <a href="{% url 'songs:index' %}?accepting_contributions=on">Contribute</a>
                         </li>
                         <li>
                             <a href="{% url 'songs:create' %}">Create</a>

@@ -27,10 +27,10 @@ class Index(generic.ListView):
     context_object_name = 'song_list'
 
     def get_queryset(self):
-        requesting_tracks = self.request.GET.get('requesting_tracks')
+        accepting_contributions = self.request.GET.get('accepting_contributions')
 
-        if requesting_tracks:
-            return Song.objects.filter(track__public=True).distinct("id")
+        if accepting_contributions:
+            return Song.objects.exclude(created_by=self.request.user).filter(track__public=True).distinct("id")
         else:
             return Song.objects.all()
 
@@ -102,9 +102,9 @@ class TrackCreate(LoginRequiredMixin,
         audio_file = self.request.FILES.get('audio')
         user = self.request.user
         song = Song.objects.get(pk=self.kwargs['pk'])
-        requesting_tracks = form.instance.public
+        accepting_contributions = form.instance.public
 
-        if requesting_tracks:
+        if accepting_contributions:
             form.instance.public = True
             form.instance.audio_url = None
             form.instance.audio_name = None
@@ -171,9 +171,9 @@ class TrackUpdate(LoginRequiredMixin,
         audio_file = self.request.FILES.get('audio')
         user = self.request.user
         song = Song.objects.get(pk=self.kwargs['pk'])
-        requesting_tracks = form.instance.public
+        accepting_contributions = form.instance.public
 
-        if requesting_tracks:
+        if accepting_contributions:
             form.instance.public = True
             form.instance.audio_url = None
             form.instance.audio_name = None
