@@ -5,7 +5,7 @@
         <article class="comments__comment" id="c{{ comment.id }}">
             <div class="media">
                 <div class="media-left">
-                    <a href="{% url 'users:profile_detail' comment.user.username %}"
+                    <a href="{% url 'users:detail' comment.user.username %}"
                        title="{{ comment.user.username }}">
                         <img src="{% gravatar_url comment.user.email 50 %}"
                              alt="{{ comment.user.username }}"/>
@@ -13,7 +13,7 @@
                 </div>
                 <div class="media-body">
                     <div class="media-heading">
-                        <a href="{% url 'users:profile_detail' comment.user.username %}">{{ comment.user.username }}</a>
+                        <a href="{% url 'users:detail' comment.user.username %}">{{ comment.user.username }}</a>
                         <small>{{ comment.submit_date | timesince }}</small>
                     </div>
                     <p>{{ comment.comment }}</p>

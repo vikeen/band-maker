@@ -11,7 +11,7 @@
             {% include 'users/user_detail_navigation.html' with active_link='skills' %}
             <div class="row user-profile__song-search">
                 <form class="form-inline col-sm-9"
-                      action="{% url 'users:profile_skills' view_user.username %}"
+                      action="{% url 'users:skills' view_user.username %}"
                       method="GET">
                     <div class="form-group">
                         <input type="text" id="id_skill_name" name="name" class="form-control"

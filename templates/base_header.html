@@ -34,17 +34,17 @@
                             </span>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li>
-                                    <a href="{% url 'users:profile_detail' user.username %}">Your Profile</a>
+                                    <a href="{% url 'users:detail' user.username %}">Your Profile</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'users:profile_songs' user.username %}">Your Songs</a>
+                                    <a href="{% url 'users:songs' user.username %}">Your Songs</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'users:profile_contributions' user.username %}">Your Contributions</a>
+                                    <a href="{% url 'users:contributions' user.username %}">Your Contributions</a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="{% url 'users:profile_track_requests' user.username %}">Your Track
+                                    <a href="{% url 'users:track_requests' user.username %}">Your Track
                                         Requests</a>
                                 </li>
                                 <li class="divider"></li>

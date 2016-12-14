@@ -13,7 +13,7 @@
 
     <div class="media">
         <div class="media-left">
-            <a href="{% url 'users:profile_detail' track_request.created_by %}">
+            <a href="{% url 'users:detail' track_request.created_by %}">
                 <img src="{% gravatar_url track_request.created_by.email 50 %}"
                      title="{{ track_request.created_by.username }}"/>
             </a>

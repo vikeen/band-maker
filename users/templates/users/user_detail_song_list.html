@@ -11,7 +11,7 @@
             {% include 'users/user_detail_navigation.html' with active_link='songs' %}
             <div class="row user-profile__song-search">
                 <form class="form-inline col-sm-9"
-                      action="{% url 'users:profile_songs' view_user.username %}"
+                      action="{% url 'users:songs' view_user.username %}"
                       method="GET">
                     <div class="form-group">
                         <input type="text" id="id_title" name="title" class="form-control" placeholder="Search songs..."

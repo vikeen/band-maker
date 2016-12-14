@@ -80,7 +80,7 @@ class DeleteSongTestCase(SongTestCase):
         super().login(self.user_creator)
         response = self.client.post(self.song_delete_url)
 
-        self.assertRedirects(response, reverse('users:profile_detail', kwargs={
+        self.assertRedirects(response, reverse('users:detail', kwargs={
             'username': self.user_creator.username
         }))
 

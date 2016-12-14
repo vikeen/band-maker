@@ -23,7 +23,7 @@ class ProfileMixin(ContextMixin):
 
 class HasAccessToRestrictedUserProfile(object):
     def get_redirect_url(self):
-        return reverse('users:profile_detail', kwargs={
+        return reverse('users:detail', kwargs={
             'username': self.kwargs['username']
         })
 

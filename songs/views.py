@@ -94,7 +94,7 @@ class Delete(LoginRequiredMixin,
 
     def get_success_url(self):
         messages.success(self.request, 'Deleted %s.' % self.object.title)
-        return reverse('users:profile_detail', kwargs={
+        return reverse('users:detail', kwargs={
             'username': self.request.user
         })
 
@@ -319,7 +319,7 @@ def decline_track_request(request, *args, **kwargs):
 
     messages.info(request, 'Track request declined')
 
-    return redirect(reverse('users:profile_track_requests', kwargs={
+    return redirect(reverse('users:track_requests', kwargs={
         'username': request.user.username
     }))
 
