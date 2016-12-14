@@ -30,7 +30,7 @@ class Skill(models.Model):
             'Percussion', (
                 ('percussion_bass', 'Bass Drum'),
                 ('percussion_bongos', 'Bongos'),
-                ('percussion_cymbals', 'cymbals'),
+                ('percussion_cymbals', 'Cymbals'),
                 ('percussion_snare', 'Snare Drum'),
                 ('percussion_drum_set', 'Drum Set'),
             )
