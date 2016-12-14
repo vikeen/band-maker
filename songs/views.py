@@ -40,6 +40,15 @@ class Detail(MediaPlayerMixin,
     model = Song
     context_object_name = 'song'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        song = context['song']
+        song.views += 1
+        song.updated = song.updated
+        song.save()
+
+        return context
+
 
 class Update(LoginRequiredMixin,
              HasAccessToSongMixin,
