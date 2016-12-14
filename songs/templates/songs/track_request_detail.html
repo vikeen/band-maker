@@ -11,6 +11,20 @@
         <li class="active">{{ track_request.track.instrument }}</li>
     </ol>
 
+    <div class="media">
+        <div class="media-left">
+            <a href="{% url 'users:profile_detail' track_request.created_by %}">
+                <img src="{% gravatar_url track_request.created_by.email 50 %}"
+                     title="{{ track_request.created_by.username }}"/>
+            </a>
+        </div>
+        <div class="media-body">
+            <h1>Track Request
+                <small>{{ track_request.track.instrument }}</small>
+            </h1>
+        </div>
+    </div>
+
     {% include 'songs/media_player.html' with hide_actions=True hide_track_request_submit=True %}
     <div class="well">
         <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
