@@ -9,41 +9,54 @@
         </div>
         <div class="col-sm-9">
             {% include 'users/user_detail_navigation.html' with active_link='songs' %}
-            <form class="user-profile__song-search form-inline" action="{% url 'users:profile_songs' view_user.username %}"
-                  method="GET">
-                <div class="form-group">
-                    <input type="text" id="id_title" name="title" class="form-control" placeholder="Search songs..."
-                           value="{{ request.GET.title }}"/>
+            <div class="row user-profile__song-search">
+                <form class="form-inline col-sm-9"
+                      action="{% url 'users:profile_songs' view_user.username %}"
+                      method="GET">
+                    <div class="form-group">
+                        <input type="text" id="id_title" name="title" class="form-control" placeholder="Search songs..."
+                               value="{{ request.GET.title }}"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Search
+                        </button>
+                    </div>
+                </form>
+                <div class="col-sm-3">
+                    {% if request.user == view_user %}
+                        <a href="{% url 'songs:create' %}" class="btn btn-success pull-right">
+                            New Song</a>
+                    {% endif %}
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-search"></i>
-                        Search
-                    </button>
-                </div>
-            </form>
+            </div>
             <section class="user-profile__song-list">
-                {% for song in song_list %}
-                    <article class="user-profile__song">
-                        <h4 class="user-profile__song-title">
-                            <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
-                        </h4>
-                        <p class="song__description">{{ song.description | truncatechars:100 }}</p>
-                        <span>
+                {% if song_list %}
+                    {% for song in song_list %}
+                        <article class="user-profile__song">
+                            <h4 class="user-profile__song-title">
+                                <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
+                            </h4>
+                            <p class="song__description">{{ song.description | truncatechars:100 }}</p>
+                            <span>
                             <i class="glyphicon glyphicon-time"></i>
                                 Updated {{ song.updated | timesince }} ago
                         </span>
-                        {% if request.user == view_user %}
-                            <ul class="user-profile__song-admin-widgets">
-                                <li class="user-profile__song-admin-widget">
-                                    <a href="{% url 'songs:edit' song.pk %}" class="btn btn-primary btn-xs">
-                                        <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
-                                    </a>
-                                </li>
-                            </ul>
-                        {% endif %}
-                    </article>
-                {% endfor %}
+                            {% if request.user == view_user %}
+                                <ul class="user-profile__song-admin-widgets">
+                                    <li class="user-profile__song-admin-widget">
+                                        <a href="{% url 'songs:edit' song.pk %}" class="btn btn-primary btn-xs">
+                                            <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
+                                        </a>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </article>
+                    {% endfor %}
+                {% else %}
+                    We couldn't find any songs.
+                {% endif %}
             </section>
         </div>
     </div>
