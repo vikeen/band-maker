@@ -1,4 +1,4 @@
-{% extends "songs/song_base.html" %}
+{% extends "base.html" %}
 {% load gravatar %}
 {% load comments %}
 
@@ -11,52 +11,7 @@
         <li class="active">{{ track_request.track.instrument }}</li>
     </ol>
 
-    <script>
-        $(document).ready(function () {
-            window.bm.mediaPlayer = new bm.components.MediaPlayer($(".media-player"), {{ tracks_json | safe}}, {{ track_request_json | safe }});
-        });
-    </script>
-    <div class="media-player content-block">
-        <section class="media-player___tracks">
-            {% for track in tracks %}
-                <article class="media-player__track" data-track-id="{{ track.pk }}">
-                    <div class="media-player__track-title">{{ track.instrument }}</div>
-                    <ul class="media-player__track-controls clearfix">
-                        <li class="media-player__track-control media-player__track-control--mute">
-                            <button type="button" class="btn btn-default">
-                                <i class="glyphicon glyphicon-volume-off"></i>
-                            </button>
-                        </li>
-                        <li class="media-player__track-control media-player__track-control--solo">
-                            <button type="button" class="btn btn-default">
-                                <i class="glyphicon glyphicon-headphones"></i>
-                            </button>
-                        </li>
-                    </ul>
-                    <div class="media-player__track-waveform-container">
-                        <div id="waveform-{{ track.pk }}" class="media-player__track-waveform"></div>
-                    </div>
-                </article>
-            {% endfor %}
-        </section>
-        <div class="media-player__progress">
-            <div class="progress">
-                <div id="progress" class="progress-bar" role="progressbar"></div>
-            </div>
-        </div>
-        <ul class="media-player__controls clearfix">
-            <li class="media-player__control media-player__control--restart">
-                <i class="glyphicon glyphicon-step-backward"></i>
-            </li>
-            <li class="media-player__control media-player__control--play">
-                <i class="glyphicon glyphicon-play"></i>
-            </li>
-            <li class="media-player__control media-player__control--pause">
-                <i class="glyphicon glyphicon-pause"></i>
-            </li>
-            <li class="media-player__control media-player__control--duration"></li>
-        </ul>
-    </div>
+    {% include 'songs/media_player.html' with show_actions=False %}
     <div class="well">
         <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
               method="post" style="display: inline">

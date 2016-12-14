@@ -147,7 +147,7 @@ function __createAudioWave(track) {
             waveColor: linGrad,
             progressColor: 'hsla(200, 100%, 30%, 0.5)',
             cursorColor: '#fff',
-            height: 45,
+            height: 60,
             barWidth: 3
         });
 
