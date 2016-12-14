@@ -26,22 +26,24 @@
     </div>
 
     {% include 'songs/media_player.html' with hide_actions=True hide_track_request_submit=True %}
-    <div class="well">
-        <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
-              method="post" style="display: inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">
-                <i class="glyphicon glyphicon-thumbs-up"></i> Approve
-            </button>
-        </form>
-        <form action="{% url 'songs:track_request_decline' song.pk track_request.track.pk track_request.pk %}"
-              method="post" style="display: inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">
-                <i class="glyphicon glyphicon-thumbs-down"></i> Decline
-            </button>
-        </form>
-    </div>
+    {% if song.created_by == request.user %}
+        <div class="well">
+            <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
+                  method="post" style="display: inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">
+                    <i class="glyphicon glyphicon-thumbs-up"></i> Approve
+                </button>
+            </form>
+            <form action="{% url 'songs:track_request_decline' song.pk track_request.track.pk track_request.pk %}"
+                  method="post" style="display: inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-thumbs-down"></i> Decline
+                </button>
+            </form>
+        </div>
+    {% endif %}
     <div class="comments">
         {% get_comment_count for track_request as track_request_comment_count %}
         <h3 class="comments__title">Comments ({{ track_request_comment_count }})</h3>
