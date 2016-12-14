@@ -9,8 +9,8 @@ class ProfileMixin(ContextMixin):
         user = User.objects.get(username=self.kwargs['username'])
 
         context['view_user'] = user
-        context['song_track_request_count'] = TrackRequest.objects.filter(
-            track__created_by=user).count()
+        context['pending_track_request_count'] = TrackRequest.objects.filter(
+            track__created_by=user, status='pending').count()
         context['skill_count'] = user.skill_set.count()
         context['song_count'] = user.song_set.count()
         return context

@@ -47,10 +47,20 @@ class ProfileSkillIndex(ProfileMixin, generic.ListView):
         return Skill.objects.filter(user__username=self.kwargs['username'], **skill_list_filter)
 
 
-class ProfileTrackRequestIndex(ProfileMixin, generic.ListView):
+class ProfileTrackRequestIndex(ProfileMixin,
+                               generic.ListView):
     model = TrackRequest
     template_name = 'users/user_detail_track_request_list.html'
-    context_object_name = 'track_request_list'
+    context_object_name = 'pending_track_request_list'
 
     def get_queryset(self):
-        return TrackRequest.objects.filter(track__song__created_by__username=self.kwargs['username'])
+        return TrackRequest.objects.filter(track__song__created_by__username=self.kwargs['username'], status='pending')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['approved_track_request_list'] = TrackRequest.objects.filter(
+            track__song__created_by__username=self.kwargs['username'], status='approved')
+        context['declined_track_request_list'] = TrackRequest.objects.filter(
+            track__song__created_by__username=self.kwargs['username'], status='declined')
+
+        return context
