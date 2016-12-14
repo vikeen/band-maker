@@ -33,6 +33,7 @@ class ProfileSongIndex(ProfileMixin, generic.ListView):
 
 
 class ProfileSkillIndex(ProfileMixin, generic.ListView):
+    model = Skill
     template_name = 'users/user_detail_skill_list.html'
     context_object_name = 'skill_list'
 
@@ -63,5 +64,24 @@ class ProfileTrackRequestIndex(HasAccessToRestrictedUserProfile,
             track__song__created_by=self.request.user, status='approved')
         context['declined_track_request_list'] = TrackRequest.objects.filter(
             track__song__created_by=self.request.user, status='declined')
+
+        return context
+
+
+class ContributionIndex(ProfileMixin,
+                        generic.ListView):
+    model = TrackRequest
+    template_name = 'users/user_detail_contribution_list.html'
+    context_object_name = 'pending_contribution_list'
+
+    def get_queryset(self):
+        return TrackRequest.objects.filter(created_by__username=self.kwargs['username'], status='pending')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['approved_contribution_list'] = TrackRequest.objects.filter(
+            created_by__username=self.kwargs['username'], status='approved')
+        context['declined_contribution_list'] = TrackRequest.objects.filter(
+            created_by__username=self.kwargs['username'], status='declined')
 
         return context

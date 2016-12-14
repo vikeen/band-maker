@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ view_user.username }} | Songs{% endblock %}
+{% block title %}{{ view_user.username }} | Contributions{% endblock %}
 
 {% block content %}
     <div class="user-profile row">
@@ -8,9 +8,9 @@
             {% include 'users/user_detail_sidebar.html' %}
         </div>
         <div class="col-sm-9">
-            {% include 'users/user_detail_navigation.html' with active_link='track_requests' %}
+            {% include 'users/user_detail_navigation.html' with active_link='contributions' %}
             <div class="content-block">
-                <div class="oanel panel-primary">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <div class="panel-title">Pending</div>
                     </div>
@@ -20,30 +20,28 @@
                                 <td>#</td>
                                 <th>Track</th>
                                 <th>Song</th>
-                                <th>User</th>
                                 <th>Created</th>
                             </tr>
                         </thread>
                         <tbody>
-                        {% for track_request in pending_track_request_list %}
+                        {% for contribution in pending_contribution_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument }}</a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'songs:detail' track_request.track.song.pk %}">
-                                        {{ track_request.track.song.title }}
+                                    <a href="{% url 'songs:detail' contribution.track.song.pk %}">
+                                        {{ contribution.track.song.title }}
                                     </a>
                                 </td>
-                                <td>{{ track_request.created_by }}</td>
-                                <td>{{ track_request.created }}</td>
+                                <td>{{ contribution.created }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <div class="oanel panel-success">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <div class="panel-title">Approved</div>
                     </div>
@@ -53,30 +51,28 @@
                                 <td>#</td>
                                 <th>Track</th>
                                 <th>Song</th>
-                                <th>User</th>
                                 <th>Created</th>
                             </tr>
                         </thread>
                         <tbody>
-                        {% for track_request in approved_track_request_list %}
+                        {% for contribution in approved_contribution_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument }}</a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'songs:detail' track_request.track.song.pk %}">
-                                        {{ track_request.track.song.title }}
+                                    <a href="{% url 'songs:detail' contribution.track.song.pk %}">
+                                        {{ contribution.track.song.title }}
                                     </a>
                                 </td>
-                                <td>{{ track_request.created_by }}</td>
-                                <td>{{ track_request.created }}</td>
+                                <td>{{ contribution.created }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
-                <div class="oanel panel-danger">
+                <div class="panel panel-danger">
                     <div class="panel-heading">
                         <div class="panel-title">Declined</div>
                     </div>
@@ -86,24 +82,22 @@
                                 <td>#</td>
                                 <th>Track</th>
                                 <th>Song</th>
-                                <th>User</th>
                                 <th>Created</th>
                             </tr>
                         </thread>
                         <tbody>
-                        {% for track_request in declined_track_request_list %}
+                        {% for contribution in declined_contribution_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument }}</a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'songs:detail' track_request.track.song.pk %}">
-                                        {{ track_request.track.song.title }}
+                                    <a href="{% url 'songs:detail' contribution.track.song.pk %}">
+                                        {{ contribution.track.song.title }}
                                     </a>
                                 </td>
-                                <td>{{ track_request.created_by }}</td>
-                                <td>{{ track_request.created }}</td>
+                                <td>{{ contribution.created }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

@@ -7,6 +7,11 @@
             Songs <span class="badge">{{ song_count }}</span>
         </a>
     </li>
+    <li role="presentation" {% if active_link == 'contributions' %}class="active"{% endif %}>
+        <a href="{% url 'users:profile_contributions' view_user.username %}">
+            Contributions <span class="badge">{{ contribution_count}}</span>
+        </a>
+    </li>
     <li role="presentation" {% if active_link == 'skills' %}class="active"{% endif %}>
         <a href="{% url 'users:profile_skills' view_user.username %}">
             Skills <span class="badge">{{ skill_count }}</span>

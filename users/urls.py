@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^(?P<username>[\w]+)/track-requests/$', views.ProfileTrackRequestIndex.as_view(),
         name='profile_track_requests'),
     url(r'^(?P<username>[\w]+)/skills/$', views.ProfileSkillIndex.as_view(), name='profile_skills'),
+    url(r'^(?P<username>[\w]+)/contributions/$', views.ContributionIndex.as_view(), name='profile_contributions'),
 ]

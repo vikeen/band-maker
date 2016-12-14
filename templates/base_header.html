@@ -40,6 +40,10 @@
                                     <a href="{% url 'users:profile_songs' user.username %}">Your Songs</a>
                                 </li>
                                 <li>
+                                    <a href="{% url 'users:profile_contributions' user.username %}">Your Contributions</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
                                     <a href="{% url 'users:profile_track_requests' user.username %}">Your Track
                                         Requests</a>
                                 </li>
