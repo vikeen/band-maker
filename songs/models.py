@@ -2,6 +2,8 @@ import uuid
 
 from django.db import models
 from django.contrib.auth.models import User
+
+from users.models import Skill
 from .licenses import license
 
 
@@ -27,7 +29,9 @@ class Song(models.Model):
 
 
 class Track(models.Model):
-    instrument = models.CharField(max_length=100)
+    TRACK_INSTRUMENT_CHOICES = Skill.SKILL_CHOICES
+
+    instrument = models.CharField(max_length=100, choices=TRACK_INSTRUMENT_CHOICES)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     audio_url = models.CharField(max_length=500, null=True, blank=True)
     audio_name = models.CharField(max_length=500, null=True, blank=True)
