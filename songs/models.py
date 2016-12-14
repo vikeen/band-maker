@@ -33,6 +33,7 @@ class Track(models.Model):
 
     instrument = models.CharField(max_length=100, choices=TRACK_INSTRUMENT_CHOICES)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    contributed_by = models.ForeignKey(User, null=True, blank=True, related_name='contributed_by')
     audio_url = models.CharField(max_length=500, null=True, blank=True)
     audio_name = models.CharField(max_length=500, null=True, blank=True)
     audio_size = models.IntegerField(null=True, blank=True)

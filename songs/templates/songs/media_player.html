@@ -18,10 +18,17 @@
                     <div class="media-player__track-metadata">
                         <div class="media">
                             <div class="media-left">
-                                <a href="{% url 'users:profile_detail' track.created_by.username %}">
-                                    <img src="{% gravatar_url track.created_by.email 40 %}"
-                                         alt="{{ track.created_by.username }}"/>
-                                </a>
+                                {% if track.contributed_by %}
+                                    <a href="{% url 'users:profile_detail' track.contributed_by.username %}">
+                                        <img src="{% gravatar_url track.contributed_by.email 40 %}"
+                                             alt="{{ track.contributed_by.username }}"/>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'users:profile_detail' track.created_by.username %}">
+                                        <img src="{% gravatar_url track.created_by.email 40 %}"
+                                             alt="{{ track.created_by.username }}"/>
+                                    </a>
+                                {% endif %}
                             </div>
                             <div class="media-body">
                                 {% if song.created_by == request.user %}

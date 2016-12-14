@@ -297,7 +297,7 @@ def approve_track_request(request, *args, **kwargs):
     track.audio_size = track_request.audio_size
     track.audio_url = track_request.audio_url
     track.public = False
-    track.created_by = track_request.created_by
+    track.contributed_by = track_request.created_by
     track.save()
 
     track_request.status = 'approved'
