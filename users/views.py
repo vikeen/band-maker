@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.views import generic
 from songs.models import Song, TrackRequest
 
-from .mixins import ProfileMixin
+from .mixins import ProfileMixin, HasAccessToRestrictedUserProfile
 from .models import Skill
 
 
@@ -47,20 +47,21 @@ class ProfileSkillIndex(ProfileMixin, generic.ListView):
         return Skill.objects.filter(user__username=self.kwargs['username'], **skill_list_filter)
 
 
-class ProfileTrackRequestIndex(ProfileMixin,
+class ProfileTrackRequestIndex(HasAccessToRestrictedUserProfile,
+                               ProfileMixin,
                                generic.ListView):
     model = TrackRequest
     template_name = 'users/user_detail_track_request_list.html'
     context_object_name = 'pending_track_request_list'
 
     def get_queryset(self):
-        return TrackRequest.objects.filter(track__song__created_by__username=self.kwargs['username'], status='pending')
+        return TrackRequest.objects.filter(track__song__created_by=self.request.user, status='pending')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['approved_track_request_list'] = TrackRequest.objects.filter(
-            track__song__created_by__username=self.kwargs['username'], status='approved')
+            track__song__created_by=self.request.user, status='approved')
         context['declined_track_request_list'] = TrackRequest.objects.filter(
-            track__song__created_by__username=self.kwargs['username'], status='declined')
+            track__song__created_by=self.request.user, status='declined')
 
         return context
