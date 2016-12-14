@@ -39,7 +39,7 @@
 }
 
 .media-player__track {
-    height: @media-player-height;
+    min-height: @media-player-height;
     width: 100%;
 
     .media-player__track-waveform-container,
@@ -50,10 +50,10 @@
     }
 
     &:first-of-type {
-        height: @media-player-height + @padding-default;
+        min-height: @media-player-height + @padding-default;
 
         .media-player__track-waveform-container {
-            height: @media-player-height + @padding-default;
+            min-height: @media-player-height + @padding-default;
         }
 
         .media-player__track-waveform {
@@ -62,10 +62,10 @@
     }
 
     &:last-of-type {
-        height: @media-player-height + @padding-default;
+        min-height: @media-player-height + @padding-default;
 
         .media-player__track-waveform-container {
-            height: @media-player-height + @padding-default;
+            min-height: @media-player-height + @padding-default;
         }
 
         .media-player__track-waveform {
@@ -75,7 +75,7 @@
 }
 
 .media-player__track-waveform-container {
-    height: @media-player-height;
+    min-height: @media-player-height;
     background: #555;
     width: @media-player-waveform-container-width;
     padding-left: @padding-default;
