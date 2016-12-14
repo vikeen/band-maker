@@ -3,7 +3,6 @@ from django.views.decorators.http import require_http_methods
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 
-
 @login_required
 @require_http_methods(['GET'])
 def index(request):

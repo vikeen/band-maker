@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load widget_tweaks %}
+{% load instrument_name %}
 
 {% block title %}Delete - {{ song.title }} - {{ track.instrument }}{% endblock %}
 
@@ -8,12 +9,12 @@
     <ol class="breadcrumb">
         <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
         <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
-        <li><a href="{% url 'songs:track_update' song.id track.id %}">{{ track.instrument }}</a></li>
+        <li><a href="{% url 'songs:track_update' song.id track.id %}">{{ track.instrument | instrument_name }}</a></li>
         <li class="active">Delete</li>
     </ol>
     <form class="form" action="" method="post">
         {% csrf_token %}
-        <p>Are you sure you want to delete "{{ track.instrument }}"?</p>
+        <p>Are you sure you want to delete "{{ track.instrument | instrument_name }}"?</p>
         <a href="{% url 'songs:track_update' song.id track.id %}">Cancel</a>
         <button type="submit" class="btn btn-danger">Confirm</button>
     </form>

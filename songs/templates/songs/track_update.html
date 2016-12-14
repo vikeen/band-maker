@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load instrument_name %}
 
 {% block title %}Edit Track{% endblock %}
 
@@ -6,7 +7,7 @@
     <ol class="breadcrumb">
         <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
         <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
-        <li class="active">{{ track.instrument }}</li>
+        <li class="active">{{ track.instrument | instrument_name }}</li>
     </ol>
 
     <form action="" method="post" enctype="multipart/form-data">

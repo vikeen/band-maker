@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load gravatar %}
+{% load instrument_name %}
 
 {% block title %}Songs{% endblock %}
 
@@ -45,15 +46,12 @@
                             {% for track in song.track_set.all %}
                                 {% if track.public %}
                                     <li class="song__requested-track">
-                                        <span class="label label-default">{{ track.instrument }}</span>
+                                        <span class="label label-default">{{ track.instrument | instrument_name }}</span>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
                         <ul class="song__meta clearfix">
-{#                            <li>#}
-{#                                <i class="glyphicon glyphicon-heart"></i> {{ song.likes }}#}
-{#                            </li>#}
                             <li>
                                 {{ song.views }} views
                             </li>

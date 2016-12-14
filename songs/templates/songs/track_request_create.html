@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load widget_tweaks %}
+{% load instrument_name %}
 
 {% block title %}Create Track{% endblock %}
 
@@ -8,7 +9,7 @@
     <ol class="breadcrumb">
         <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
         <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
-        <li><a href="#">{{ track.instrument }}</a></li>
+        <li><a href="#">{{ track.instrument | instrument_name }}</a></li>
         <li class="active">Create Request</li>
     </ol>
 

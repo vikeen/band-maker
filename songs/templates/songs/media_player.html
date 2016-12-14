@@ -1,4 +1,5 @@
 {% load gravatar %}
+{% load instrument_name %}
 
 {% if tracks %}
     <script>
@@ -33,10 +34,10 @@
                             <div class="media-body">
                                 {% if song.created_by == request.user %}
                                     <a href="{% url 'songs:track_update' song.pk track.pk %}">
-                                        {{ track.instrument }}
+                                        {{ track.instrument | instrument_name }}
                                     </a>
                                 {% else %}
-                                    {{ track.instrument }}
+                                    {{ track.instrument | instrument_name }}
                                 {% endif %}
                                 <ul class="media-player__track-controls clearfix">
                                     <li class="media-player__track-control media-player__track-control--mute">

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load instrument_name %}
 
 {% block title %}{{ view_user.username }} | Contributions{% endblock %}
 
@@ -28,7 +29,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument | instrument_name }}</a>
                                 </td>
                                 <td>
                                     <a href="{% url 'songs:detail' contribution.track.song.pk %}">
@@ -59,7 +60,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument | instrument_name }}</a>
                                 </td>
                                 <td>
                                     <a href="{% url 'songs:detail' contribution.track.song.pk %}">
@@ -90,7 +91,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' contribution.track.song.pk contribution.track.pk contribution.pk %}">{{ contribution.track.instrument | instrument_name }}</a>
                                 </td>
                                 <td>
                                     <a href="{% url 'songs:detail' contribution.track.song.pk %}">

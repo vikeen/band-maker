@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load instrument_name %}
 
 {% block title %}{{ view_user.username }} | Songs{% endblock %}
 
@@ -29,7 +30,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument | instrument_name }}</a>
                                 </td>
                                 <td>
                                     <a href="{% url 'songs:detail' track_request.track.song.pk %}">
@@ -62,7 +63,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument | instrument_name }}</a>
                                 </td>
                                 <td>
                                     <a href="{% url 'songs:detail' track_request.track.song.pk %}">
@@ -95,7 +96,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument }}</a>
+                                    <a href="{% url 'songs:track_request_detail' track_request.track.song.pk track_request.track.pk track_request.pk %}">{{ track_request.track.instrument | instrument_name }}</a>
                                 </td>
                                 <td>
                                     <a href="{% url 'songs:detail' track_request.track.song.pk %}">

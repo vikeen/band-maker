@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load instrument_name %}
 
 {% block title %}{{ view_user.username }} | Songs{% endblock %}
 
@@ -44,7 +45,7 @@
                         {% for skill in skill_list %}
                             <tr>
                                 <td>
-                                    {{ skill.get_name_display }}
+                                    {{ skill.name | instrument_name }}
                                 </td>
                             </tr>
                         {% endfor %}

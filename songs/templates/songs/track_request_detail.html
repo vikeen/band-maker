@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load gravatar %}
 {% load comments %}
+{% load instrument_name %}
 
 {% block title %}{{ song.title }}{% endblock %} }}
 
@@ -8,7 +9,7 @@
     <ol class="breadcrumb">
         <li><a href="{% url 'songs:index' %}">Songs</a></li>
         <li><a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a></li>
-        <li class="active">{{ track_request.track.instrument }}</li>
+        <li class="active">{{ track_request.track.instrument | instrument_name }}</li>
     </ol>
 
     <div class="media">
@@ -20,7 +21,7 @@
         </div>
         <div class="media-body">
             <h1>Track Request
-                <small>{{ track_request.track.instrument }}</small>
+                <small>{{ track_request.track.instrument | instrument_name }}</small>
             </h1>
         </div>
     </div>
