@@ -136,7 +136,7 @@ class TrackCreate(LoginRequiredMixin,
 
     def get_success_url(self):
         messages.success(self.request, 'Created track - %s.' % self.object.instrument)
-        return reverse_lazy('songs:edit', kwargs={
+        return reverse('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
 
@@ -152,7 +152,7 @@ class TrackDelete(LoginRequiredMixin,
 
     def get_success_url(self):
         messages.success(self.request, 'Deleted track - %s.' % self.object.instrument)
-        return reverse_lazy('songs:edit', kwargs={
+        return reverse('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
 
@@ -209,7 +209,7 @@ class TrackUpdate(LoginRequiredMixin,
 
     def get_success_url(self):
         messages.success(self.request, 'Updated track - %s.' % self.object.instrument)
-        return reverse_lazy('songs:edit', kwargs={
+        return reverse('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
 
