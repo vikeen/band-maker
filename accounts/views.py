@@ -1,10 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from users.models import Skill
 
 
-class ProfileUpdate(generic.UpdateView):
+class ProfileUpdate(LoginRequiredMixin,
+                    generic.UpdateView):
     model = User
     fields = ['first_name', 'last_name', 'email']
     template_name = 'accounts/profile_update.html'
