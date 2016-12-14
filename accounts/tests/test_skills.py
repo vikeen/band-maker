@@ -49,13 +49,13 @@ class CreateSkillTestCase(UserTestCase):
     def test_skill_create_submits(self):
         super().login()
         response = self.client.post(self.create_skill_url, {
-            'name': 'lead_guitar'
+            'name': 'guitar_electric'
         })
 
         skill = Skill.objects.filter(user=self.user).first()
 
+        self.assertEquals(skill.name, 'guitar_electric')
         self.assertRedirects(response, reverse('accounts:skills'))
-        self.assertEquals(skill.name, 'lead_guitar')
 
     def test_skill_create_denies_invalid_name(self):
         super().login()
@@ -69,7 +69,7 @@ class CreateSkillTestCase(UserTestCase):
 class DeleteSkillTestCase(UserTestCase):
     def setUp(self):
         super().setUp()
-        self.skill = Skill.objects.create(name='lead_guitar', user=self.user)
+        self.skill = Skill.objects.create(name='guitar_electric', user=self.user)
         self.delete_skill_url = reverse("accounts:skill_delete", kwargs={
             'pk': self.skill.pk
         })
@@ -94,7 +94,7 @@ class DeleteSkillTestCase(UserTestCase):
     def test_skill_delete_submits(self):
         super().login()
         response = self.client.post(self.delete_skill_url, {
-            'name': 'lead_guitar'
+            'name': 'guitar_electric'
         })
 
         self.assertRedirects(response, reverse('accounts:skills'))

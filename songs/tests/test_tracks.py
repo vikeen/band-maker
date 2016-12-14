@@ -33,7 +33,7 @@ class CreateTrackTestCase(TrackTestCase):
     def test_track_create_submits_public(self):
         super().login(self.user_creator)
         response = self.client.post(self.create_track_url, {
-            'instrument': 'my instrument',
+            'instrument': 'guitar_electric',
             'public': True,
             'license': 'cc-by-4.0'
         })
@@ -55,7 +55,7 @@ class DeleteTrackTestCase(TrackTestCase):
     def setUp(self):
         super().setUp()
         self.track = Track.objects.create(
-            instrument="guitar",
+            instrument="guitar_electric",
             audio_url="file/path",
             audio_name="track.mp3",
             audio_size=1024,
@@ -102,7 +102,7 @@ class UpdateTrackTestCase(TrackTestCase):
     def setUp(self):
         super().setUp()
         self.track = Track.objects.create(
-            instrument="guitar",
+            instrument="guitar_electric",
             audio_url="file/path",
             audio_name="track.mp3",
             audio_size=1024,
@@ -135,19 +135,19 @@ class UpdateTrackTestCase(TrackTestCase):
     def test_track_update_submits_to_public(self):
         super().login(self.user_creator)
         response = self.client.post(self.track_update_url, {
-            'instrument': 'new instrument',
+            'instrument': 'guitar_acoustic',
             'public': True,
             'license': 'cc-by-4.0'
         })
 
         updated_track = Track.objects.get(pk=self.track.pk)
 
-        self.assertRedirects(response, reverse('songs:edit', kwargs={
-            'pk': self.song.pk
-        }))
-        self.assertEqual(updated_track.instrument, 'new instrument')
+        self.assertEqual(updated_track.instrument, 'guitar_acoustic')
         self.assertEqual(updated_track.public, True)
         self.assertEqual(updated_track.audio_url, None)
         self.assertEqual(updated_track.audio_name, None)
         self.assertEqual(updated_track.audio_content_type, None)
         self.assertEqual(updated_track.audio_size, None)
+        self.assertRedirects(response, reverse('songs:edit', kwargs={
+            'pk': self.song.pk
+        }))
