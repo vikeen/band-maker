@@ -9,23 +9,50 @@
         </div>
         <div class="col-sm-9">
             {% include 'users/user_detail_navigation.html' with active_link='skills' %}
+            <div class="row user-profile__song-search">
+                <form class="form-inline col-sm-9"
+                      action="{% url 'users:profile_skills' view_user.username %}"
+                      method="GET">
+                    <div class="form-group">
+                        <input type="text" id="id_skill_name" name="name" class="form-control"
+                               placeholder="Search skills..."
+                               value="{{ request.GET.name }}"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Search
+                        </button>
+                    </div>
+                </form>
+                <div class="col-sm-3">
+                    {% if request.user == view_user %}
+                        <a href="{% url 'accounts:skill_create' %}" class="btn btn-success pull-right">
+                            New Skill</a>
+                    {% endif %}
+                </div>
+            </div>
             <section class="user-profile__skill-list content-block">
-                <table class="table table-bordered">
-                    <thread>
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                    </thread>
-                    <tbody>
-                    {% for skill in skill_list %}
-                        <tr>
-                            <td>
-                                {{ skill.get_name_display }}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                {% if skill_list %}
+                    <table class="table table-bordered">
+                        <thread>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thread>
+                        <tbody>
+                        {% for skill in skill_list %}
+                            <tr>
+                                <td>
+                                    {{ skill.get_name_display }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    We couldn't find any skills.
+                {% endif %}
             </section>
         </div>
     </div>

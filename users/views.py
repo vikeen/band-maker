@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
 from django.views import generic
 from songs.models import Song, TrackRequest
+
 from .mixins import ProfileMixin
+from .models import Skill
 
 
 class ProfileDetail(ProfileMixin, generic.DetailView):
@@ -35,7 +37,14 @@ class ProfileSkillIndex(ProfileMixin, generic.ListView):
     context_object_name = 'skill_list'
 
     def get_queryset(self):
-        return User.objects.get(username=self.kwargs['username']).skill_set.all()
+        skill_list_filter = {}
+
+        name = self.request.GET.get('name')
+
+        if name:
+            skill_list_filter['name__icontains'] = self.request.GET.get('name')
+
+        return Skill.objects.filter(user__username=self.kwargs['username'], **skill_list_filter)
 
 
 class ProfileTrackRequestIndex(ProfileMixin, generic.ListView):
