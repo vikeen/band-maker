@@ -115,7 +115,7 @@ class UpdateSongTestCase(SongTestCase):
             'title': 'new song title',
             'description': 'new song description',
             'license': 'cc-by-4.0',
-            'published': True
+            # 'published': True
         })
 
         updated_song = Song.objects.get(pk=self.song.pk)
@@ -123,5 +123,5 @@ class UpdateSongTestCase(SongTestCase):
         self.assertRedirects(response, self.song_update_url)
         self.assertEqual(updated_song.title, 'new song title')
         self.assertEqual(updated_song.description, 'new song description')
-        self.assertEqual(updated_song.published, True)
+        # self.assertEqual(updated_song.published, True)
         self.assertEqual(updated_song.created_by, self.user_creator)

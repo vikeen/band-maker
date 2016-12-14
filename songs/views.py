@@ -55,7 +55,7 @@ class Update(LoginRequiredMixin,
              MediaPlayerMixin,
              generic.UpdateView):
     model = Song
-    fields = ["title", 'description', 'published']
+    fields = ["title", 'description']
     template_name = 'songs/song_update.html'
     context_object_name = 'song'
 

@@ -24,17 +24,6 @@
         {% endif %}
     </div>
 </div>
-{% if form.published %}
-    <div class="form-group">
-        <label for="id_published">Published
-            {% render_field form.published %}
-        </label>
-        <span class="help-block">Published songs can be viewed by any user</span>
-        {% if form.published.errors %}
-            <p class="errors">{{ form.published.errors.as_text }}</p>
-        {% endif %}
-    </div>
-{% endif %}
 <div class="form-group">
     <button class="btn btn-primary" type="submit">Save</button>
 </div>
