@@ -243,9 +243,7 @@ class TrackRequestCreate(LoginRequiredMixin,
             'ContentType': audio_file.content_type
         })
 
-        form.save()
-
-        return redirect(self.get_success_url())
+        return super(TrackRequestCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(TrackRequestCreate, self).get_context_data(**kwargs)
@@ -253,6 +251,7 @@ class TrackRequestCreate(LoginRequiredMixin,
         return context
 
     def get_success_url(self):
+        messages.success(self.request, 'Created track request')
         return reverse('songs:detail', kwargs={
             'pk': self.kwargs['pk']
         })
@@ -295,6 +294,8 @@ def approve_track_request(request, *args, **kwargs):
     track_request.status = 'approved'
     track_request.save()
 
+    messages.info(request, 'Track request approved')
+
     return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
 
 
@@ -306,6 +307,8 @@ def decline_track_request(request, *args, **kwargs):
 
     track_request.status = 'declined'
     track_request.save()
+
+    messages.info(request, 'Track request declined')
 
     return redirect(reverse('users:profile_track_requests', kwargs={
         'username': request.user.username
