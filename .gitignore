@@ -9,6 +9,6 @@ node_modules
 .DS_Store
 
 # ignore compiled assets
-band_maker/static/css/main.css
-band_maker/static/js/app.bundle.js
+#band_maker/static/css/main.css
+#band_maker/static/js/app.bundle.js
 staticfiles
