@@ -11,7 +11,7 @@
         <li class="active">{{ track_request.track.instrument }}</li>
     </ol>
 
-    {% include 'songs/media_player.html' with show_actions=False %}
+    {% include 'songs/media_player.html' with hide_actions=True hide_track_request_submit=True %}
     <div class="well">
         <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
               method="post" style="display: inline">

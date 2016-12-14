@@ -53,9 +53,10 @@
                     <div class="media-player__track-waveform-container">
                         <div id="waveform-{{ track.pk }}" class="media-player__track-waveform">
                             {% if not track.audio_url %}
-                                <a class="btn btn-success btn-xs media-player__submit-track-request"
-                                   href="{% url 'songs:track_request_create' song.pk track.pk %}">Submit
-                                    Track</a>
+                                {% if not hide_track_request_submit %}
+                                    <a class="btn btn-success btn-xs media-player__submit-track-request"
+                                       href="{% url 'songs:track_request_create' song.pk track.pk %}">Submit Track</a>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>
@@ -80,7 +81,7 @@
             <li class="media-player__control media-player__control--duration"></li>
         </ul>
     </div>
-    {% if show_actions %}
+    {% if not hide_actions %}
         <div class="well">
             <a href="{% url 'songs:download' song.pk %}">
                 <button type="button" class="btn btn-primary">
