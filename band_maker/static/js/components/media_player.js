@@ -2,9 +2,14 @@ export class MediaPlayer {
     constructor($element, tracks, trackRequests) {
         const self = this;
 
+        console.log("media player init", $element);
+
         self.$element = $element;
         self.tracks = tracks || [];
         self.trackRequests = trackRequests || [];
+
+        console.log("tracks", self.tracks);
+        console.log("track requests", self.trackRequests);
 
 
         self.loadTracks();
