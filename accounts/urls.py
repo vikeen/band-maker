@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import views as auth_views
 from registration.backends.simple import views as registration_views
 
@@ -9,8 +10,11 @@ urlpatterns = [
     url(r'^login', auth_views.login, {'template_name': 'accounts/login.html'}, name='login'),
     url(r'^logout', auth_views.logout, {'template_name': 'accounts/logout.html'}, name='logout'),
     url(r'^registration', registration_views.RegistrationView.as_view(), name='registration'),
-    url(r'^password/change$', auth_views.password_change,
-        {'template_name': 'registration/password_change.html'}, name='password_change'),
+    url(r'^password/change$', auth_views.password_change, {
+        'template_name': 'accounts/password_change.html',
+        'post_change_redirect': reverse_lazy('accounts:password_change_done')
+    }, name='password_change'),
+    url(r'^password/change/done$', views.password_change_done, name='password_change_done'),
     url(r'^edit$', views.ProfileUpdate.as_view(), name='edit'),
 
     # skills

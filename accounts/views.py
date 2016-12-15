@@ -1,6 +1,9 @@
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views import generic
 from users.models import Skill
 
@@ -52,3 +55,9 @@ class SkillDelete(LoginRequiredMixin,
 
     def get_success_url(self):
         return reverse('accounts:skills')
+
+
+@login_required
+def password_change_done(request):
+    messages.success(request, 'Your password has been changed')
+    return redirect(reverse('accounts:password_change'))

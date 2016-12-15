@@ -5,7 +5,7 @@
     <li role="presentation" {% if active_link == 'skills' %}class="active"{% endif %}>
         <a href="{% url 'accounts:skills' %}">Skills</a>
     </li>
-{#    <li role="presentation" {% if active_link == 'password' %}class="active"{% endif %}>#}
-{#        <a href="{% url 'accounts:password_change' %}">Password</a>#}
-{#    </li>#}
+    <li role="presentation" {% if active_link == 'password' %}class="active"{% endif %}>
+        <a href="{% url 'accounts:password_change' %}">Password</a>
+    </li>
 </ul>
