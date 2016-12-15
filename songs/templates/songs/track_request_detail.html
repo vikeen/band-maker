@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    {% include 'songs/media_player.html' with hide_actions=True hide_track_request_submit=True %}
+    {% include 'songs/media_player.html' with hide_track_request_submit=True %}
     {% if song.created_by == request.user %}
         <div class="well">
             <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"

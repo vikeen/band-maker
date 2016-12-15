@@ -28,6 +28,13 @@
         </div>
     </div>
     {% include 'songs/media_player.html' %}
+    <div class="well">
+        <a href="{% url 'songs:download' song.pk %}">
+            <button type="button" class="btn btn-primary">
+                <i class="glyphicon glyphicon-download"></i> Download
+            </button>
+        </a>
+    </div>
     <div class="comments">
         {% get_comment_count for song as song_comment_count %}
         <h3 class="comments__title">Comments ({{ song_comment_count }})</h3>

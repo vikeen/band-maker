@@ -12,7 +12,17 @@
         <legend>Edit Song</legend>
         {% include 'songs/song_form.html' %}
         <hr/>
-        {% include 'songs/media_player.html' with add_track_action=True %}
+        {% include 'songs/media_player.html' %}
+        <div class="well">
+            <a href="{% url 'songs:download' song.pk %}">
+                <button type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-download"></i> Download
+                </button>
+            </a>
+            <a href="{% url "songs:track_create" song.id %}" class="btn btn-warning">
+                <i class="glyphicon glyphicon-plus"></i> Add Track
+            </a>
+        </div>
         <hr/>
         <a class="btn btn-danger" href="{% url 'songs:delete' song.id %}">
             <i class="glyphicon glyphicon-trash"></i> Delete
