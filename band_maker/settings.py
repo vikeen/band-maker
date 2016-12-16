@@ -81,6 +81,11 @@ WSGI_APPLICATION = 'band_maker.wsgi.application'
 # force emails to go through standard out for development environments
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_HOST = os.environ.get('MAILGUN_SMTP_SERVER')
+    EMAIL_PORT = os.environ.get('MAILGUN_SMTP_PORT')
+    EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN')
+    EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD')
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
