@@ -61,3 +61,8 @@ class SkillDelete(LoginRequiredMixin,
 def password_change_done(request):
     messages.success(request, 'Your password has been changed')
     return redirect(reverse('accounts:password_change'))
+
+
+def password_reset_complete(request):
+    messages.success(request, 'You password has been reset. Please log in with your new password')
+    return redirect(reverse('accounts:login'))

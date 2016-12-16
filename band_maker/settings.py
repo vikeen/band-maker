@@ -78,6 +78,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'band_maker.wsgi.application'
 
+# force emails to go through standard out for development environments
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 if 'TRAVIS' in os.environ:
