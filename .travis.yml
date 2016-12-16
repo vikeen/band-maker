@@ -5,7 +5,7 @@ services: postgresql
 install:
   - pip3 install -r requirements.txt
 before_script:
-  - psql -c "CREATE DATABASE band_maker;" -U postgres
+  - psql -c "CREATE DATABASE melody_buddy;" -U postgres
 script:
   - python3 manage.py migrate
   - python3 manage.py test

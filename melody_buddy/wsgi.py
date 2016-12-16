@@ -1,5 +1,5 @@
 """
-WSGI config for band_maker project.
+WSGI config for melody_buddy project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "band_maker.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "melody_buddy.settings")
 
 from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise

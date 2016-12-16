@@ -1,4 +1,4 @@
-# Band Maker
+# Melody Buddy
 
 ### Depencies
 
@@ -19,11 +19,11 @@ $ pip install -r requirements.txt
 ### Database
 
 ```sql
-CREATE DATABASE band_maker;
-CREATE ROLE band_maker_user with PASSWORD 'password';
-ALTER ROLE band_maker_user with LOGIN;
-ALTER ROLE band_maker_user WITH CREATEDB;
-ALTER DATABASE band_maker OWNER TO band_maker_user;
+CREATE DATABASE melody_buddy;
+CREATE ROLE melody_buddy_user with PASSWORD 'password';
+ALTER ROLE melody_buddy_user with LOGIN;
+ALTER ROLE melody_buddy_user WITH CREATEDB;
+ALTER DATABASE melody_buddy OWNER TO melody_buddy_user;
 ```
 
 ```sh

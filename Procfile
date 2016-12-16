@@ -1,1 +1,1 @@
-web: gunicorn band_maker.wsgi --log-file -
+web: gunicorn melody_buddy.wsgi --log-file -

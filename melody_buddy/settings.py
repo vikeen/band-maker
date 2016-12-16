@@ -1,5 +1,5 @@
 """
-Django settings for band_maker project, on Heroku. For more info, see:
+Django settings for melody_buddy project, on Heroku. For more info, see:
 https://github.com/heroku/heroku-django-template
 
 For more information on this file, see
@@ -22,7 +22,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # SECURITY WARNING: change this before deploying to production!
 SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 
-DEBUG = os.environ.get('BAND_MAKER_DEBUG')
+DEBUG = os.environ.get('MELODY_BUDDY_DEBUG')
 
 # Application definition
 
@@ -57,7 +57,7 @@ MIDDLEWARE_CLASSES = (
 
 SITE_ID = 1
 
-ROOT_URLCONF = 'band_maker.urls'
+ROOT_URLCONF = 'melody_buddy.urls'
 
 TEMPLATES = [
     {
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'band_maker.wsgi.application'
+WSGI_APPLICATION = 'melody_buddy.wsgi.application'
 
 # force emails to go through standard out for development environments
 if DEBUG:
@@ -93,7 +93,7 @@ if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'band_maker',
+            'NAME': 'melody_buddy',
             'USER': 'postgres',
             'PASSWORD': '',
             'HOST': 'localhost',
@@ -104,8 +104,8 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'band_maker',
-            'USER': 'band_maker_user',
+            'NAME': 'melody_buddy',
+            'USER': 'melody_buddy_user',
             'PASSWORD': 'password',
             'HOST': 'localhost',
             'PORT': ''
