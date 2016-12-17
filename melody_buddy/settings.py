@@ -87,6 +87,8 @@ else:
     EMAIL_HOST_USER = os.environ.get('MAILGUN_SMTP_LOGIN')
     EMAIL_HOST_PASSWORD = os.environ.get('MAILGUN_SMTP_PASSWORD')
 
+DEFAULT_FROM_EMAIL = 'support@melodybuddy.com'
+
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 if 'TRAVIS' in os.environ:
