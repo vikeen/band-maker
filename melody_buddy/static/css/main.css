@@ -1,8 +1,42 @@
+.text-color--primary {
+  color: #337ab7;
+}
+.text-color--danger {
+  color: #a94442;
+}
+.text-color--success {
+  color: #5cb85c;
+}
+.text-color--info {
+  color: #5bc0de;
+}
+.text-color--warning {
+  color: #f0ad4e;
+}
+.text-color--base {
+  color: #444 !important;
+}
+.text-color--inverse,
 .skill-addon,
 .skill-addon:focus,
 .skill-addon:active,
 .skill-addon:hover {
   color: white;
+}
+.bg-color--primary {
+  background-color: #337ab7;
+}
+.bg-color--warning {
+  background-color: #f0ad4e;
+}
+.bg-color--success {
+  background-color: #5cb85c;
+}
+.bg-color--info {
+  background-color: #5bc0de;
+}
+.bg-color--danger {
+  background-color: #a94442;
 }
 .clickable {
   cursor: pointer !important;
@@ -12,33 +46,11 @@
   color: white;
   padding-bottom: 80px;
 }
-.jumbotron .btn-primary {
-  background: #845ac7;
-  border-color: #845ac7;
+body {
+  background-color: #fcfcfc;
 }
-.jumbotron .btn-primary:hover {
-  background: #7646c1;
-}
-.jumbotron p {
-  color: #d9ccee;
-  max-width: 75%;
-  margin: 1em auto 2em;
-}
-.navbar + .jumbotron {
-  margin-top: -20px;
-}
-.jumbotron .lang-logo {
-  display: block;
-  background: #a94442;
-  border-radius: 50%;
-  overflow: hidden;
-  width: 100px;
-  height: 100px;
-  margin: auto;
-  border: 2px solid white;
-}
-.jumbotron .lang-logo img {
-  max-width: 100%;
+nav {
+  background-color: #3f51b5 !important;
 }
 .media-player {
   margin: 0 auto;
@@ -198,6 +210,9 @@
 }
 .site-footer {
   margin-top: 20px;
+}
+main.container {
+  margin-top: 50px;
 }
 form .errors {
   color: #a94442;
