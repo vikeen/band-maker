@@ -17,14 +17,14 @@
                     <label for="id_username">Username</label>
                     {% render_field form.username class+="validate" %}
                     {% if form.username.errors %}
-                        <p class="errors">{{ form.username.errors.as_text }}</p>
+                        <div class="errors">{{ form.username.errors.as_text }}</div>
                     {% endif %}
                 </div>
                 <div class="input-field">
                     <label for="id_password">Password</label>
                     {% render_field form.password class+="validate" %}
                     {% if form.password.errors %}
-                        <p class="errors">{{ form.password.errors.as_text }}</p>
+                        <div class="errors">{{ form.password.errors.as_text }}</div>
                     {% endif %}
                 </div>
                 <button type="submit" class="btn">Log in</button>

@@ -3,8 +3,10 @@
 {% block title %}Create Song{% endblock %}
 
 {% block content %}
-    <form action="" method="post">
-        <legend>Create Song</legend>
-        {% include 'songs/song_form.html' %}
-    </form>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Create Song</span>
+            {% include 'songs/song_form.html' %}
+        </div>
+    </div>
 {% endblock %}

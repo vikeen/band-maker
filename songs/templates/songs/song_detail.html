@@ -5,10 +5,14 @@
 {% block title %}{{ song.title }}{% endblock %} }}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="{% url 'songs:index' %}">Songs</a></li>
-        <li class="active">{{ song.title }}</li>
-    </ol>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <a href="{% url 'songs:index' %}" class="breadcrumb">Songs</a>
+                <a href="#!" class="breadcrumb">{{ song.title }}</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="media">
         <div class="media-left">

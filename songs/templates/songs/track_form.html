@@ -9,7 +9,7 @@
         <label for="id_instrument">Instrument</label>
         {% render_field form.instrument class+="form-control" required="required" %}
         {% if form.title.errors %}
-            <p class="errors">{{ form.instrument.errors.as_text }}</p>
+            <div class="errors">{{ form.instrument.errors.as_text }}</div>
         {% endif %}
     </div>
 </div>
@@ -37,7 +37,7 @@
         <label for="id_public">Request Tracks {% render_field form.public %}</label>
         <span class="help-block">Allow other users to upload their work and collaborate with your song</span>
         {% if form.public.errors %}
-            <p class="errors">{{ form.public.errors.as_text }}</p>
+            <div class="errors">{{ form.public.errors.as_text }}</div>
         {% endif %}
     </div>
 </div>
@@ -55,7 +55,7 @@
 {#                    <a href="#" data-toggle="modal" data-target="#licenseModal">view license details</a>#}
 {#                </span>#}
 {#        {% if form.license.errors %}#}
-{#            <p class="errors">{{ form.license.errors.as_text }}</p>#}
+{#            <div class="errors">{{ form.license.errors.as_text }}</div>#}
 {#        {% endif %}#}
 {#        <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog">#}
 {#            <div class="modal-dialog" role="document">#}
