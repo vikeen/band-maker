@@ -18,7 +18,10 @@
 <main class="container">
     {% if messages %}
         {% for message in messages %}
-            <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+            <div class="card-panel {% if message.tags %}message message--{{ message.tags }}{% endif %}">
+                {{ message }}
+                <a href="#!" class="right" title="close message"><i class="material-icons message__close js-message-close">close</i></a>
+            </div>
         {% endfor %}
     {% endif %}
     {% block content %}{% endblock %}

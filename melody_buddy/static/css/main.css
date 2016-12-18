@@ -1,17 +1,17 @@
 .text-color--primary {
-  color: #337ab7;
+  color: #2196f3;
 }
 .text-color--danger {
-  color: #a94442;
+  color: #f44336;
 }
 .text-color--success {
-  color: #5cb85c;
+  color: #4caf50;
 }
 .text-color--info {
-  color: #5bc0de;
+  color: #03a9f4;
 }
 .text-color--warning {
-  color: #f0ad4e;
+  color: #ff9800;
 }
 .text-color--base {
   color: #444 !important;
@@ -20,29 +20,38 @@
 .skill-addon,
 .skill-addon:focus,
 .skill-addon:active,
-.skill-addon:hover {
+.skill-addon:hover,
+.message.message--success,
+.message.message--error,
+.message.message--info,
+.message.message--warning,
+.message .message__close {
   color: white;
 }
 .bg-color--primary {
-  background-color: #337ab7;
+  background-color: #2196f3;
 }
-.bg-color--warning {
-  background-color: #f0ad4e;
+.bg-color--warning,
+.message.message--warning {
+  background-color: #ff9800;
 }
-.bg-color--success {
-  background-color: #5cb85c;
+.bg-color--success,
+.message.message--success {
+  background-color: #4caf50;
 }
-.bg-color--info {
-  background-color: #5bc0de;
+.bg-color--info,
+.message.message--info {
+  background-color: #03a9f4;
 }
-.bg-color--danger {
-  background-color: #a94442;
+.bg-color--danger,
+.message.message--error {
+  background-color: #f44336;
 }
 .clickable {
   cursor: pointer !important;
 }
 .jumbotron {
-  background: #337ab7;
+  background: #2196f3;
   color: white;
   padding-bottom: 80px;
 }
@@ -215,7 +224,7 @@ main.container {
   margin-top: 50px;
 }
 form .errors {
-  color: #a94442;
+  color: #f44336;
   padding: 5px;
   margin-top: 5px;
 }

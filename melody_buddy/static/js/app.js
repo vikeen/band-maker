@@ -1,9 +1,11 @@
 import {MediaPlayer} from "./components/media_player";
+import {Messages} from "./components/messages";
 import {secondsToDateTime} from "./utils/seconds_to_date_time";
 
 window.bm = {
     components: {
-        MediaPlayer: MediaPlayer
+        MediaPlayer: MediaPlayer,
+        Messages: Messages
     },
     utils: {
         secondsToDateTime: secondsToDateTime
@@ -20,4 +22,6 @@ $(document).ready(() => {
     });
     $(".button-collapse").sideNav();
     $('ul.tabs').tabs();
+
+    new window.bm.components.Messages();
 });

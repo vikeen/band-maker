@@ -20,6 +20,7 @@ class ProfileUpdate(LoginRequiredMixin,
         return User.objects.get(pk=self.request.user.pk)
 
     def get_success_url(self):
+        messages.success(self.request, 'Your profile has been updated')
         return reverse('accounts:edit')
 
 
@@ -64,5 +65,5 @@ def password_change_done(request):
 
 
 def password_reset_complete(request):
-    messages.success(request, 'You password has been reset. Please log in with your new password')
+    messages.success(request, 'Your password has been reset. Please log in with your new password')
     return redirect(reverse('accounts:login'))
