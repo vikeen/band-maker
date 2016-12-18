@@ -77,7 +77,7 @@ class Create(LoginRequiredMixin,
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-        return super(Create, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         messages.success(self.request, 'Created %s.' % self.object.title)
@@ -141,7 +141,7 @@ class TrackCreate(LoginRequiredMixin,
         form.instance.created_by = user
         form.instance.song = song
 
-        return super(TrackCreate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_success_url(self):
         messages.success(self.request, 'Created track - %s.' % self.object.instrument)
@@ -209,10 +209,10 @@ class TrackUpdate(LoginRequiredMixin,
 
         form.instance.created_by = user
 
-        return super(TrackUpdate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(TrackUpdate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['track_json'] = serializers.serialize("json", [context['track'], ])
         return context
 
@@ -252,10 +252,10 @@ class TrackRequestCreate(LoginRequiredMixin,
             'ContentType': audio_file.content_type
         })
 
-        return super(TrackRequestCreate, self).form_valid(form)
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(TrackRequestCreate, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['track'] = Track.objects.get(pk=self.kwargs['track_id'])
         return context
 
@@ -275,7 +275,7 @@ class TrackRequestDetail(LoginRequiredMixin,
     pk_url_kwarg = 'track_request_id'
 
     def get_context_data(self, **kwargs):
-        context = super(TrackRequestDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         # only grab confirmed tracks and the track which is being viewed for a request
         context['tracks'] = context['song'].track_set.filter(Q(public=False) | Q(pk=self.kwargs['track_id']))
@@ -303,7 +303,7 @@ def approve_track_request(request, *args, **kwargs):
     track_request.status = 'approved'
     track_request.save()
 
-    messages.info(request, 'Track request approved')
+    messages.success(request, 'Track request approved')
 
     return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
 
@@ -317,7 +317,7 @@ def decline_track_request(request, *args, **kwargs):
     track_request.status = 'declined'
     track_request.save()
 
-    messages.info(request, 'Track request declined')
+    messages.success(request, 'Track request declined')
 
     return redirect(reverse('users:track_requests', kwargs={
         'username': request.user.username

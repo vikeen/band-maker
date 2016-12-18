@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+
+{% if form.errors %}
+    <div class="card-panel message message--error">Please correct the errors below:</div>
+{% endif %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="file-field input-field js-audio-file-container">
+        <div class="btn">
+            <span>Audio File</span>
+            <input type="file" id="id_track" name="audio" accept=".mp3" required/>
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Upload the instrument track"/>
+        </div>
+    </div>
+    <button class="btn" type="submit">Save</button>
+</form>

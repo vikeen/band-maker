@@ -3,52 +3,53 @@
 {% load comments %}
 {% load instrument_name %}
 
-{% block title %}{{ song.title }}{% endblock %} }}
+{% block title %}{{ song.title }} | {{ track_request.track.instrument | instrument_name }} | Track Request #
+    {{ track_request.pk }}{% endblock %} }}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="{% url 'songs:index' %}">Songs</a></li>
-        <li><a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a></li>
-        <li class="active">{{ track_request.track.instrument | instrument_name }}</li>
-    </ol>
-
-    <div class="media">
-        <div class="media-left">
-            <a href="{% url 'users:detail' track_request.created_by %}">
-                <img src="{% gravatar_url track_request.created_by.email 50 %}"
-                     title="{{ track_request.created_by.username }}"/>
-            </a>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <a class="breadcrumb" href="{% url 'songs:detail' song.id %}">{{ song.title }}</a>
+                <a class="breadcrumb" href="#!">{{ track_request.track.instrument | instrument_name }}</a>
+                <a class="breadcrumb" href="#!">Track Request #{{ track_request.pk }}</a>
+            </div>
         </div>
-        <div class="media-body">
-            <h1>Track Request
-                <small>{{ track_request.track.instrument | instrument_name }}</small>
-            </h1>
+    </nav>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ track_request.track.instrument | instrument_name }}</span>
+            <p>
+                contributed by <a
+                    href="{% url 'users:detail' track_request.created_by %}">{{ track_request.created_by }}</a>
+            </p>
+            {% include 'songs/media_player.html' with hide_track_request_submit=True %}
         </div>
+        {% if song.created_by == request.user %}
+            <div class="card-action">
+                <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
+                      method="post" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn green">
+                        Approve
+                    </button>
+                </form>
+                <form action="{% url 'songs:track_request_decline' song.pk track_request.track.pk track_request.pk %}"
+                      method="post" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn red">
+                        Decline
+                    </button>
+                </form>
+            </div>
+        {% endif %}
     </div>
-
-    {% include 'songs/media_player.html' with hide_track_request_submit=True %}
-    {% if song.created_by == request.user %}
-        <div class="well">
-            <form action="{% url 'songs:track_request_approve' song.pk track_request.track.pk track_request.pk %}"
-                  method="post" style="display: inline">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">
-                    <i class="glyphicon glyphicon-thumbs-up"></i> Approve
-                </button>
-            </form>
-            <form action="{% url 'songs:track_request_decline' song.pk track_request.track.pk track_request.pk %}"
-                  method="post" style="display: inline">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">
-                    <i class="glyphicon glyphicon-thumbs-down"></i> Decline
-                </button>
-            </form>
-        </div>
-    {% endif %}
-    <div class="comments">
+    <div class="card comments">
         {% get_comment_count for track_request as track_request_comment_count %}
-        <h3 class="comments__title">Comments ({{ track_request_comment_count }})</h3>
-        {% render_comment_form for track_request %}
-        {% render_comment_list for track_request %}
+        <div class="card-content">
+            <span class="card-title">Comments ({{ track_request_comment_count }})</span>
+            {% render_comment_form for track_request %}
+            {% render_comment_list for track_request %}
+        </div>
     </div>
 {% endblock %}
