@@ -1,0 +1,19 @@
+<li>
+    <a href="{% url 'users:detail' user.username %}">Your Profile</a>
+</li>
+<li>
+    <a href="{% url 'users:songs' user.username %}">Your Songs</a>
+</li>
+<li>
+    <a href="{% url 'users:contributions' user.username %}">Your Contributions</a>
+</li>
+<li>
+    <a href="{% url 'users:track_requests' user.username %}">Your Track
+        Requests</a>
+</li>
+<li>
+    <a href="{% url 'accounts:edit' %}">Account Settings</a>
+</li>
+<li>
+    <a href="{% url 'accounts:logout' %}">Log Out</a>
+</li>

@@ -1,28 +1,6 @@
 {% load gravatar %}
 
 <header class="site-header">
-    <!-- Dropdown Structure -->
-    <ul id="dropdown1" class="dropdown-content">
-        <li>
-            <a href="{% url 'users:detail' user.username %}">Your Profile</a>
-        </li>
-        <li>
-            <a href="{% url 'users:songs' user.username %}">Your Songs</a>
-        </li>
-        <li>
-            <a href="{% url 'users:contributions' user.username %}">Your Contributions</a>
-        </li>
-        <li>
-            <a href="{% url 'users:track_requests' user.username %}">Your Track
-                Requests</a>
-        </li>
-        <li>
-            <a href="{% url 'accounts:edit' %}">Account Settings</a>
-        </li>
-        <li>
-            <a href="{% url 'accounts:logout' %}">Log Out</a>
-        </li>
-    </ul>
     <nav>
         <div class="nav-wrapper container">
             <a href="{% url 'index' %}" class="brand-logo">Melody Buddy</a>
@@ -44,35 +22,23 @@
                         </a>
                     </li>
                 {% else %}
-                    <li>
-                        <a href="{% url 'accounts:registration' %}">Sign Up</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'accounts:login' %}">Log In</a>
-                    </li>
+                    {% include 'base_unauthenticated_links.html' %}
                 {% endif %}
-            </ul>
-            <ul id="mobile-main-navigation" class="side-nav">
-                <li>
-                    <a href="{% url 'users:detail' user.username %}">Your Profile</a>
-                </li>
-                <li>
-                    <a href="{% url 'users:songs' user.username %}">Your Songs</a>
-                </li>
-                <li>
-                    <a href="{% url 'users:contributions' user.username %}">Your Contributions</a>
-                </li>
-                <li>
-                    <a href="{% url 'users:track_requests' user.username %}">Your Track
-                        Requests</a>
-                </li>
-                <li>
-                    <a href="{% url 'accounts:edit' %}">Account Settings</a>
-                </li>
-                <li>
-                    <a href="{% url 'accounts:logout' %}">Log Out</a>
-                </li>
             </ul>
         </div>
     </nav>
 </header>
+
+{# Links loaded via javascript #}
+{% if user.id %}
+    <ul id="dropdown1" class="dropdown-content">
+        {% include 'base_account_links.html' %}
+    </ul>
+    <ul id="mobile-main-navigation" class="side-nav">
+        {% include 'base_account_links.html' %}
+    </ul>
+{% else %}
+    <ul id="mobile-main-navigation" class="side-nav">
+        {% include 'base_unauthenticated_links.html' %}
+    </ul>
+{% endif %}
