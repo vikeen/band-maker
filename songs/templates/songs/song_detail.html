@@ -14,30 +14,26 @@
         </div>
     </nav>
 
-    <div class="media">
-        <div class="media-left">
-            <a href="{% url 'users:detail' song.created_by %}">
-                <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>
+    {#        <div class="media-left">#}
+    {#            <a href="{% url 'users:detail' song.created_by %}">#}
+    {#                <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>#}
+    {#            </a>#}
+    {#        </div>#}
+    {#        <div class="media-body">#}
+    <h1 class="media-heading song__title">{{ song.title }}</h1>
+    <p class="song__description">{{ song.description }}</p>
+    {#        </div>#}
+    {#    </div>#}
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Tracks</span>
+            {% include 'songs/media_player.html' %}
+        </div>
+        <div class="card-action">
+            <a href="{% url 'songs:download' song.pk %}">
+                <button class="btn">Download</button>
             </a>
         </div>
-        <div class="media-body">
-            <h1 class="media-heading song__title">{{ song.title }}
-                {% if request.user == song.created_by %}
-                    <a href="{% url 'songs:edit' song.pk %}" class="btn btn-primary btn-xs">
-                        <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
-                    </a>
-                {% endif %}
-            </h1>
-            <p class="song__description">{{ song.description }}</p>
-        </div>
-    </div>
-    {% include 'songs/media_player.html' %}
-    <div class="well">
-        <a href="{% url 'songs:download' song.pk %}">
-            <button type="button" class="btn btn-primary">
-                <i class="glyphicon glyphicon-download"></i> Download
-            </button>
-        </a>
     </div>
     <div class="comments">
         {% get_comment_count for song as song_comment_count %}

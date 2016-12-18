@@ -1,37 +1,36 @@
 {% load gravatar %}
 {% load instrument_name %}
 
-{% if tracks %}
-    <script>
-        $(document).ready(function () {
-            window.bm.mediaPlayer = new bm.components.MediaPlayer(
-                $(".media-player"),
-                    {% if tracks_json %}{{ tracks_json | safe }}{% else %}[]{% endif %},
-                    {% if track_request_json %}{{ track_request_json | safe }}{% else %}[]{% endif %});
-        })
-    </script>
-    <div class="media-player content-block">
-        <section class="media-player___tracks">
+<div class="media-player">
+    {% if tracks %}
+        <script>
+            $(document).ready(function () {
+                window.bm.mediaPlayer = new bm.components.MediaPlayer(
+                    $(".media-player"),
+                        {% if tracks_json %}{{ tracks_json | safe }}{% else %}[]{% endif %},
+                        {% if track_request_json %}{{ track_request_json | safe }}{% else %}[]{% endif %});
+            })
+        </script>
+        <section class="media-player___tracks row">
             {% for track in tracks %}
-                <article
-                        class="media-player__track {% if not track.audio_url %}media-player__track--no-media{% endif %}"
-                        data-track-id="{{ track.pk }}">
-                    <div class="media-player__track-metadata">
-                        <div class="media">
-                            <div class="media-left">
-                                {% if track.contributed_by %}
-                                    <a href="{% url 'users:detail' track.contributed_by.username %}">
-                                        <img src="{% gravatar_url track.contributed_by.email 40 %}"
-                                             alt="{{ track.contributed_by.username }}"/>
-                                    </a>
-                                {% else %}
-                                    <a href="{% url 'users:detail' track.created_by.username %}">
-                                        <img src="{% gravatar_url track.created_by.email 40 %}"
-                                             alt="{{ track.created_by.username }}"/>
-                                    </a>
-                                {% endif %}
-                            </div>
-                            <div class="media-body">
+                <article data-track-id="{{ track.pk }}"
+                         class="media-player__track {% if not track.audio_url %}media-player__track--no-media{% endif %}">
+                    <div class="col s3">
+                        <div class="media-player__track-artist">
+                            {% if track.contributed_by %}
+                                <a href="{% url 'users:detail' track.contributed_by.username %}">
+                                    <img src="{% gravatar_url track.contributed_by.email 40 %}"
+                                         alt="{{ track.contributed_by.username }}"/>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'users:detail' track.created_by.username %}">
+                                    <img src="{% gravatar_url track.created_by.email 40 %}"
+                                         alt="{{ track.created_by.username }}"/>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="media-player__track-meta">
+                            <div class="media-player__track-instrument-title">
                                 {% if song.created_by == request.user %}
                                     <a href="{% url 'songs:track_update' song.pk track.pk %}">
                                         {{ track.instrument | instrument_name }}
@@ -39,31 +38,29 @@
                                 {% else %}
                                     {{ track.instrument | instrument_name }}
                                 {% endif %}
-                                <ul class="media-player__track-controls clearfix">
-                                    <li class="media-player__track-control media-player__track-control--mute">
-                                        <button type="button"
-                                                class="btn btn-default media-player__track-control-action"
-                                                {% if not track.audio_url %}disabled{% endif %}>
-                                            <i class="glyphicon glyphicon-volume-off"></i>
-                                        </button>
-                                    </li>
-                                    <li class="media-player__track-control media-player__track-control--solo">
-                                        <button type="button"
-                                                class="btn btn-default media-player__track-control-action"
-                                                {% if not track.audio_url %}disabled{% endif %}>
-                                            <i class="glyphicon glyphicon-headphones"></i>
-                                        </button>
-                                    </li>
-                                </ul>
                             </div>
+                            <ul class="media-player__track-controls clearfix">
+                                <li class="media-player__track-control media-player__track-control--mute">
+                                    <button class="btn btn-flat btn-small media-player__track-control-action"
+                                            {% if not track.audio_url %}disabled{% endif %}>
+                                        <i class="material-icons">volume_mute</i>
+                                    </button>
+                                </li>
+                                <li class="media-player__track-control media-player__track-control--solo">
+                                    <button class="btn btn-flat btn-small media-player__track-control-action"
+                                            {% if not track.audio_url %}disabled{% endif %}>
+                                        <i class="material-icons">headset</i>
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="media-player__track-waveform-container">
+                    <div class="media-player__track-waveform-container col s9">
                         <div id="waveform-{{ track.pk }}" class="media-player__track-waveform">
                             {% if not track.audio_url %}
                                 {% if not hide_track_request_submit %}
-                                    <a class="btn btn-success btn-xs media-player__submit-track-request"
-                                       href="{% url 'songs:track_request_create' song.pk track.pk %}">Submit Track</a>
+                                    <a class="btn" href="{% url 'songs:track_request_create' song.pk track.pk %}">
+                                        Submit Track</a>
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -71,27 +68,31 @@
                 </article>
             {% endfor %}
         </section>
-        <div class="media-player__progress">
-            <div class="progress">
-                <div id="progress" class="progress-bar" role="progressbar"></div>
+        <div class="row media-player__loading-progress">
+            <div class="col s9 offset-s3">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
             </div>
         </div>
-        <ul class="media-player__controls clearfix">
-            <li class="media-player__control media-player__control--restart">
-                <i class="glyphicon glyphicon-step-backward"></i>
-            </li>
-            <li class="media-player__control media-player__control--play">
-                <i class="glyphicon glyphicon-play"></i>
-            </li>
-            <li class="media-player__control media-player__control--pause">
-                <i class="glyphicon glyphicon-pause"></i>
-            </li>
-            <li class="media-player__control media-player__control--duration"></li>
-        </ul>
-    </div>
-{% else %}
-    <p class="text-center">
-        <i class="glyphicon glyphicon-music"></i>
-        <b>No tracks uploaded yet</b>
-    </p>
-{% endif %}
+        <div class="row">
+            <ul class="media-player__controls col s9 offset-s3">
+                <li class="media-player__control media-player__control--restart">
+                    <i class="material-icons">replay</i>
+                </li>
+                <li class="media-player__control media-player__control--play">
+                    <i class="material-icons">play_arrow</i>
+                </li>
+                <li class="media-player__control media-player__control--pause">
+                    <i class="material-icons">pause</i>
+                </li>
+                <li class="media-player__control media-player__control--duration"></li>
+            </ul>
+        </div>
+    {% else %}
+        <p class="center">
+            <i class="glyphicon glyphicon-music"></i>
+            <b>No tracks uploaded yet</b>
+        </p>
+    {% endif %}
+</div>

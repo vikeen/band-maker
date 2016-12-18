@@ -224,7 +224,7 @@ function __onTrackReadyEvent(track) {
 
     if (self.allTracksAreLoaded()) {
         console.log("all tracks are loaded");
-        self.$element.find(".progress").hide();
+        self.$element.find(".media-player__loading-progress").hide();
 
         __updateSongDurations.bind(self)();
 

@@ -1,33 +1,23 @@
 @import (reference) "./includes/_measurements";
 
-@media-player-height: 60px;
-@media-player-width: @site-width;
-@media-player-track-metadata-width: 200px;
-@media-player-waveform-container-width: @media-player-width - @media-player-track-metadata-width - 30px;
-@media-player-controls-offset: @media-player-track-metadata-width;
+@media-player-track-height: 60px;
 
+/*
+ *
+ * MediaPlayer Core
+ *
+ */
 .media-player {
     margin: 0 auto;
-    width: @media-player-width;
-
-    .progress {
-        padding: 0;
-        width: @media-player-waveform-container-width;
-        margin-top: @margin-default;
-        margin-left: @media-player-controls-offset;
-    }
-
-    .progress-bar {
-        transition: none;
-    }
 }
 
+/*
+ *
+ * MediaPlayer Controls
+ *
+ */
 .media-player__controls {
-    padding: 0;
-    list-style: none;
     margin-top: @margin-large;
-    margin-left: @media-player-controls-offset;
-    width: @media-player-waveform-container-width;
 
     .media-player__control {
         margin-right: @margin-small;
@@ -37,20 +27,40 @@
     }
 }
 
-.media-player__track {
-    min-height: @media-player-height;
-    width: 100%;
+/*
+ *
+ * MediaPlayer Loading
+ *
+ */
+.media-player__loading-progress {
+    margin: @margin-default 0;
 
-    .media-player__track-waveform-container {
-        display: inline-block;
-        vertical-align: middle;
+    .progress {
+        height: 15px;
+    }
+}
+
+/*
+ *
+ * MediaPlayer Track
+ *
+ */
+.media-player__track {
+    min-height: @media-player-track-height;
+    width: 100%;
+    margin: 0 !important;
+
+    &.media-player__track--no-media {
+        .media-player__track-waveform {
+            padding-top: @padding-default; // leave space for the request button
+        }
     }
 
     &:first-of-type {
-        min-height: @media-player-height + @padding-default;
+        min-height: @media-player-track-height + @padding-default;
 
         .media-player__track-waveform-container {
-            min-height: @media-player-height + @padding-default;
+            min-height: @media-player-track-height + @padding-default;
         }
 
         .media-player__track-waveform {
@@ -59,68 +69,48 @@
     }
 
     &:last-of-type {
-        min-height: @media-player-height + @padding-default;
+        min-height: @media-player-track-height + @padding-default;
 
         .media-player__track-waveform-container {
-            min-height: @media-player-height + @padding-default;
+            min-height: @media-player-track-height + @padding-default;
         }
 
         .media-player__track-waveform {
             padding-bottom: @padding-default;
         }
     }
-}
 
-.media-player__track-waveform-container {
-    min-height: @media-player-height;
-    background: #555;
-    width: @media-player-waveform-container-width;
-    padding-left: @padding-default;
-    padding-right: @padding-default;
-    display: inline-block;
-    position: relative;
-}
-
-.media-player__track-changer {
-    position: absolute;
-    top: @padding-extra-small;
-    z-index: 100;
-}
-
-.media-player__track-metadata {
-    height: @media-player-height;
-    font-weight: bold;
-    margin: 0;
-    vertical-align: middle;
-    width: @media-player-track-metadata-width;
-    display: inline-block;
-}
-
-.media-player__track-controls {
-    height: @media-player-height;
-    padding: 0;
-    list-style: none;
-    margin: 0;
-    display: block;
-}
-
-.media-player__track-control {
-    float: left;
-    margin-left: @margin-small;
-
-    &:first-child {
-        margin-left: 0;
+    .media-player__track-waveform-container {
+        min-height: @media-player-track-height;
+        background: @color-ui;
+        padding-left: @padding-default;
+        padding-right: @padding-default;
+        display: inline-block;
+        vertical-align: middle;
     }
-}
 
-.media-player__track-control-action {
-    padding: 3px 6px;
-    font-size: 10px;
-    display: inline;
-}
+    .media-player__track-artist {
+        display: inline-block;
+        margin-right: @margin-default;
+        padding-top: @padding-default;
+    }
 
-.media-player .media-player__track--no-media {
-    .media-player__track-waveform {
-        padding-top: @padding-default; // leave space for the request button
+    .media-player__track-meta {
+        display: inline-block;
+        vertical-align: top;
+        padding-top: @padding-default;
+    }
+
+    .media-player__track-controls {
+        margin: 0;
+    }
+
+    .media-player__track-control {
+        float: left;
+        margin-left: @margin-small;
+
+        &:first-child {
+            margin-left: 0;
+        }
     }
 }
