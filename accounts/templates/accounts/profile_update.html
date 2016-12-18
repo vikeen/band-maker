@@ -3,13 +3,10 @@
 {% block title %}{{ user.username }} | Profile{% endblock %}
 
 {% block content %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            {% include 'accounts/navigation.html' with active_link='profile' %}
-        </div>
-        <div class="card-panel">
-            <form action="" method="post">
-                {% include 'accounts/profile_form.html' %}
-            </form>
-        </div>
+    {% include 'accounts/navigation.html' with active_link='profile' %}
+    <div class="card-panel">
+        <form action="" method="post">
+            {% include 'accounts/profile_form.html' %}
+        </form>
+    </div>
 {% endblock %}

@@ -226,7 +226,7 @@ main.container {
 form .errors {
   color: #f44336;
   padding: 5px;
-  margin-top: 5px;
+  margin-top: -15px;
 }
 .song__requested-tracks {
   padding: 0;
