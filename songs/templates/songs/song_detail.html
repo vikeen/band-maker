@@ -14,16 +14,11 @@
         </div>
     </nav>
 
-    {#        <div class="media-left">#}
-    {#            <a href="{% url 'users:detail' song.created_by %}">#}
-    {#                <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>#}
-    {#            </a>#}
-    {#        </div>#}
-    {#        <div class="media-body">#}
+{#    <a href="{% url 'users:detail' song.created_by %}">#}
+{#        <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>#}
+{#    </a>#}
     <h1 class="media-heading song__title">{{ song.title }}</h1>
     <p class="song__description">{{ song.description }}</p>
-    {#        </div>#}
-    {#    </div>#}
     <div class="card">
         <div class="card-content">
             <span class="card-title">Tracks</span>
@@ -35,10 +30,12 @@
             </a>
         </div>
     </div>
-    <div class="comments">
+    <div class="card comments">
         {% get_comment_count for song as song_comment_count %}
-        <h3 class="comments__title">Comments ({{ song_comment_count }})</h3>
-        {% render_comment_form for song %}
-        {% render_comment_list for song %}
+        <div class="card-content">
+            <span class="card-title">Comments ({{ song_comment_count }})</span>
+            {% render_comment_form for song %}
+            {% render_comment_list for song %}
+        </div>
     </div>
 {% endblock %}

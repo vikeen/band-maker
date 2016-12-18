@@ -5,33 +5,25 @@
 <div class="comments__comment-form">
     {% if user.is_authenticated %}
         {% get_comment_form for object as form %}
-        <form action="{% comment_form_target %}" method="POST" class="form-horizontal">
+        <form action="{% comment_form_target %}" method="POST">
             {% csrf_token %}
             {{ form.honeypot }}
             {{ form.content_type }}
             {{ form.object_pk }}
             {{ form.timestamp }}
             {{ form.security_hash }}
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="{% url 'users:detail' user.username %}">
-                                <img src="{% gravatar_url user.email 50 %}"
-                                     title="{{ user.username }}"/>
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            {% render_field form.comment class+="form-control" placeholder="Add a comment" rows="3" required="required" %}
-                            {% if form.comment.errors %}
-                                <div class="errors">{{ form.comment.errors.as_text }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
+            <div class="input-field">
+{#                <a href="{% url 'users:detail' user.username %}" class="comments__comment-author-avatar left">#}
+{#                    <img src="{% gravatar_url user.email 50 %}"#}
+{#                         title="{{ user.username }}"/>#}
+{#                </a>#}
+                {% render_field form.comment class+="materialize-textarea" placeholder="Add a comment" required="required" %}
+                {% if form.comment.errors %}
+                    <div class="errors">{{ form.comment.errors.as_text }}</div>
+                {% endif %}
             </div>
-        <input type="hidden" name="next" value="{{ request.path }}"/>
-            <input type="submit" value="Comment" id="id_submit" class="btn btn-primary"/>
+            <input type="hidden" name="next" value="{{ request.path }}"/>
+            <input type="submit" value="Comment" id="id_submit" class="btn"/>
         </form>
     {% else %}
         <p>Please <a href="{% url 'accounts:login' %}">log in</a> to leave a comment.</p>
