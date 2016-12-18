@@ -5,8 +5,6 @@
 {% block content %}
     {% include 'accounts/navigation.html' with active_link='profile' %}
     <div class="card-panel">
-        <form action="" method="post">
-            {% include 'accounts/profile_form.html' %}
-        </form>
+        {% include 'accounts/profile_form.html' %}
     </div>
 {% endblock %}

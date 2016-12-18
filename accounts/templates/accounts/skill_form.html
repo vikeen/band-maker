@@ -1,10 +1,9 @@
 {% load widget_tweaks %}
 
-{% if form.errors %}
-    <div class="message message--error">Please correct the errors below:</div>
-{% endif %}
-
 <form action="" method="post">
+    {% if form.errors %}
+        <div class="card-panel message message--error">Please correct the errors below:</div>
+    {% endif %}
     {% csrf_token %}
     <div class="input-field">
         <label for="id_name">Name</label>

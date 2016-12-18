@@ -1,29 +1,31 @@
 {% load widget_tweaks %}
 
-{% if form.errors %}
-    <div class="alert alert-danger">Please correct the errors below:</div>
-{% endif %}
+<form action="" method="post">
+    {% if form.errors %}
+        <div class="card-panel message message--error">Please correct the errors below:</div>
+    {% endif %}
 
-{% csrf_token %}
-<div class="input-field">
-    <label for="id_first_name">First Name</label>
-    {% render_field form.first_name %}
-    {% if form.first_name.errors %}
-        <p class="errors">{{ form.first_name.errors.as_text }}</p>
-    {% endif %}
-</div>
-<div class="input-field">
-    <label for="id_last_name">Last Name</label>
-    {% render_field form.last_name %}
-    {% if form.last_name.errors %}
-        <p class="errors">{{ form.last_name.errors.as_text }}</p>
-    {% endif %}
-</div>
-<div class="input-field">
-    <label for="id_email">Email</label>
-    {% render_field form.email %}
-    {% if form.email.errors %}
-        <p class="errors">{{ form.email.errors.as_text }}</p>
-    {% endif %}
-</div>
-<button class="btn" type="submit">Save</button>
+    {% csrf_token %}
+    <div class="input-field">
+        <label for="id_first_name">First Name</label>
+        {% render_field form.first_name %}
+        {% if form.first_name.errors %}
+            <p class="errors">{{ form.first_name.errors.as_text }}</p>
+        {% endif %}
+    </div>
+    <div class="input-field">
+        <label for="id_last_name">Last Name</label>
+        {% render_field form.last_name %}
+        {% if form.last_name.errors %}
+            <p class="errors">{{ form.last_name.errors.as_text }}</p>
+        {% endif %}
+    </div>
+    <div class="input-field">
+        <label for="id_email">Email</label>
+        {% render_field form.email %}
+        {% if form.email.errors %}
+            <p class="errors">{{ form.email.errors.as_text }}</p>
+        {% endif %}
+    </div>
+    <button class="btn" type="submit">Save</button>
+</form>
