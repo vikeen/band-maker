@@ -15,12 +15,13 @@
 
 {% include 'base_header.html' %}
 
-<main class="container">
+<main class="container row">
     {% if messages %}
         {% for message in messages %}
             <div class="card-panel {% if message.tags %}message message--{{ message.tags }}{% endif %}">
                 {{ message }}
-                <a href="#!" class="right" title="close message"><i class="material-icons message__close js-message-close">close</i></a>
+                <a href="#!" class="right" title="close message"><i
+                        class="material-icons message__close js-message-close">close</i></a>
             </div>
         {% endfor %}
     {% endif %}
