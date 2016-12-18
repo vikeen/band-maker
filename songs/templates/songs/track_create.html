@@ -3,14 +3,20 @@
 {% block title %}Create Track{% endblock %}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
-        <li><a href="{% url 'songs:edit' song.id %}">{{ song.title }}</a></li>
-        <li class="active">Create Track</li>
-    </ol>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <a href="{% url 'users:songs' user.username %}" class="breadcrumb">My Songs</a>
+                <a href="{% url 'songs:edit' song.id %}" class="breadcrumb">{{ song.title }}</a>
+                <a href="#!" class="breadcrumb">Create Track</a>
+            </div>
+        </div>
+    </nav>
 
-    <form action="" method="post" enctype="multipart/form-data">
-        <legend>Create Track</legend>
-        {% include 'songs/track_form.html' %}
-    </form>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Create Track</span>
+            {% include 'songs/track_form.html' %}
+        </div>
+    </div>
 {% endblock %}
