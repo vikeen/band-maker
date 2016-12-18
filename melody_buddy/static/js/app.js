@@ -19,4 +19,5 @@ $(document).ready(() => {
         hover: false
     });
     $(".button-collapse").sideNav();
+    $('ul.tabs').tabs();
 });
