@@ -196,9 +196,6 @@
 .comments__comment {
   margin-top: 15px;
 }
-.container {
-  width: 1200px !important;
-}
 .site-footer {
   margin-top: 20px;
 }
@@ -229,10 +226,10 @@ form .errors {
 .content-block {
   margin-top: 15px;
 }
-.site-header .gravatar img {
-  margin-top: 8px;
+.site-header .gravatar {
+  position: relative;
 }
-.site-header .gravatar .dropdown-icon {
-  vertical-align: middle;
-  margin-top: 5px;
+.site-header .gravatar img {
+  position: relative;
+  top: 12px;
 }

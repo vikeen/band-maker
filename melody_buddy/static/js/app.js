@@ -15,4 +15,8 @@ window.bm = {
  * Initialize application widgets
  */
 $(document).ready(() => {
+    $(".dropdown-button").dropdown({
+        hover: false
+    });
+    $(".button-collapse").sideNav();
 });

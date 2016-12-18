@@ -11,10 +11,6 @@
 @import "./users/index";
 @import "./comments";
 
-.container {
-    width: @site-width !important;
-}
-
 .site-footer {
     margin-top: @margin-large;
 }
@@ -53,12 +49,10 @@ form .errors {
 }
 
 .site-header .gravatar {
-    img {
-        margin-top: 8px;
-    }
+    position: relative;
 
-    .dropdown-icon {
-        vertical-align: middle;
-        margin-top: 5px;
+    img {
+        position: relative;
+        top: 12px;
     }
 }
