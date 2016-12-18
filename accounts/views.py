@@ -45,6 +45,7 @@ class SkillCreate(LoginRequiredMixin,
         return super().form_valid(form)
 
     def get_success_url(self):
+        messages.success(self.request, "Created skill")
         return reverse('accounts:skills')
 
 
@@ -55,6 +56,7 @@ class SkillDelete(LoginRequiredMixin,
     template_name = 'accounts/skill_confirm_delete.html'
 
     def get_success_url(self):
+        messages.success(self.request, "Deleted skill")
         return reverse('accounts:skills')
 
 

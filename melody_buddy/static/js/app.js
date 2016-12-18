@@ -22,6 +22,7 @@ $(document).ready(() => {
     });
     $(".button-collapse").sideNav();
     $('ul.tabs').tabs();
+    $('select').material_select();
 
     new window.bm.components.Messages();
 });

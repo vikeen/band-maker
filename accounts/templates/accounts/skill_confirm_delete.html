@@ -6,17 +6,17 @@
 {% block title %}Delete Skill{% endblock %}
 
 {% block content %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            {% include 'accounts/navigation.html' with active_link='skills' %}
+    {% include 'accounts/navigation.html' with active_link='skills' %}
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Delete Skill</span>
+            <p>Are you sure you want to delete the skill, "{{ skill.name | instrument_name }}"?</p>
         </div>
-        <div class="panel-body">
+        <div class="card-action">
             <form class="form" action="" method="post">
-                <legend>Delete Skill"</legend>
                 {% csrf_token %}
-                <p>Are you sure you want to delete the skill, "{{ skill.name | instrument_name }}"?</p>
-                <a href="{% url 'accounts:skills' %}">Cancel</a>
-                <button type="submit" class="btn btn-danger">Confirm</button>
+                <a href="{% url 'accounts:skills' %}" class="text-color--primary">Cancel</a>
+                <button type="submit" class="btn red">Confirm</button>
             </form>
         </div>
     </div>

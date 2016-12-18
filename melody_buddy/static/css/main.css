@@ -1,5 +1,5 @@
 .text-color--primary {
-  color: #2196f3;
+  color: #2196f3 !important;
 }
 .text-color--danger {
   color: #f44336;
@@ -29,7 +29,7 @@
   color: white;
 }
 .bg-color--primary {
-  background-color: #2196f3;
+  background-color: #2196f3 !important;
 }
 .bg-color--warning,
 .message.message--warning {
