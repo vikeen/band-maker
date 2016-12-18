@@ -5,6 +5,13 @@
         <div class="card-panel message message--error">Please correct the errors below:</div>
     {% endif %}
     {% csrf_token %}
+    <div class="input-field">
+        <label for="id_instrument">Instrument</label>
+        {% render_field form.instrument %}
+        {% if form.title.errors %}
+            <div class="errors">{{ form.instrument.errors.as_text }}</div>
+        {% endif %}
+    </div>
     <p>
         <script>
             $(document).ready(function () {
@@ -32,13 +39,6 @@
         <div class="errors">{{ form.public.errors.as_text }}</div>
     {% endif %}
     </p>
-    <div class="input-field">
-        <label for="id_instrument">Instrument</label>
-        {% render_field form.instrument %}
-        {% if form.title.errors %}
-            <div class="errors">{{ form.instrument.errors.as_text }}</div>
-        {% endif %}
-    </div>
     <div class="file-field input-field js-audio-file-container">
         <div class="btn">
             <span>Audio File</span>
@@ -48,31 +48,5 @@
             <input class="file-path validate" type="text" placeholder="Upload the instrument track"/>
         </div>
     </div>
-    {#<div class="input-field row">#}
-    {#    <div class="col-sm-6">#}
-    {#        <label for="id_license">License</label>#}
-    {#        {% render_field form.license class+="form-control" %}#}
-    {#        <span class="help-block">#}
-    {#                    <a href="#" data-toggle="modal" data-target="#licenseModal">view license details</a>#}
-    {#                </span>#}
-    {#        {% if form.license.errors %}#}
-    {#            <div class="errors">{{ form.license.errors.as_text }}</div>#}
-    {#        {% endif %}#}
-    {#        <div class="modal fade" id="licenseModal" tabindex="-1" role="dialog">#}
-    {#            <div class="modal-dialog" role="document">#}
-    {#                <div class="modal-content">#}
-    {#                    <div class="modal-header">#}
-    {#                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span#}
-    {#                                aria-hidden="true">&times;</span></button>#}
-    {#                        <h4 class="modal-title">{{ track.get_license_information.name }}</h4>#}
-    {#                        <a href="{{ track.get_license_information.link }}" target="_blank">canonical URL for the#}
-    {#                            license</a>#}
-    {#                    </div>#}
-    {#                    <pre>{{ track.get_license_information.text }}</pre>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
-    {#</div>#}
     <button class="btn" type="submit">Save</button>
 </form>
