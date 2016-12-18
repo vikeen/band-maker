@@ -2,17 +2,17 @@
 
 <img src="{% gravatar_url view_user.email 200 %}" class="user-profile__avatar"
      title="{{ view_user.username }}"/>
-<h2>
+<h4>
     {{ view_user.username }}
     <br/>
     {% if view_user.first_name %}
         <small>{{ view_user.first_name }} {{ view_user.last_name }}</small>
     {% endif %}
-</h2>
-<hr/>
+</h4>
+<div class="divider"></div>
 <ul class="user-profile__meta">
     <li class="user-profile__meta-data">
-        <i class="glyphicon glyphicon-time user-profile__meta-data-icon"></i>
+        <i class="material-icons left">access_time</i>
         Joined on {{ view_user.date_joined | date:"M d, Y" }}
     </li>
 </ul>
