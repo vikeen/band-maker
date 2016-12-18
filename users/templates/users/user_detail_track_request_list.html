@@ -5,17 +5,15 @@
 
 {% block content %}
     <div class="user-profile row">
-        <div class="col-sm-3">
+        <div class="col s3">
             {% include 'users/user_detail_sidebar.html' %}
         </div>
-        <div class="col-sm-9">
+        <div class="col s9">
             {% include 'users/user_detail_navigation.html' with active_link='track_requests' %}
-            <div class="content-block">
-                <div class="oanel panel-primary">
-                    <div class="panel-heading">
-                        <div class="panel-title">Pending</div>
-                    </div>
-                    <table class="table table-bordered">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Pending</span>
+                    <table class="bordered">
                         <thread>
                             <tr>
                                 <td>#</td>
@@ -44,11 +42,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="oanel panel-success">
-                    <div class="panel-heading">
-                        <div class="panel-title">Approved</div>
-                    </div>
-                    <table class="table table-bordered">
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Approved</span>
+                    <table class="bordered">
                         <thread>
                             <tr>
                                 <td>#</td>
@@ -77,11 +75,11 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="oanel panel-danger">
-                    <div class="panel-heading">
-                        <div class="panel-title">Declined</div>
-                    </div>
-                    <table class="table table-bordered">
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Declined</span>
+                    <table class="bordered">
                         <thread>
                             <tr>
                                 <td>#</td>

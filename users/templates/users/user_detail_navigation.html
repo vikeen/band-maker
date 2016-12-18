@@ -1,30 +1,37 @@
-<ul class="nav nav-tabs">
-    <li role="presentation" {% if active_link == 'overview' %}class="active"{% endif %}>
-        <a href="{% url 'users:detail' view_user.username %}">Overview</a>
-    </li>
-    <li role="presentation" {% if active_link == 'songs' %}class="active"{% endif %}>
-        <a href="{% url 'users:songs' view_user.username %}">
-            Songs <span class="badge">{{ song_count }}</span>
-        </a>
-    </li>
-    <li role="presentation" {% if active_link == 'contributions' %}class="active"{% endif %}>
-        <a href="{% url 'users:contributions' view_user.username %}">
-            Contributions <span class="badge">{{ contribution_count}}</span>
-        </a>
-    </li>
-    <li role="presentation" {% if active_link == 'skills' %}class="active"{% endif %}>
-        <a href="{% url 'users:skills' view_user.username %}">
-            Skills <span class="badge">{{ skill_count }}</span>
-        </a>
-    </li>
-    {% if view_user == request.user %}
-        <li role="presentation" {% if active_link == 'track_requests' %}class="active"{% endif %}>
-            <a href="{% url 'users:track_requests' view_user.username %}">
-                Track Requests
-                {% if pending_track_request_count > 0 %}
-                    <span class="badge">{{ pending_track_request_count }}</span>
-                {% endif %}
-            </a>
-        </li>
-    {% endif %}
-</ul>
+<nav>
+    <div class="nav-wrapper">
+        <ul class="left">
+            <li class="{% if active_link == 'overview' %}active{% endif %}">
+                <a href="{% url 'users:detail' view_user.username %}">Overview</a>
+            </li>
+            <li class="{% if active_link == 'songs' %}active{% endif %}">
+                <a href="{% url 'users:songs' view_user.username %}">
+                    Songs
+                    {#                    <span class="badge">{{ song_count }}</span>#}
+                </a>
+            </li>
+            <li class="{% if active_link == 'contributions' %}active{% endif %}">
+                <a href="{% url 'users:contributions' view_user.username %}">
+                    Contributions
+{#                    <span class="badge">{{ contribution_count }}</span>#}
+                </a>
+            </li>
+            <li class="{% if active_link == 'skills' %}active{% endif %}">
+                <a href="{% url 'users:skills' view_user.username %}">
+                    Skills
+                    {#                    <span class="badge">{{ skill_count }}</span>#}
+                </a>
+            </li>
+            {% if view_user == request.user %}
+                <li class="{% if active_link == 'track_requests' %}active{% endif %}">
+                    <a href="{% url 'users:track_requests' view_user.username %}">
+                        Track Requests
+                        {#                        {% if pending_track_request_count > 0 %}#}
+                        {#                            <span class="badge">{{ pending_track_request_count }}</span>#}
+                        {#                        {% endif %}#}
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

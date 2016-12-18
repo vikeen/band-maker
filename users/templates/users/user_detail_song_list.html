@@ -4,55 +4,44 @@
 
 {% block content %}
     <div class="user-profile row">
-        <div class="col-sm-3">
+        <div class="col s3">
             {% include 'users/user_detail_sidebar.html' %}
         </div>
-        <div class="col-sm-9">
+        <div class="col s9">
             {% include 'users/user_detail_navigation.html' with active_link='songs' %}
-            <div class="row user-profile__song-search">
-                <form class="form-inline col-sm-9"
-                      action="{% url 'users:songs' view_user.username %}"
-                      method="GET">
-                    <div class="form-group">
-                        <input type="text" id="id_title" name="title" class="form-control" placeholder="Search songs..."
-                               value="{{ request.GET.title }}"/>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-search"></i>
-                            Search
-                        </button>
-                    </div>
-                </form>
-                <div class="col-sm-3">
-                    {% if request.user == view_user %}
-                        <a href="{% url 'songs:create' %}" class="btn btn-success pull-right">
-                            New Song</a>
-                    {% endif %}
+            <nav class="white">
+                <div class="nav-wrapper">
+                    <form action="{% url 'users:songs' view_user.username %}" method="GET">
+                        <div class="input-field">
+                            <input type="search" id="id_title" name="title" placeholder="Search songs..."
+                                   value="{{ request.GET.title }}"/>
+                            <label for="id_title"><i class="material-icons text-color--base">search</i></label>
+                            <i class="material-icons">close</i>
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <section class="user-profile__song-list">
+            </nav>
+            <section class="user-profile__song-list row">
                 {% if song_list %}
                     {% for song in song_list %}
-                        <article class="user-profile__song">
-                            <h4 class="user-profile__song-title">
-                                <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
-                            </h4>
-                            <p class="song__description">{{ song.description | truncatechars:100 }}</p>
-                            <span>
-                            <i class="glyphicon glyphicon-time"></i>
-                                Updated {{ song.updated | timesince }} ago
-                        </span>
-                            {% if request.user == view_user %}
-                                <ul class="user-profile__song-admin-widgets">
-                                    <li class="user-profile__song-admin-widget">
-                                        <a href="{% url 'songs:edit' song.pk %}" class="btn btn-primary btn-xs">
-                                            <i class="glyphicon glyphicon-pencil"></i>&nbsp;Edit
-                                        </a>
-                                    </li>
-                                </ul>
-                            {% endif %}
-                        </article>
+                        <div class="col s12">
+                            <div class="card horizontal">
+                                <div class="card-stacked">
+                                    <div class="card-content">
+                                    <span class="card-title">
+                                        <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
+                                    </span>
+                                        <p>{{ song.description | truncatechars:100 }}</p>
+                                        <p>Updated {{ song.updated | timesince }} ago</p>
+                                    </div>
+                                    <div class="card-action">
+                                        {% if request.user == view_user %}
+                                            <a href="{% url 'songs:edit' song.pk %}">Edit</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     {% endfor %}
                 {% else %}
                     We couldn't find any songs.
