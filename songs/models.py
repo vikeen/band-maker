@@ -47,6 +47,9 @@ class Track(models.Model):
                                max_length=100)
     uuid = models.UUIDField(default=uuid.uuid4)
 
+    def __str__(self):
+        return self.instrument
+
     def get_license_information(self):
         return license[self.license]
 
@@ -69,6 +72,9 @@ class TrackRequest(models.Model):
     license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
                                max_length=100)
     track = models.ForeignKey(Track, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.audio_name
 
     class Meta:
         db_table = 'songs_track_requests'
