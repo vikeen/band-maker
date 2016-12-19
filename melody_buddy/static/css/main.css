@@ -110,7 +110,7 @@ nav {
  *
  */
 .media-player__track {
-  min-height: 60px;
+  height: 60px;
   width: 100%;
   margin: 0 !important;
 }
@@ -118,25 +118,25 @@ nav {
   padding-top: 15px;
 }
 .media-player__track:first-of-type {
-  min-height: 75px;
+  height: 75px;
 }
 .media-player__track:first-of-type .media-player__track-waveform-container {
-  min-height: 75px;
+  height: 75px;
 }
 .media-player__track:first-of-type .media-player__track-waveform {
   padding-top: 15px;
 }
 .media-player__track:last-of-type {
-  min-height: 75px;
+  height: 75px;
 }
 .media-player__track:last-of-type .media-player__track-waveform-container {
-  min-height: 75px;
+  height: 75px;
 }
 .media-player__track:last-of-type .media-player__track-waveform {
   padding-bottom: 15px;
 }
 .media-player__track .media-player__track-waveform-container {
-  min-height: 60px;
+  height: 60px;
   background: #444;
   padding-left: 15px;
   padding-right: 15px;
@@ -147,6 +147,9 @@ nav {
   display: inline-block;
   margin-right: 15px;
   padding-top: 15px;
+}
+.media-player__track .media-player__track-meta-container {
+  height: 60px;
 }
 .media-player__track .media-player__track-meta {
   display: inline-block;

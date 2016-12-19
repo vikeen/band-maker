@@ -11,11 +11,11 @@
                         {% if track_request_json %}{{ track_request_json | safe }}{% else %}[]{% endif %});
             })
         </script>
-        <section class="media-player___tracks row">
+        <section class="media-player___tracks">
             {% for track in tracks %}
                 <article data-track-id="{{ track.pk }}"
-                         class="media-player__track {% if not track.audio_url %}media-player__track--no-media{% endif %}">
-                    <div class="col s3">
+                         class="media-player__track row {% if not track.audio_url %}media-player__track--no-media{% endif %}">
+                    <div class="media-player__track-meta-container col s3">
                         <div class="media-player__track-artist">
                             {% if track.contributed_by %}
                                 <a href="{% url 'users:detail' track.contributed_by.username %}">
@@ -46,7 +46,7 @@
                                         <i class="material-icons">volume_mute</i>
                                     </button>
                                 </li>
-                                <li class="media-player__track-control media-player__track-control--solo">
+                                    <li class="media-player__track-control media-player__track-control--solo">
                                     <button class="btn btn-flat btn-small media-player__track-control-action"
                                             {% if not track.audio_url %}disabled{% endif %}>
                                         <i class="material-icons">headset</i>
