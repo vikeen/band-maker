@@ -2,6 +2,29 @@ from django.contrib import admin
 
 from .models import Song, Track, TrackRequest
 
-admin.site.register(Song)
-admin.site.register(Track)
-admin.site.register(TrackRequest)
+
+class SongAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_by', 'views', 'updated', 'created')
+    exclude = ('license',)
+    readonly_fields = ('uuid', 'views', 'likes')
+    search_fields = ('title',)
+    list_filter = ('updated', 'created')
+
+
+class TrackAdmin(admin.ModelAdmin):
+    list_display = ('instrument', 'song', 'created_by', 'contributed_by', 'updated', 'created')
+    exclude = ('license', 'song')
+    readonly_fields = ('uuid', 'likes')
+    search_fields = ('song__title',)
+    list_filter = ('updated', 'created')
+
+
+class TrackRequestAdmin(admin.ModelAdmin):
+    list_display = ('track', 'created_by', 'status', 'updated', 'created')
+    exclude = ('license', 'track')
+    list_filter = ('status', 'updated', 'created')
+
+
+admin.site.register(Song, SongAdmin)
+admin.site.register(Track, TrackAdmin)
+admin.site.register(TrackRequest, TrackRequestAdmin)
