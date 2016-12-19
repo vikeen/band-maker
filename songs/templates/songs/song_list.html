@@ -6,59 +6,47 @@
 {% block title %}Songs{% endblock %}
 
 {% block content %}
-    <form class="form form-inline" action="{% url 'songs:index' %}" method="GET">
-        <fieldset>
-            <legend>
-                <h1>Songs</h1>
-            </legend>
-            <div class="form-group">
-                <label>Accepting Contributions
-                    <input type="checkbox" name="accepting_contributions"
-                           {% if request.GET.accepting_contributions %}checked{% endif %}/>
-                </label>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Songs</span>
+            <div class="row">
+                <form action="{% url 'songs:index' %}" method="GET">
+                    <p class="col s6">
+                        <input type="checkbox" name="accepting_contributions" id="id_accepting_contributions"
+                               {% if request.GET.accepting_contributions %}checked{% endif %}/>
+                        <label for="id_accepting_contributions">Accepting Contributions</label>
+                    </p>
+                    <button type="submit" class="btn indigo">Filter</button>
+                </form>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
-        </fieldset>
-    </form>
-
-
-    <div class="panel panel-default content-block">
-        <div class="panel-heading"></div>
-        <div class="panel-body">
+        </div>
+        <ul class="collection">
             {% for song in song_list %}
-                <div class="media">
-                    <div class="media-left">
-                        <a href="{% url 'users:detail' song.created_by %}">
-                            <img src="{% gravatar_url song.created_by.email 50 %}"
-                                 title="{{ song.created_by.username }}"/>
-                        </a>
+                <li class="collection-item avatar">
+                    <a href="{% url 'users:detail' song.created_by %}">
+                        <img src="{% gravatar_url song.created_by.email 50 %}" class="circle"
+                             title="{{ song.created_by.username }}"/>
+                    </a>
+                    <span class="title">
+                    <a href="{% url "songs:detail" song.id %}">{{ song.title }}</a>
+                    <br/>
+                    <small>{{ song.created | date:'M d, Y' }}</small>
+                </span>
+                    <p>{{ song.description | truncatechars:100 }}</p>
+                    <div class="secondary-content">
+                        <span class="new badge blue" data-badge-caption="views">{{ song.views }}</span>
                     </div>
-                    <div class="media-body">
-                        <h2 class="media-heading song__title">
-                            <a href="{% url "songs:detail" song.id %}">{{ song.title }}</a>
-                        </h2>
-                        {% if song.description %}
-                            <p class="song__description">{{ song.description | truncatechars:100 }}</p>
-                        {% endif %}
-                        <ul class="song__requested-tracks clearfix">
+                    <footer>
+                        <ul>
                             {% for track in song.track_set.all %}
                                 {% if track.public %}
-                                    <li class="song__requested-track">
-                                        <span class="label label-default">{{ track.instrument | instrument_name }}</span>
-                                    </li>
+                                    <div class="chip">{{ track.instrument | instrument_name }}</div>
                                 {% endif %}
                             {% endfor %}
                         </ul>
-                        <ul class="song__meta clearfix">
-                            <li>
-                                {{ song.views }} views
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                    </footer>
+                </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
 {% endblock %}

@@ -237,14 +237,6 @@ form .errors {
   padding: 5px;
   margin-top: -15px;
 }
-.song__requested-tracks {
-  padding: 0;
-  list-style: none;
-}
-.song__requested-track {
-  margin-right: 10px;
-  float: left;
-}
 .song__meta {
   list-style: none;
   padding-left: 0;
@@ -255,6 +247,9 @@ form .errors {
 .song__meta li {
   float: left;
   margin-right: 20px;
+}
+.collection footer {
+  margin-top: 15px;
 }
 .content-block {
   margin-top: 15px;
