@@ -5,59 +5,45 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-sm-offset-3 col-sm-6">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Create an account</span>
             {% if form.errors %}
-                <div class="alert alert-danger">Please correct the errors below: {{ form.non_field_errors }}</div>
+                <div class="card-panel message message--error">Please correct the errors
+                    below: {{ form.non_field_errors }}</div>
             {% endif %}
-            <h1>Create an account</h1>
-
-            <form method="post" action="" class="form">
+            <form method="post" action="">
                 {% csrf_token %}
-                <div class="form-group">
+                <div class="input-field">
                     <label for="id_username">Username</label>
-                    {% render_field form.username class+="form-control" %}
+                    {% render_field form.username %}
                     {% if form.username.errors %}
                         <div class="errors">{{ form.username.errors.as_text }}</div>
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="input-field">
                     <label for="id_email">Email</label>
-                    {% render_field form.email class+="form-control" %}
+                    {% render_field form.email %}
                     {% if form.email.errors %}
                         <div class="errors">{{ form.email.errors.as_text }}</div>
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="input-field">
                     <label for="id_password1">Password</label>
-                    {% render_field form.password1 class+="form-control" %}
+                    {% render_field form.password1 %}
                     {% if form.password1.errors %}
                         <div class="errors">{{ form.password1.errors.as_text }}</div>
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="input-field">
                     <label for="id_password2">Confirm Password</label>
-                    {% render_field form.password2 class+="form-control" %}
+                    {% render_field form.password2 %}
                     {% if form.password2.errors %}
                         <div class="errors">{{ form.password2.errors.as_text }}</div>
                     {% endif %}
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Register &rarr;</button>
-                </div>
+                <button class="btn" type="submit">Register &rarr;</button>
             </form>
         </div>
     </div>
-{% endblock %}
-
-{% block content-related %}
-    <p>Fill out the form to the left (all fields are required), and your
-        account will be created; you'll be sent an email with instructions on how
-        to finish your registration.</p>
-
-    <p>We'll only use your email to send you signup instructions. We hate spam
-        as much as you do.</p>
-
-    <p>This account will let you log into the ticket tracker, claim tickets,
-        and be exempt from spam filtering.</p>
 {% endblock %}
