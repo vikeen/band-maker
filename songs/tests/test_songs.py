@@ -19,8 +19,17 @@ class SongTestCase(TestCase):
 
 
 class IndexSongTestCase(SongTestCase):
+    def setUp(self):
+        super().setUp()
+        self.song_index_url = reverse("songs:index")
+
+    def test_song_index_denies_anonymous(self):
+        response = self.client.get(self.song_index_url)
+        self.assertRedirects(response, '%s/?next=%s' % (reverse('accounts:login'), self.song_index_url))
+
     def test_song_list_loads(self):
-        response = self.client.get(reverse("songs:index"))
+        super().login(self.user_creator)
+        response = self.client.get(self.song_index_url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'songs/song_list.html')
 
