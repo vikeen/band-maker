@@ -21,30 +21,32 @@
                     </form>
                 </div>
             </nav>
-            <section class="user-profile__song-list row">
+            <section class="user-profile__song-list">
                 {% if song_list %}
                     {% for song in song_list %}
-                        <div class="col s12">
-                            <div class="card horizontal">
-                                <div class="card-stacked">
-                                    <div class="card-content">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
                                     <span class="card-title">
                                         <a href="{% url 'songs:detail' song.pk %}">{{ song.title }}</a>
                                     </span>
-                                        <p>{{ song.description | truncatechars:100 }}</p>
-                                        <p>Updated {{ song.updated | timesince }} ago</p>
-                                    </div>
-                                    {% if request.user == view_user %}
-                                        <div class="card-action">
-                                            <a href="{% url 'songs:edit' song.pk %}">Edit</a>
-                                        </div>
-                                    {% endif %}
+                                    <p>{{ song.description | truncatechars:100 }}</p>
+                                    <p>Updated {{ song.updated | timesince }} ago</p>
                                 </div>
+                                {% if request.user == view_user %}
+                                    <div class="card-action">
+                                        <a href="{% url 'songs:edit' song.pk %}">Edit</a>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
                 {% else %}
-                    We couldn't find any songs.
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">We couldn't find any songs.</span>
+                        </div>
+                    </div>
                 {% endif %}
             </section>
         </div>
