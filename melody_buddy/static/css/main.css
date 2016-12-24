@@ -264,3 +264,7 @@ form .errors {
   position: relative;
   top: 12px;
 }
+.site-header .gravatar .dropdown-content {
+  min-width: 200px;
+  right: 0;
+}
