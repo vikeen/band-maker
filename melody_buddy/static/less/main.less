@@ -16,10 +16,12 @@ main.container {
     margin-top: 50px;
 }
 
-form .errors {
-    color: @color-danger;
-    padding: @padding-extra-small;
-    margin-top: -@margin-default;
+form {
+    .errors, .errorlist {
+        color: @color-danger;
+        padding: 0 @padding-large @padding-large;
+        margin-top: -@margin-default;
+    }
 }
 
 .song__meta {

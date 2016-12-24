@@ -18,9 +18,7 @@
 {#                         title="{{ user.username }}"/>#}
 {#                </a>#}
                 {% render_field form.comment class+="materialize-textarea" placeholder="Add a comment" required="required" %}
-                {% if form.comment.errors %}
-                    <div class="errors">{{ form.comment.errors.as_text }}</div>
-                {% endif %}
+                {{ form.comment.errors }}
             </div>
             <input type="hidden" name="next" value="{{ request.path }}"/>
             <input type="submit" value="Comment" id="id_submit" class="btn"/>

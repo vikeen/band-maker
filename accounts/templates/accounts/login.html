@@ -10,7 +10,9 @@
             <div class="card">
                 <div class="card-content">
                     {% if form.errors %}
-                        <div class="card-panel message message--error">Please correct the errors below:</div>
+                        <div class="card-panel message message--error">Sorry, we weren't able to authenticate you with
+                            the provided credentials
+                        </div>
                     {% endif %}
                     <span class="card-title">Log In</span>
 
@@ -19,16 +21,12 @@
                         <div class="input-field">
                             <label for="id_username">Username</label>
                             {% render_field form.username %}
-                            {% if form.username.errors %}
-                                <div class="errors">{{ form.username.errors.as_text }}</div>
-                            {% endif %}
+                            {{ form.username.errors }}
                         </div>
                         <div class="input-field">
                             <label for="id_password">Password</label>
                             {% render_field form.password %}
-                            {% if form.password.errors %}
-                                <div class="errors">{{ form.password.errors.as_text }}</div>
-                            {% endif %}
+                            {{ form.password.errors }}
                         </div>
                         <button type="submit" class="btn">Log in</button>
                     </form>

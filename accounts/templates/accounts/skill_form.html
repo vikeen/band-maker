@@ -8,9 +8,7 @@
     <div class="input-field">
         <label for="id_name">Name</label>
         {% render_field form.name %}
-        {% if form.name.errors %}
-            <div class="errors">{{ form.name.errors.as_text }}</div>
-        {% endif %}
+        {{ form.name.errors }}
     </div>
     <button class="btn" type="submit">Save</button>
 </form>

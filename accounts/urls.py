@@ -4,13 +4,16 @@ from django.contrib.auth import views as auth_views
 from registration.backends.simple import views as registration_views
 
 from . import views
+from . import forms
 
 app_name = 'accounts'
 urlpatterns = [
     # authentication
     url(r'^login', auth_views.login, {'template_name': 'accounts/login.html'}, name='login'),
     url(r'^logout', auth_views.logout, {'template_name': 'accounts/logout.html'}, name='logout'),
-    url(r'^registration', registration_views.RegistrationView.as_view(), name='registration'),
+    url(r'^registration', registration_views.RegistrationView.as_view(
+        form_class=forms.RegistrationForm
+    ), name='registration'),
 
     # password
     url(r'^password/change/$', auth_views.password_change, {

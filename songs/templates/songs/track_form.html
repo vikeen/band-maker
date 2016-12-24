@@ -8,9 +8,7 @@
     <div class="input-field">
         <label for="id_instrument">Instrument</label>
         {% render_field form.instrument %}
-        {% if form.title.errors %}
-            <div class="errors">{{ form.instrument.errors.as_text }}</div>
-        {% endif %}
+        {{ form.instrument.errors }}
     </div>
     <p>
         <script>
@@ -35,9 +33,7 @@
         {% render_field form.public %}
         <label for="id_public">Request track from contributor</label>
     <div><i>Allow other users to upload their work and collaborate with your song</i></div>
-    {% if form.public.errors %}
-        <div class="errors">{{ form.public.errors.as_text }}</div>
-    {% endif %}
+    {{ form.public.errors }}
     </p>
     <div class="file-field input-field js-audio-file-container">
         <div class="btn">

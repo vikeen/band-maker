@@ -9,17 +9,13 @@
     <div class="input-field">
         <label for="id_title">Title</label>
         {% render_field form.title %}
-        {% if form.title.errors %}
-            <div class="errors">{{ form.title.errors.as_text }}</div>
-        {% endif %}
+        {{ form.title.errors }}
     </div>
 
     <div class="input-field">
         <label for="id_description">Description</label>
         {% render_field form.description class+="materialize-textarea" %}
-        {% if form.description.errors %}
-            <div class="errors">{{ form.description.errors.as_text }}</div>
-        {% endif %}
+        {{ form.description.errors }}
     </div>
     <button class="btn btn" type="submit">Save</button>
 </form>
