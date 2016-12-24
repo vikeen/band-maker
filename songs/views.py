@@ -22,7 +22,8 @@ from tempfile import mkdtemp
 from shutil import rmtree
 
 
-class Index(generic.ListView):
+class Index(LoginRequiredMixin,
+            generic.ListView):
     model = Song
     context_object_name = 'song_list'
 
