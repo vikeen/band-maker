@@ -55,6 +55,8 @@ export class MediaPlayer {
     restart() {
         const self = this;
 
+        mixpanel.track("media-player:restart");
+
         self.tracks.forEach(track => {
             track.__audio && track.__audio.play(0);
         });
@@ -64,6 +66,8 @@ export class MediaPlayer {
 
     play() {
         const self = this;
+
+        mixpanel.track("media-player:play");
 
         self.tracks.forEach(track => {
             if (track.__audio && !track.__audio.isPlaying()) {
@@ -76,6 +80,8 @@ export class MediaPlayer {
 
     pause() {
         const self = this;
+
+        mixpanel.track("media-player:pause");
 
         self.tracks.forEach(track => {
             if (track.__audio && track.__audio.isPlaying()) {
@@ -323,6 +329,8 @@ function __handleTrackMuteClick(event) {
         $trackControl = $(event.currentTarget),
         trackId = $trackControl.parents(".media-player__track").data("trackId"),
         track = self.getTrackById(trackId);
+
+    mixpanel.track("media-player:mute-track", track);
 
     self.toggleTrackMute(track);
 
