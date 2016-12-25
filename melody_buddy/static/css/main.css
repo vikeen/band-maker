@@ -28,6 +28,10 @@
 .message .message__close {
   color: white;
 }
+.text-color--muted,
+.site-footer {
+  color: #eee;
+}
 .bg-color--primary {
   background-color: #2196f3 !important;
 }
@@ -268,4 +272,13 @@ form .errorlist {
 .site-header .gravatar .dropdown-content {
   min-width: 200px;
   right: 0;
+}
+.site-footer {
+  margin-top: 20px;
+  padding-top: 20px;
+}
+.site-footer__copyright {
+  height: 50px;
+  line-height: 50px;
+  overflow: hidden;
 }
