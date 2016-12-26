@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
-{% load gravatar %}
+{% load avatar_image %}
 {% load instrument_name %}
 
 {% block title %}Songs{% endblock %}
@@ -24,8 +23,7 @@
             {% for song in song_list %}
                 <li class="collection-item avatar">
                     <a href="{% url 'users:detail' song.created_by %}">
-                        <img src="{% gravatar_url song.created_by.email 50 %}" class="circle"
-                             title="{{ song.created_by.username }}"/>
+                        {% avatar_image song.created_by size=50 class="circle"%}
                     </a>
                     <span class="title">
                     <a href="{% url "songs:detail" song.id %}">{{ song.title }}</a>

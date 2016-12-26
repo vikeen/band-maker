@@ -1,4 +1,4 @@
-{% load gravatar %}
+{% load avatar_image %}
 {% load instrument_name %}
 
 <div class="media-player">
@@ -19,13 +19,11 @@
                         <div class="media-player__track-artist">
                             {% if track.contributed_by %}
                                 <a href="{% url 'users:detail' track.contributed_by.username %}">
-                                    <img src="{% gravatar_url track.contributed_by.email 40 %}"
-                                         alt="{{ track.contributed_by.username }}"/>
+                                    {% avatar_image track.contributed_by size=40 %}
                                 </a>
                             {% else %}
                                 <a href="{% url 'users:detail' track.created_by.username %}">
-                                    <img src="{% gravatar_url track.created_by.email 40 %}"
-                                         alt="{{ track.created_by.username }}"/>
+                                    {% avatar_image track.created_by size=40 %}
                                 </a>
                             {% endif %}
                         </div>
@@ -46,7 +44,7 @@
                                         <i class="material-icons">volume_mute</i>
                                     </button>
                                 </li>
-                                    <li class="media-player__track-control media-player__track-control--solo">
+                                <li class="media-player__track-control media-player__track-control--solo">
                                     <button class="btn btn-flat btn-small media-player__track-control-action"
                                             {% if not track.audio_url %}disabled{% endif %}>
                                         <i class="material-icons">headset</i>

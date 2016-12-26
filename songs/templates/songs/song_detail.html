@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load gravatar %}
 {% load comments %}
 
 {% block title %}{{ song.title }}{% endblock %} }}
@@ -14,9 +13,6 @@
         </div>
     </nav>
 
-{#    <a href="{% url 'users:detail' song.created_by %}">#}
-{#        <img src="{% gravatar_url song.created_by.email 50 %}" title="{{ song.created_by.username }}"/>#}
-{#    </a>#}
     <h1 class="media-heading song__title">{{ song.title }}</h1>
     <p class="song__description">{{ song.description }}</p>
     <div class="card">

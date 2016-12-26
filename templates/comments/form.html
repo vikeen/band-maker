@@ -1,6 +1,5 @@
 {% load widget_tweaks %}
 {% load comments %}
-{% load gravatar %}
 
 <div class="comments__comment-form">
     {% if user.is_authenticated %}
@@ -13,10 +12,6 @@
             {{ form.timestamp }}
             {{ form.security_hash }}
             <div class="input-field">
-{#                <a href="{% url 'users:detail' user.username %}" class="comments__comment-author-avatar left">#}
-{#                    <img src="{% gravatar_url user.email 50 %}"#}
-{#                         title="{{ user.username }}"/>#}
-{#                </a>#}
                 {% render_field form.comment class+="materialize-textarea" placeholder="Add a comment" required="required" %}
                 {{ form.comment.errors }}
             </div>

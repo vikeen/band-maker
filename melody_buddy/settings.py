@@ -36,7 +36,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'widget_tweaks',
     'django_comments',
-    'django_gravatar',
     'songs.apps.SongsConfig',
     'users.apps.UsersConfig',
     'accounts.apps.AccountsConfig',

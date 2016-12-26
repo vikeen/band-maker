@@ -1,7 +1,7 @@
-{% load gravatar %}
+{% load avatar_image %}
 
-<img src="{% gravatar_url view_user.email 200 %}" class="user-profile__avatar"
-     title="{{ view_user.username }}"/>
+{% avatar_image view_user size=200 %}
+
 <h4>
     {{ view_user.username }}
     <br/>

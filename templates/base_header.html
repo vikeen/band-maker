@@ -1,4 +1,4 @@
-{% load gravatar %}
+{% load avatar_image %}
 
 <header class="site-header">
     <nav>
@@ -17,7 +17,7 @@
                     </li>
                     <li class="gravatar">
                         <a class="dropdown-button" href="#!" data-activates="dropdown1">
-                            <img src="{% gravatar_url user.email 35 %}" alt="{{ user.username }}"/>
+                            {% avatar_image user size=35 %}
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
