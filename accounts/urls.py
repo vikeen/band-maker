@@ -38,6 +38,7 @@ urlpatterns = [
 
     # account
     url(r'^edit$', views.ProfileUpdate.as_view(), name='edit'),
+    url(r'^avatar_upload$', views.avatar_upload, name='avatar_upload'),
     url(r'^skills/$', views.SkillIndex.as_view(), name='skills'),
     url(r'^skills/create/$', views.SkillCreate.as_view(), name='skill_create'),
     url(r'^skills/(?P<pk>[0-9]+)/delete/$', views.SkillDelete.as_view(),
