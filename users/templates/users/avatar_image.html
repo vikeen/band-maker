@@ -1,4 +1,7 @@
-<img class="avatar {{ class }}" src="{{ user.profile.avatar_url }}"
+{% load static %}
+
+<img class="avatar {{ class }}" src="
+        {% if user.profile.avatar_url %}{{ user.profile.avatar_url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}"
      width="{{ size }}"
      alt="{{ user.username }} profile"
      title="{{ user.username }}"/>

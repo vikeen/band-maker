@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load avatar_image %}
 {% load widget_tweaks %}
 
 {% block title %}{{ user.username }} | Profile{% endblock %}
@@ -11,12 +12,9 @@
                 {% include 'accounts/profile_form.html' %}
             </div>
             <div class="col m6 s12">
+                {% avatar_image user size=200 %}
                 <form action="{% url 'accounts:avatar_upload' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {% if user.profile %}
-                        <img src="{{ user.profile.avatar_url }}"
-                             alt="{{ user.profile.avatar_file_name }}"/>
-                    {% endif %}
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>Image</span>
