@@ -233,6 +233,14 @@ nav {
 .comments__comment-content {
   margin-left: 65px;
 }
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+main {
+  flex: 1 0 auto;
+}
 .site-footer {
   margin-top: 20px;
 }
