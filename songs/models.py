@@ -45,7 +45,7 @@ class Track(models.Model):
     updated = models.DateTimeField(auto_now=True)
     license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
                                max_length=100)
-    uuid = models.UUIDField(default=uuid.uuid4)
+    uuid = models.UUIDField()
 
     def __str__(self):
         return self.instrument

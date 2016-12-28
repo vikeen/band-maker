@@ -2,6 +2,7 @@ import zipfile
 import os
 import boto3
 import logging
+import uuid
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
@@ -18,6 +19,7 @@ from django.views.decorators.csrf import csrf_protect
 from shutil import rmtree
 from tempfile import mkdtemp
 
+from .s3 import S3TrackUploadClient
 from .notifications import NotificationTypes
 from .licenses import license
 from .models import Song, Track, TrackRequest
@@ -103,57 +105,6 @@ class Delete(LoginRequiredMixin,
         })
 
 
-class TrackCreate(LoginRequiredMixin,
-                  HasAccessToSongMixin,
-                  SongMixin,
-                  generic.CreateView):
-    model = Track
-    fields = ['instrument', 'public']
-    template_name = 'songs/track_create.html'
-
-    def form_valid(self, form):
-        audio_file = self.request.FILES.get('audio')
-        user = self.request.user
-        song = Song.objects.get(pk=self.kwargs['pk'])
-        accepting_contributions = form.instance.public
-
-        if accepting_contributions:
-            form.instance.public = True
-            form.instance.audio_url = None
-            form.instance.audio_name = None
-            form.instance.audio_content_type = None
-            form.instance.audio_size = None
-        else:
-            form.instance.public = False
-
-            if audio_file:
-                s3_bucket = os.environ.get('S3_BUCKET')
-                s3_client = boto3.client('s3')
-                s3_track_file_path = '%s/songs/%s/tracks/%s' % (user, song.uuid, audio_file.name)
-
-                form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
-                form.instance.audio_name = audio_file.name
-                form.instance.audio_content_type = audio_file.content_type
-                form.instance.audio_size = audio_file.size
-
-                # TODO: try catch here
-                s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
-                    'ACL': 'public-read',
-                    'ContentType': audio_file.content_type
-                })
-
-        form.instance.created_by = user
-        form.instance.song = song
-
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        messages.success(self.request, 'Created track - %s.' % self.object.instrument)
-        return reverse('songs:edit', kwargs={
-            'pk': self.kwargs['pk']
-        })
-
-
 class TrackDelete(LoginRequiredMixin,
                   HasAccessToTrack,
                   SongMixin,
@@ -165,6 +116,51 @@ class TrackDelete(LoginRequiredMixin,
 
     def get_success_url(self):
         messages.success(self.request, 'Deleted track - %s.' % self.object.instrument)
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class TrackCreate(LoginRequiredMixin,
+                  HasAccessToSongMixin,
+                  SongMixin,
+                  generic.CreateView):
+    model = Track
+    fields = ['instrument', 'public']
+    template_name = 'songs/track_create.html'
+
+    def form_valid(self, form):
+        audio_file = self.request.FILES.get('audio')
+        song = Song.objects.get(pk=self.kwargs['pk'])
+        accepting_contributions = form.instance.public
+
+        track_uuid = uuid.uuid4()
+
+        form.instance.created_by = self.request.user
+        form.instance.song = song
+        form.instance.uuid = track_uuid
+
+        if accepting_contributions:
+            form.instance.public = True
+            form.instance.audio_url = None
+            form.instance.audio_name = None
+            form.instance.audio_content_type = None
+            form.instance.audio_size = None
+        else:
+            form.instance.public = False
+
+            if audio_file:
+                s3_track_upload_client = S3TrackUploadClient(song, track_uuid, audio_file.content_type)
+                form.instance.audio_url = s3_track_upload_client.get_upload_url()
+                form.instance.audio_name = audio_file.name
+                form.instance.audio_content_type = audio_file.content_type
+                form.instance.audio_size = audio_file.size
+                s3_track_upload_client.upload_file_obj(audio_file)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Created track - %s.' % self.object.instrument)
         return reverse('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
@@ -182,7 +178,6 @@ class TrackUpdate(LoginRequiredMixin,
 
     def form_valid(self, form):
         audio_file = self.request.FILES.get('audio')
-        user = self.request.user
         song = Song.objects.get(pk=self.kwargs['pk'])
         accepting_contributions = form.instance.public
 
@@ -196,22 +191,12 @@ class TrackUpdate(LoginRequiredMixin,
             form.instance.public = False
 
             if audio_file:
-                s3_bucket = os.environ.get('S3_BUCKET')
-                s3_client = boto3.client('s3')
-                s3_track_file_path = '%s/songs/%s/tracks/%s' % (user, song.uuid, audio_file.name)
-
-                form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
+                s3_track_upload_client = S3TrackUploadClient(song, self.object.uuid, audio_file.content_type)
+                form.instance.audio_url = s3_track_upload_client.get_upload_url()
                 form.instance.audio_name = audio_file.name
                 form.instance.audio_content_type = audio_file.content_type
                 form.instance.audio_size = audio_file.size
-
-                # TODO: try catch here
-                s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
-                    'ACL': 'public-read',
-                    'ContentType': audio_file.content_type
-                })
-
-        form.instance.created_by = user
+                s3_track_upload_client.upload_file_obj(audio_file)
 
         return super().form_valid(form)
 
