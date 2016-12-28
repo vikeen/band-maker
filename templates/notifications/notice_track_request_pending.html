@@ -1,0 +1,8 @@
+{% load instrument_name %}
+
+{% with song=notice.action_object.track.song track=notice.action_object.track track_request=notice.action_object %}
+    {{ notice.actor }} created a
+    <a href="{% url 'songs:track_request_detail' song.pk track.pk track_request.pk %}">
+        {{ track | instrument_name }}
+    </a> track request for <i>"{{ song.title }}"</i>
+{% endwith %}

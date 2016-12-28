@@ -1,4 +1,5 @@
 {% load avatar_image %}
+{% load notifications_tags %}
 
 <header class="site-header">
     <nav>
@@ -15,6 +16,20 @@
                     <li>
                         <a href="{% url 'songs:create' %}">Create</a>
                     </li>
+                    <li>
+                        {% notifications_unread as unread_count %}
+                        {% if  unread_count %}
+                            <a href="{% url 'notifications:unread' %}">
+                                <i class="material-icons left">notifications_active</i>
+                                <span class="new badge">{{ unread_count }}</span>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'notifications:all' %}">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        {% endif %}
+                    </li>
+
                     <li class="gravatar">
                         <a class="dropdown-button" href="#!" data-activates="dropdown1">
                             {% avatar_image user size=35 %}

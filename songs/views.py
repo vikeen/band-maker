@@ -3,7 +3,7 @@ import os
 import boto3
 import logging
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from django.core.files.base import File
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -15,11 +15,13 @@ from django.shortcuts import redirect
 from django.views import generic
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
+from shutil import rmtree
+from tempfile import mkdtemp
+from notifications.signals import notify
+
 from .licenses import license
 from .models import Song, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin, SongMixin
-from tempfile import mkdtemp
-from shutil import rmtree
 
 
 class Index(LoginRequiredMixin,
@@ -247,13 +249,22 @@ class TrackRequestCreate(LoginRequiredMixin,
         form.instance.created_by = user
         form.instance.track_id = self.kwargs['track_id']
 
-        # TODO: try catch here
-        s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
-            'ACL': 'public-read',
-            'ContentType': audio_file.content_type
-        })
+        if form.is_valid():
+            s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
+                'ACL': 'public-read',
+                'ContentType': audio_file.content_type
+            })
 
-        return super().form_valid(form)
+            track_request = form.save()
+
+            notify.send(user,
+                        recipient=song.created_by,
+                        verb='created a track request',
+                        action_object=track_request,
+                        target=song,
+                        type="track_request_pending")
+
+        return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

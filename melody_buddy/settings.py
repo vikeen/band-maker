@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'users.apps.UsersConfig',
     'accounts.apps.AccountsConfig',
     'registration.backends.simple',
-    'home'
+    'home',
+    'notifications'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -183,3 +184,6 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
+
+# attach extra arguments to notify.send(...) will be serialized as json data
+NOTIFICATIONS_USE_JSONFIELD=True
