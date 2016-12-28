@@ -337,6 +337,12 @@ def decline_track_request(request, *args, **kwargs):
 
     messages.success(request, 'Track request declined')
 
+    notify.send(request.user,
+                recipient=track_request.created_by,
+                verb='track request declined',
+                action_object=track_request,
+                type="track_request_declined")
+
     return redirect(reverse('users:track_requests', kwargs={
         'username': request.user.username
     }))

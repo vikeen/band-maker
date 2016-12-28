@@ -47,6 +47,8 @@
                             {% include 'notifications/notice_track_request_pending.html' %}
                         {% elif notice.data.type == 'track_request_approved' %}
                             {% include 'notifications/notice_track_request_approved.html' %}
+                        {% elif notice.data.type == 'track_request_declined' %}
+                            {% include 'notifications/notice_track_request_declined.html' %}
                         {% else %}
                             {{ notice }}
                         {% endif %}
