@@ -23,7 +23,7 @@
             {% for song in song_list %}
                 <li class="collection-item avatar">
                     <a href="{% url 'users:detail' song.created_by %}">
-                        {% avatar_image song.created_by size=50 class="circle"%}
+                        {% avatar_image song.created_by size=50 class="circle" %}
                     </a>
                     <span class="title">
                     <a href="{% url "songs:detail" song.id %}">{{ song.title }}</a>
@@ -32,7 +32,7 @@
                 </span>
                     <p>{{ song.description | truncatechars:100 }}</p>
                     <div class="secondary-content">
-                        <span class="new badge blue" data-badge-caption="views">{{ song.views }}</span>
+                        <span class="new badge blue" data-badge-caption="views">{{ song.songstats.views }}</span>
                     </div>
                     <footer>
                         <ul>

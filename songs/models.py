@@ -9,8 +9,6 @@ from .licenses import license
 
 class Song(models.Model):
     title = models.CharField(max_length=200)
-    likes = models.IntegerField(default=0)
-    views = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -28,6 +26,15 @@ class Song(models.Model):
         return license[self.license]
 
 
+class SongStats(models.Model):
+    song = models.OneToOneField(Song, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = 'songs_song_stats'
+
+
 class Track(models.Model):
     TRACK_INSTRUMENT_CHOICES = Skill.SKILL_CHOICES
 
@@ -39,7 +46,6 @@ class Track(models.Model):
     audio_size = models.IntegerField(null=True, blank=True)
     audio_content_type = models.CharField(max_length=100, null=True, blank=True)
     public = models.BooleanField(default=False)
-    likes = models.IntegerField(default=0)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

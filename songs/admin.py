@@ -4,9 +4,9 @@ from .models import Song, Track, TrackRequest
 
 
 class SongAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_by', 'views', 'updated', 'created')
+    list_display = ('title', 'created_by', 'updated', 'created')
     exclude = ('license',)
-    readonly_fields = ('uuid', 'views', 'likes')
+    readonly_fields = ('uuid',)
     search_fields = ('title',)
     list_filter = ('updated', 'created')
 
@@ -14,7 +14,7 @@ class SongAdmin(admin.ModelAdmin):
 class TrackAdmin(admin.ModelAdmin):
     list_display = ('instrument', 'song', 'created_by', 'contributed_by', 'updated', 'created')
     exclude = ('license', 'song')
-    readonly_fields = ('uuid', 'likes')
+    readonly_fields = ('uuid',)
     search_fields = ('song__title',)
     list_filter = ('updated', 'created')
 

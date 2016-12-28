@@ -22,7 +22,7 @@ from tempfile import mkdtemp
 from .s3 import S3TrackUploadClient, S3TrackRequestUploadClient
 from .notifications import NotificationTypes
 from .licenses import license
-from .models import Song, Track, TrackRequest
+from .models import Song, SongStats, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin, SongMixin
 
 
@@ -48,9 +48,9 @@ class Detail(MediaPlayerMixin,
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         song = context['song']
-        song.views += 1
-        song.updated = song.updated
-        song.save()
+
+        song.songstats.views += 1
+        song.songstats.save()
 
         return context
 
@@ -86,6 +86,9 @@ class Create(LoginRequiredMixin,
 
     def get_success_url(self):
         messages.success(self.request, 'Created %s.' % self.object.title)
+
+        SongStats.objects.create(song=self.object)
+
         return reverse('songs:edit', kwargs={
             'pk': self.object.pk
         })
