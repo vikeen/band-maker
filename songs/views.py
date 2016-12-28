@@ -17,8 +17,8 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from shutil import rmtree
 from tempfile import mkdtemp
-from notifications.signals import notify
 
+from .notifications import NotificationTypes
 from .licenses import license
 from .models import Song, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin, SongMixin
@@ -257,12 +257,10 @@ class TrackRequestCreate(LoginRequiredMixin,
 
             track_request = form.save()
 
-            notify.send(user,
-                        recipient=song.created_by,
-                        verb='created a track request',
-                        action_object=track_request,
-                        target=song,
-                        type="track_request_pending")
+            messages.success(self.request, 'Created track request')
+            NotificationTypes.track_request_pending(self.request.user, recipient=song.created_by,
+                                                    action_object=track_request,
+                                                    target=song)
 
         return HttpResponseRedirect(self.get_success_url())
 
@@ -272,7 +270,6 @@ class TrackRequestCreate(LoginRequiredMixin,
         return context
 
     def get_success_url(self):
-        messages.success(self.request, 'Created track request')
         return reverse('songs:detail', kwargs={
             'pk': self.kwargs['pk']
         })
@@ -316,12 +313,8 @@ def approve_track_request(request, *args, **kwargs):
     track_request.save()
 
     messages.success(request, 'Track request approved')
-
-    notify.send(request.user,
-                recipient=track_request.created_by,
-                verb='track request approved',
-                action_object=track_request,
-                type="track_request_approved")
+    NotificationTypes.track_request_approved(request.user, recipient=track_request.created_by,
+                                             action_object=track_request)
 
     return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
 
@@ -336,12 +329,8 @@ def decline_track_request(request, *args, **kwargs):
     track_request.save()
 
     messages.success(request, 'Track request declined')
-
-    notify.send(request.user,
-                recipient=track_request.created_by,
-                verb='track request declined',
-                action_object=track_request,
-                type="track_request_declined")
+    NotificationTypes.track_request_declined(request.user, recipient=track_request.created_by,
+                                             action_object=track_request)
 
     return redirect(reverse('users:track_requests', kwargs={
         'username': request.user.username
