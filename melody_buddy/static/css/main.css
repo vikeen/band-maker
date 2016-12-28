@@ -13,7 +13,11 @@
 .text-color--warning {
   color: #ff9800;
 }
-.text-color--base {
+.text-color--base,
+.wizard__step--future-step,
+.wizard__step--past-step,
+.wizard__step--future-step a,
+.wizard__step--past-step a {
   color: #444 !important;
 }
 .text-color--inverse,
@@ -241,9 +245,6 @@ body {
 main {
   flex: 1 0 auto;
 }
-.site-footer {
-  margin-top: 20px;
-}
 main.container {
   margin-top: 50px;
 }
@@ -253,16 +254,30 @@ form .errorlist {
   padding: 0 20px 20px;
   margin-top: -15px;
 }
-.song__meta {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  display: block;
+.wizard {
+  background: transparent !important;
 }
-.song__meta li {
-  float: left;
-  margin-right: 20px;
+.wizard__step {
+  background-color: #3f51b5;
+  float: none;
+  padding: 0;
+  border-right: 2px solid rgba(0, 0, 0, 0.14);
+}
+.wizard__step:last-of-type {
+  border-right: none;
+}
+.wizard__step a {
+  padding: 0 15px;
+  font-size: 1rem;
+  display: block;
+  cursor: pointer;
+}
+.wizard__step a:hover {
+  background: none;
+}
+.wizard__step--future-step,
+.wizard__step--past-step {
+  background: transparent;
 }
 .collection footer {
   margin-top: 15px;
