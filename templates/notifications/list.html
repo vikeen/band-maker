@@ -45,6 +45,8 @@
                     <span class="title">
                         {% if notice.data.type == 'track_request_pending' %}
                             {% include 'notifications/notice_track_request_pending.html' %}
+                        {% elif notice.data.type == 'track_request_approved' %}
+                            {% include 'notifications/notice_track_request_approved.html' %}
                         {% else %}
                             {{ notice }}
                         {% endif %}

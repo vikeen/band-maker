@@ -317,6 +317,12 @@ def approve_track_request(request, *args, **kwargs):
 
     messages.success(request, 'Track request approved')
 
+    notify.send(request.user,
+                recipient=track_request.created_by,
+                verb='track request approved',
+                action_object=track_request,
+                type="track_request_approved")
+
     return redirect(reverse('songs:track_request_detail', kwargs=kwargs))
 
 
