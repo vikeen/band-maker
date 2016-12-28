@@ -2,18 +2,32 @@
 
 {% load widget_tweaks %}
 
-{% block title %}Delete - {{ object.title }}{% endblock %}
+{% block title %}{{ song.title }} | Delete{% endblock %}
 
 {% block content %}
-    <ol class="breadcrumb">
-        <li><a href="{% url 'users:detail' user.username %}">My Songs</a></li>
-        <li><a href="{% url 'songs:edit' object.id %}">{{ object.title }}</a></li>
-        <li class="active">Delete</li>
-    </ol>
-    <form class="form" action="" method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete "{{ object.title }}"?</p>
-        <a href="{% url 'songs:edit' object.id %}">Cancel</a>
-        <button type="submit" class="btn btn-danger">Confirm</button>
-    </form>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="col s12">
+                <a href="{% url 'users:songs' user.username %}" class="breadcrumb">My Songs</a>
+                <a href="{% url 'songs:edit' song.pk %}" class="breadcrumb">{{ song.title }}</a>
+                <a href="#!" class="breadcrumb">Delete</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Delete "{{ song.title }}"</span>
+            <p>Are you sure you want to delete "{{ song.title }}"?</p>
+        </div>
+        <div class="card-action">
+            <a href="{% url 'songs:edit' song.pk %}">Cancel</a>
+
+            <form action="" method="post" style="display: inline">
+                {% csrf_token %}
+                <button type="submit" class="btn red">Confirm</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

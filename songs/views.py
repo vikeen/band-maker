@@ -94,6 +94,7 @@ class Delete(LoginRequiredMixin,
              generic.DeleteView):
     model = Song
     template_name = 'songs/song_confirm_delete.html'
+    context_object_name = 'song'
 
     def get_success_url(self):
         messages.success(self.request, 'Deleted %s.' % self.object.title)
