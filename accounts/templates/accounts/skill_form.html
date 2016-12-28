@@ -6,8 +6,9 @@
     {% endif %}
     {% csrf_token %}
     <div class="input-field">
-        <label for="id_name">Name</label>
         {% render_field form.name %}
+        <!-- label must come after form element for materialize css requirements -->
+        <label for="id_name">Name</label>
         {{ form.name.errors }}
     </div>
     <button class="btn" type="submit">Save</button>

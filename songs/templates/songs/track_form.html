@@ -6,8 +6,9 @@
     {% endif %}
     {% csrf_token %}
     <div class="input-field">
-        <label for="id_instrument">Instrument</label>
         {% render_field form.instrument %}
+        <!-- label must come after form element for materialize css requirements -->
+        <label for="id_instrument">Instrument</label>
         {{ form.instrument.errors }}
     </div>
     <p>
