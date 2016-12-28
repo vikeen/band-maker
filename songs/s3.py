@@ -32,3 +32,12 @@ class S3TrackUploadClient(S3BaseUploadClient):
 
     def get_upload_path(self):
         return '%s/songs/%s/tracks/%s' % (self.song.created_by, self.song.uuid, self.file_name)
+
+
+class S3TrackRequestUploadClient(S3BaseUploadClient):
+    def __init__(self, song, file_name, file_content_type):
+        self.song = song
+        super().__init__(file_name, file_content_type)
+
+    def get_upload_path(self):
+        return '%s/songs/%s/requests/%s' % (self.song.created_by, self.song.uuid, self.file_name)

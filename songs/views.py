@@ -19,7 +19,7 @@ from django.views.decorators.csrf import csrf_protect
 from shutil import rmtree
 from tempfile import mkdtemp
 
-from .s3 import S3TrackUploadClient
+from .s3 import S3TrackUploadClient, S3TrackRequestUploadClient
 from .notifications import NotificationTypes
 from .licenses import license
 from .models import Song, Track, TrackRequest
@@ -221,34 +221,22 @@ class TrackRequestCreate(LoginRequiredMixin,
 
     def form_valid(self, form):
         audio_file = self.request.FILES.get('audio')
-        user = self.request.user
         song = Song.objects.get(pk=self.kwargs['pk'])
+        track_request_uuid = uuid.uuid4()
 
-        s3_bucket = os.environ.get('S3_BUCKET')
-        s3_client = boto3.client('s3')
-        s3_track_file_path = '%s/songs/%s/requests/%s' % (user, song.uuid, audio_file.name)
+        s3_track_request_upload_client = S3TrackRequestUploadClient(song, track_request_uuid, audio_file.content_type)
 
-        form.instance.audio_url = 'https://s3-us-west-2.amazonaws.com/%s/%s' % (s3_bucket, s3_track_file_path)
+        form.instance.uuid = track_request_uuid
+        form.instance.created_by = self.request.user
+        form.instance.track_id = self.kwargs['track_id']
+        form.instance.audio_url = s3_track_request_upload_client.get_upload_url()
         form.instance.audio_name = audio_file.name
         form.instance.audio_content_type = audio_file.content_type
         form.instance.audio_size = audio_file.size
-        form.instance.created_by = user
-        form.instance.track_id = self.kwargs['track_id']
 
-        if form.is_valid():
-            s3_client.upload_fileobj(audio_file, s3_bucket, s3_track_file_path, ExtraArgs={
-                'ACL': 'public-read',
-                'ContentType': audio_file.content_type
-            })
+        s3_track_request_upload_client.upload_file_obj(audio_file)
 
-            track_request = form.save()
-
-            messages.success(self.request, 'Created track request')
-            NotificationTypes.track_request_pending(self.request.user, recipient=song.created_by,
-                                                    action_object=track_request,
-                                                    target=song)
-
-        return HttpResponseRedirect(self.get_success_url())
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -256,6 +244,12 @@ class TrackRequestCreate(LoginRequiredMixin,
         return context
 
     def get_success_url(self):
+        messages.success(self.request, 'Created track request')
+        NotificationTypes.track_request_pending(self.request.user,
+                                                recipient=self.object.track.song.created_by,
+                                                action_object=self.object,
+                                                target=self.object.track.song)
+
         return reverse('songs:detail', kwargs={
             'pk': self.kwargs['pk']
         })
