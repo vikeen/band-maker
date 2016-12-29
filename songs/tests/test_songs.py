@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 
-from ..models import Song
+from ..models import Song, SongStats
 
 
 class SongTestCase(TestCase):
@@ -71,6 +71,7 @@ class DeleteSongTestCase(SongTestCase):
     def setUp(self):
         super().setUp()
         self.song = Song.objects.create(title='title', description='description', created_by=self.user_creator)
+        SongStats.objects.create(song=self.song)
         self.song_delete_url = reverse("songs:delete", kwargs={'pk': self.song.pk})
 
     def test_song_delete_denies_anonymous(self):
@@ -104,6 +105,7 @@ class UpdateSongTestCase(SongTestCase):
         super().setUp()
         self.song = Song.objects.create(title='song title', description='song description',
                                         created_by=self.user_creator)
+        SongStats.objects.create(song=self.song)
         self.song_update_url = reverse("songs:edit", kwargs={'pk': self.song.pk})
 
     def test_song_update_denies_anonymous(self):

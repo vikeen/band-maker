@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 
-from ..models import Song, Track
+from ..models import Song, SongStats, Track
 from .test_songs import SongTestCase
 
 
@@ -12,6 +12,8 @@ class TrackTestCase(SongTestCase):
             title='song title',
             description='song description',
             created_by=self.user_creator)
+
+        SongStats.objects.create(song=self.song)
 
 
 class CreateTrackTestCase(TrackTestCase):
