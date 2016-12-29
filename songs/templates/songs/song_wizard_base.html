@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load song_wizard_navigation_class %}
+
+{% block title %}{{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="wizard">
+        <nav class="wizard__navigation">
+            <div class="nav-wrapper">
+                <ul>
+                    <li class="{% song_wizard_navigation_class steps='songs:wizard_create,songs:wizard_create_confirm' %} col m4">
+                        {% if song %}
+                            <a href="{% url 'songs:wizard_create_confirm' song.pk %}">1. Song Information</a>
+                        {% else %}
+                            <a href="#!">1. Song Information</a>
+                        {% endif %}
+                    </li>
+                    <li class="{% song_wizard_navigation_class steps='songs:wizard_track_create' %} col m4">
+                        {% if tracks %}
+                            <a href="{% url 'songs:wizard_track_create' song.pk %}">2. Your Tracks</a>
+                        {% else %}
+                            <a href="#!">2. Your Tracks</a>
+                        {% endif %}
+                    </li>
+                    <li class="{% song_wizard_navigation_class steps='songs:wizard_contributor_create' %} col m4">
+                        {% if tracks %}
+                            <a href="{% url 'songs:wizard_contributor_create' song.pk %}">3. Contributors</a>
+                        {% else %}
+                            <a href="#!" disabled="disabled">3. Contributors</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="col m6 wizard__content--primary">
+                        {% block wizard_primary_content %}
+                        {% endblock %}
+                    </div>
+                    <div class="col m6 wizard__content--secondary">
+                        {% block wizard_secondary_content %}
+                            {% include 'songs/song_wizard_preview.html' %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-action wizard__actions">
+                {% block wizard_actions %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

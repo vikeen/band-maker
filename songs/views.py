@@ -71,11 +71,12 @@ class Update(LoginRequiredMixin,
         })
 
 
-class Create(LoginRequiredMixin,
-             generic.CreateView):
+class WizardCreate(LoginRequiredMixin,
+                   SongMixin,
+                   generic.CreateView):
     model = Song
     fields = ['title', 'description']
-    template_name = 'songs/song_create.html'
+    template_name = 'songs/song_wizard_information.html'
 
     def get_license_information(self):
         return license[self.license]
@@ -85,13 +86,98 @@ class Create(LoginRequiredMixin,
         return super().form_valid(form)
 
     def get_success_url(self):
-        messages.success(self.request, 'Created %s.' % self.object.title)
-
         SongStats.objects.create(song=self.object)
-
-        return reverse('songs:edit', kwargs={
+        return reverse('songs:wizard_create_confirm', kwargs={
             'pk': self.object.pk
         })
+
+
+class WizardCreateConfirm(LoginRequiredMixin,
+                          SongMixin,
+                          generic.UpdateView):
+    model = Song
+    fields = ['title', 'description']
+    template_name = 'songs/song_wizard_information_confirm.html'
+    context_object_name = 'song'
+
+    def get_success_url(self):
+        return reverse('songs:wizard_create_confirm', kwargs={
+            'pk': self.object.pk
+        })
+
+
+class WizardTrackCreate(LoginRequiredMixin,
+                        HasAccessToSongMixin,
+                        SongMixin,
+                        generic.CreateView):
+    model = Track
+    fields = ['instrument']
+    template_name = 'songs/song_wizard_track_create.html'
+
+    def form_valid(self, form):
+        audio_file = self.request.FILES.get('audio')
+        song = Song.objects.get(pk=self.kwargs['pk'])
+
+        track_uuid = uuid.uuid4()
+
+        form.instance.created_by = self.request.user
+        form.instance.song = song
+        form.instance.uuid = track_uuid
+
+        s3_track_upload_client = S3TrackUploadClient(song, track_uuid, audio_file.content_type)
+        form.instance.audio_url = s3_track_upload_client.get_upload_url()
+        form.instance.audio_name = audio_file.name
+        form.instance.audio_content_type = audio_file.content_type
+        form.instance.audio_size = audio_file.size
+        s3_track_upload_client.upload_file_obj(audio_file)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('songs:wizard_track_create', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class WizardContributorCreate(LoginRequiredMixin,
+                              HasAccessToSongMixin,
+                              SongMixin,
+                              generic.CreateView):
+    model = Track
+    fields = ['instrument']
+    template_name = 'songs/song_wizard_contributor_create.html'
+
+    def form_valid(self, form):
+        song = Song.objects.get(pk=self.kwargs['pk'])
+
+        track_uuid = uuid.uuid4()
+
+        form.instance.created_by = self.request.user
+        form.instance.song = song
+        form.instance.uuid = track_uuid
+
+        form.instance.public = True
+        form.instance.audio_url = None
+        form.instance.audio_name = None
+        form.instance.audio_content_type = None
+        form.instance.audio_size = None
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('songs:wizard_contributor_create', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+# Redirect the user to song edit once song creation is complete.
+@login_required
+def wizard_complete(request, pk):
+    song = Song.objects.get(pk=pk)
+    messages.success(request, '"%s" has been created.' % song.title)
+    return HttpResponseRedirect(reverse('songs:edit', kwargs={
+        'pk': song.pk
+    }))
 
 
 class Delete(LoginRequiredMixin,

@@ -1,0 +1,14 @@
+{% extends 'songs/song_wizard_base.html' %}
+
+{% block title %}{{ song.title }}{% endblock %}
+
+{% block wizard_primary_content %}
+    <span class="card-title">Song Information</span>
+    {% include 'songs/song_form.html' %}
+{% endblock %}
+
+{% block wizard_actions %}
+    <a href="{% url 'songs:wizard_track_create' song.pk %}" class="btn">
+        Add Your Tracks &rarr;
+    </a>
+{% endblock %}

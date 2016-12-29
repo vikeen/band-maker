@@ -12,6 +12,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background: @color-gray-light;
 }
 
 main {
@@ -30,24 +31,37 @@ form {
     }
 }
 
-.wizard {
+nav {
+    background-color: @color-primary !important;
+}
+
+.wizard__navigation {
     background: transparent !important;
 }
 
-.wizard__steps {
-}
-
 .wizard__step {
-    background-color: #3f51b5;
+    color: @color-ui;
+    background: @color-ui-inverse;
+
     float: none;
     padding: 0;
-    border-right: @border-width-small solid rgba(0,0,0,0.14);
+    border-right: @border-width-small solid rgba(0, 0, 0, 0.14);
 
     &:last-of-type {
         border-right: none;
     }
 
+    &.wizard__step--active {
+        color: @color-ui-inverse;
+        background-color: @color-primary;
+
+        a {
+            color: @color-ui-inverse;
+        }
+    }
+
     a {
+        color: @color-ui;
         padding: 0 @padding-default;
         font-size: 1rem;
         display: block;
@@ -59,17 +73,16 @@ form {
     }
 }
 
-.wizard__step--active {
-    //background-color: rgba(0, 0, 0, 0.1);
+.wizard__content--primary, .wizard__content--secondary {
+    min-height: 400px !important;
 }
 
-.wizard__step--future-step, .wizard__step--past-step {
-    &:extend(.text-color--base);
-    background: transparent;
+.wizard__content--secondary {
+    overflow-y: scroll;
+}
 
-    a {
-        &:extend(.text-color--base);
-    }
+.wizard__actions {
+    text-align: right;
 }
 
 .collection {

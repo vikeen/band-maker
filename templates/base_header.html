@@ -14,7 +14,7 @@
                         <a href="{% url 'songs:index' %}?accepting_contributions=on">Contribute</a>
                     </li>
                     <li>
-                        <a href="{% url 'songs:create' %}">Create</a>
+                        <a href="{% url 'songs:wizard_create' %}">Create</a>
                     </li>
                     <li>
                         {% notifications_unread as unread_count %}

@@ -1,5 +1,5 @@
 .text-color--primary {
-  color: #2196f3 !important;
+  color: #3f51b5 !important;
 }
 .text-color--danger {
   color: #f44336;
@@ -13,11 +13,7 @@
 .text-color--warning {
   color: #ff9800;
 }
-.text-color--base,
-.wizard__step--future-step,
-.wizard__step--past-step,
-.wizard__step--future-step a,
-.wizard__step--past-step a {
+.text-color--base {
   color: #444 !important;
 }
 .text-color--inverse,
@@ -37,7 +33,7 @@
   color: #eee;
 }
 .bg-color--primary {
-  background-color: #2196f3 !important;
+  background-color: #3f51b5 !important;
 }
 .bg-color--warning,
 .message.message--warning {
@@ -68,16 +64,8 @@
   display: table;
   clear: both;
 }
-.jumbotron {
-  background: #2196f3;
-  color: white;
-  padding-bottom: 80px;
-}
-body {
-  background-color: #fcfcfc;
-}
 nav {
-  background-color: #3f51b5 !important;
+  background-color: #3f51b5;
 }
 /*
  *
@@ -241,6 +229,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background: #eee;
 }
 main {
   flex: 1 0 auto;
@@ -254,11 +243,15 @@ form .errorlist {
   padding: 0 20px 20px;
   margin-top: -15px;
 }
-.wizard {
+nav {
+  background-color: #3f51b5 !important;
+}
+.wizard__navigation {
   background: transparent !important;
 }
 .wizard__step {
-  background-color: #3f51b5;
+  color: #444;
+  background: white;
   float: none;
   padding: 0;
   border-right: 2px solid rgba(0, 0, 0, 0.14);
@@ -266,7 +259,15 @@ form .errorlist {
 .wizard__step:last-of-type {
   border-right: none;
 }
+.wizard__step.wizard__step--active {
+  color: white;
+  background-color: #3f51b5;
+}
+.wizard__step.wizard__step--active a {
+  color: white;
+}
 .wizard__step a {
+  color: #444;
   padding: 0 15px;
   font-size: 1rem;
   display: block;
@@ -275,9 +276,15 @@ form .errorlist {
 .wizard__step a:hover {
   background: none;
 }
-.wizard__step--future-step,
-.wizard__step--past-step {
-  background: transparent;
+.wizard__content--primary,
+.wizard__content--secondary {
+  min-height: 400px !important;
+}
+.wizard__content--secondary {
+  overflow-y: scroll;
+}
+.wizard__actions {
+  text-align: right;
 }
 .collection footer {
   margin-top: 15px;

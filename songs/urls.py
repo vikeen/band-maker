@@ -5,12 +5,20 @@ from . import views
 app_name = 'songs'
 urlpatterns = [
     url(r'^$', views.Index.as_view(), name='index'),
-    url(r'^create$', views.Create.as_view(), name='create'),
     url(r'^(?P<pk>[0-9]+)/$', views.Detail.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/delete$', views.Delete.as_view(), name='delete'),
     url(r'^(?P<pk>[0-9]+)/edit$', views.Update.as_view(), name='edit'),
 
     url(r'^(?P<pk>[0-9]+)/download$', views.download_song, name='download'),
+
+    # song create wizard
+    url(r'^create$', views.WizardCreate.as_view(), name='wizard_create'),
+    url(r'^create/(?P<pk>[0-9]+)/confirm$', views.WizardCreateConfirm.as_view(), name='wizard_create_confirm'),
+    url(r'^create/(?P<pk>[0-9]+)/tracks/create$', views.WizardTrackCreate.as_view(),
+        name='wizard_track_create'),
+    url(r'^create/(?P<pk>[0-9]+)/contributors/create$', views.WizardContributorCreate.as_view(),
+        name='wizard_contributor_create'),
+    url(r'^create/(?P<pk>[0-9]+)/complete$', views.wizard_complete, name='wizard_complete'),
 
     # tracks
     url(r'^(?P<pk>[0-9]+)/tracks/create', views.TrackCreate.as_view(), name="track_create"),

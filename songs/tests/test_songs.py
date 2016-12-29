@@ -37,7 +37,7 @@ class IndexSongTestCase(SongTestCase):
 class CreateSongTestCase(SongTestCase):
     def setUp(self):
         super().setUp()
-        self.create_song_url = reverse("songs:create")
+        self.create_song_url = reverse("songs:wizard_create")
 
     def test_song_create_denies_anonymous(self):
         response = self.client.get(self.create_song_url)
@@ -47,7 +47,7 @@ class CreateSongTestCase(SongTestCase):
         super().login(self.user_creator)
         response = self.client.get(self.create_song_url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'songs/song_create.html')
+        self.assertTemplateUsed(response, 'songs/song_wizard_information.html')
 
     def test_song_create_submits(self):
         super().login(self.user_creator)

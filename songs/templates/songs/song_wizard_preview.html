@@ -1,0 +1,24 @@
+{% load instrument_name %}
+
+{% if song %}
+    <span class="card-title">{{ song.title }}</span>
+    <p>{{ song.description | truncatechars:100 }}</p>
+{% endif %}
+
+{% if tracks %}
+    <blockquote>Your Tracks</blockquote>
+    <ol>
+        {% for track in tracks %}
+            <li>{{ track | instrument_name }} - {{ track.audio_name }}</li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+{% if contributor_tracks %}
+    <blockquote>Contributors</blockquote>
+    <ol>
+        {% for track in contributor_tracks %}
+            <li>{{ track | instrument_name }}</li>
+        {% endfor %}
+    </ol>
+{% endif %}
