@@ -30,9 +30,15 @@
                         <div class="media-player__track-meta">
                             <div class="media-player__track-instrument-title">
                                 {% if song.created_by == request.user %}
-                                    <a href="{% url 'songs:track_update' song.pk track.pk %}">
-                                        {{ track.instrument | instrument_name }}
-                                    </a>
+                                    {% if track.public %}
+                                        <a href="{% url 'songs:contributor_update' song.pk track.pk %}">
+                                            {{ track.instrument | instrument_name }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'songs:track_update' song.pk track.pk %}">
+                                            {{ track.instrument | instrument_name }}
+                                        </a>
+                                    {% endif %}
                                 {% else %}
                                     {{ track.instrument | instrument_name }}
                                 {% endif %}

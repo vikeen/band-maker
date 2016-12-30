@@ -68,6 +68,9 @@ nav {
   background-color: #3f51b5;
 }
 /*
+ *  components
+ */
+/*
  *
  * MediaPlayer Core
  *
@@ -162,6 +165,60 @@ nav {
 .media-player__track .media-player__track-control:first-child {
   margin-left: 0;
 }
+.wizard__navigation {
+  background: transparent !important;
+}
+.wizard__step {
+  color: #444;
+  background: white;
+  float: none;
+  padding: 0;
+  border-right: 2px solid rgba(0, 0, 0, 0.14);
+}
+.wizard__step:last-of-type {
+  border-right: none;
+}
+.wizard__step.wizard__step--active {
+  color: white;
+  background-color: #3f51b5;
+}
+.wizard__step.wizard__step--active a {
+  color: white;
+}
+.wizard__step a {
+  color: #444;
+  padding: 0 15px;
+  font-size: 1rem;
+  display: block;
+  cursor: pointer;
+}
+.wizard__step a:hover {
+  background: none;
+}
+.wizard__content--primary,
+.wizard__content--secondary {
+  min-height: 400px !important;
+}
+.wizard__content--secondary {
+  overflow-y: scroll;
+}
+.wizard__actions {
+  text-align: right;
+}
+.wizard__delete-track {
+  display: inline;
+  margin-left: 15px;
+}
+.wizard__preview .wizard__preview-description {
+  margin-bottom: 20px !important;
+}
+.wizard__preview .collection-item .secondary-content {
+  margin-top: -9px;
+  /* magic number */
+}
+/*
+ *  apps
+ */
 .skills {
   margin-top: 15px;
 }
@@ -245,46 +302,6 @@ form .errorlist {
 }
 nav {
   background-color: #3f51b5 !important;
-}
-.wizard__navigation {
-  background: transparent !important;
-}
-.wizard__step {
-  color: #444;
-  background: white;
-  float: none;
-  padding: 0;
-  border-right: 2px solid rgba(0, 0, 0, 0.14);
-}
-.wizard__step:last-of-type {
-  border-right: none;
-}
-.wizard__step.wizard__step--active {
-  color: white;
-  background-color: #3f51b5;
-}
-.wizard__step.wizard__step--active a {
-  color: white;
-}
-.wizard__step a {
-  color: #444;
-  padding: 0 15px;
-  font-size: 1rem;
-  display: block;
-  cursor: pointer;
-}
-.wizard__step a:hover {
-  background: none;
-}
-.wizard__content--primary,
-.wizard__content--secondary {
-  min-height: 400px !important;
-}
-.wizard__content--secondary {
-  overflow-y: scroll;
-}
-.wizard__actions {
-  text-align: right;
 }
 .collection footer {
   margin-top: 15px;

@@ -2,9 +2,14 @@
 @import (reference) "./includes/_measurements";
 @import "./_utilities";
 @import "./theme";
-// components
+/*
+ *  components
+ */
 @import "./media_player";
-// apps
+@import "./wizard";
+/*
+ *  apps
+ */
 @import "./users/index";
 @import "./comments";
 
@@ -33,56 +38,6 @@ form {
 
 nav {
     background-color: @color-primary !important;
-}
-
-.wizard__navigation {
-    background: transparent !important;
-}
-
-.wizard__step {
-    color: @color-ui;
-    background: @color-ui-inverse;
-
-    float: none;
-    padding: 0;
-    border-right: @border-width-small solid rgba(0, 0, 0, 0.14);
-
-    &:last-of-type {
-        border-right: none;
-    }
-
-    &.wizard__step--active {
-        color: @color-ui-inverse;
-        background-color: @color-primary;
-
-        a {
-            color: @color-ui-inverse;
-        }
-    }
-
-    a {
-        color: @color-ui;
-        padding: 0 @padding-default;
-        font-size: 1rem;
-        display: block;
-        cursor: pointer;
-
-        &:hover {
-            background: none;
-        }
-    }
-}
-
-.wizard__content--primary, .wizard__content--secondary {
-    min-height: 400px !important;
-}
-
-.wizard__content--secondary {
-    overflow-y: scroll;
-}
-
-.wizard__actions {
-    text-align: right;
 }
 
 .collection {

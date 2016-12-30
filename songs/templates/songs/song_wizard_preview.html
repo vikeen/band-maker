@@ -1,24 +1,46 @@
 {% load instrument_name %}
 
-{% if song %}
-    <span class="card-title">{{ song.title }}</span>
-    <p>{{ song.description | truncatechars:100 }}</p>
-{% endif %}
+<section class="wizard__preview">
+    {% if song %}
+        <span class="card-title">{{ song.title }}</span>
+        <p class="wizard__preview-description">{{ song.description | truncatechars:100 }}</p>
+    {% endif %}
 
-{% if tracks %}
-    <blockquote>Your Tracks</blockquote>
-    <ol>
-        {% for track in tracks %}
-            <li>{{ track | instrument_name }} - {{ track.audio_name }}</li>
-        {% endfor %}
-    </ol>
-{% endif %}
+    {% if tracks %}
+        <h6><b>Your Tracks</b></h6>
+        <ol class="collection">
+            {% for track in tracks %}
+                <li class="collection-item">
+                    {{ track | instrument_name }} - ({{ track.audio_name }})
+                    <form action="{% url 'songs:wizard_track_delete' song.pk track.pk %}" method="post"
+                          class="secondary-content">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn btn-floating btn-flat" type="submit" title="Delete Track">
+                            <i class="material-icons red-text">delete</i>
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
 
-{% if contributor_tracks %}
-    <blockquote>Contributors</blockquote>
-    <ol>
-        {% for track in contributor_tracks %}
-            <li>{{ track | instrument_name }}</li>
-        {% endfor %}
-    </ol>
-{% endif %}
+    {% if contributor_tracks %}
+        <h6><b>Contributors</b></h6>
+        <ol class="collection">
+            {% for track in contributor_tracks %}
+                <li class="collection-item">
+                    {{ track | instrument_name }} - (From Contributor)
+                    <form action="{% url 'songs:wizard_contributor_delete' song.pk track.pk %}" method="post"
+                          class="secondary-content">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <button class="btn btn-floating btn-flat" type="submit" title="Delete Track">
+                            <i class="material-icons red-text">delete</i>
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+</section>

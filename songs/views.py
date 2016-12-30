@@ -26,8 +26,93 @@ from .models import Song, SongStats, Track, TrackRequest
 from .mixins import HasAccessToSongMixin, HasAccessToTrack, MediaPlayerMixin, SongMixin
 
 
-class Index(LoginRequiredMixin,
-            generic.ListView):
+class BaseSongUpdate(LoginRequiredMixin,
+                     HasAccessToSongMixin,
+                     MediaPlayerMixin,
+                     generic.UpdateView):
+    model = Song
+    fields = ["title", 'description']
+    context_object_name = 'song'
+
+    def get_success_url(self):
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class BaseContributorCreate(LoginRequiredMixin,
+                            HasAccessToSongMixin,
+                            SongMixin,
+                            generic.CreateView):
+    model = Track
+    fields = ['instrument']
+
+    def form_valid(self, form):
+        song = Song.objects.get(pk=self.kwargs['pk'])
+
+        form.instance.created_by = self.request.user
+        form.instance.song = song
+        form.instance.uuid = uuid.uuid4()
+        form.instance.public = True
+        form.instance.audio_url = None
+        form.instance.audio_name = None
+        form.instance.audio_content_type = None
+        form.instance.audio_size = None
+
+        return super().form_valid(form)
+
+
+class BaseTrackCreate(LoginRequiredMixin,
+                      HasAccessToSongMixin,
+                      SongMixin,
+                      generic.CreateView):
+    model = Track
+    fields = ['instrument']
+
+    def form_valid(self, form):
+        audio_file = self.request.FILES.get('audio')
+        song = Song.objects.get(pk=self.kwargs['pk'])
+
+        track_uuid = uuid.uuid4()
+
+        form.instance.created_by = self.request.user
+        form.instance.song = song
+        form.instance.uuid = track_uuid
+
+        form.instance.public = False
+
+        if audio_file:
+            s3_track_upload_client = S3TrackUploadClient(song, track_uuid, audio_file.content_type)
+            form.instance.audio_url = s3_track_upload_client.get_upload_url()
+            form.instance.audio_name = audio_file.name
+            form.instance.audio_content_type = audio_file.content_type
+            form.instance.audio_size = audio_file.size
+            s3_track_upload_client.upload_file_obj(audio_file)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class BaseTrackDelete(LoginRequiredMixin,
+                      HasAccessToTrack,
+                      SongMixin,
+                      generic.DeleteView):
+    model = Track
+    context_object_name = 'track'
+    pk_url_kwarg = 'track_id'
+
+    def get_success_url(self):
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class SongIndex(LoginRequiredMixin,
+                generic.ListView):
     model = Song
     context_object_name = 'song_list'
 
@@ -40,8 +125,8 @@ class Index(LoginRequiredMixin,
             return Song.objects.all()
 
 
-class Detail(MediaPlayerMixin,
-             generic.DetailView):
+class SongDetail(MediaPlayerMixin,
+                 generic.DetailView):
     model = Song
     context_object_name = 'song'
 
@@ -55,19 +140,25 @@ class Detail(MediaPlayerMixin,
         return context
 
 
-class Update(LoginRequiredMixin,
-             HasAccessToSongMixin,
-             MediaPlayerMixin,
-             generic.UpdateView):
-    model = Song
-    fields = ["title", 'description']
+class SongUpdate(BaseSongUpdate):
     template_name = 'songs/song_update.html'
-    context_object_name = 'song'
 
     def get_success_url(self):
         messages.success(self.request, 'Updated %s.' % self.object.title)
-        return reverse('songs:edit', kwargs={
-            'pk': self.kwargs['pk']
+        return super().get_success_url()
+
+
+class SongDelete(LoginRequiredMixin,
+                 HasAccessToSongMixin,
+                 generic.DeleteView):
+    model = Song
+    template_name = 'songs/song_confirm_delete.html'
+    context_object_name = 'song'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Deleted %s.' % self.object.title)
+        return reverse('users:detail', kwargs={
+            'username': self.request.user
         })
 
 
@@ -92,13 +183,14 @@ class WizardCreate(LoginRequiredMixin,
         })
 
 
-class WizardCreateConfirm(LoginRequiredMixin,
-                          SongMixin,
-                          generic.UpdateView):
-    model = Song
-    fields = ['title', 'description']
+class WizardCreateConfirm(BaseSongUpdate):
     template_name = 'songs/song_wizard_information_confirm.html'
-    context_object_name = 'song'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['tracks'] = context['song'].track_set.filter(public=False)
+        context['contributor_tracks'] = context['song'].track_set.filter(public=True)
+        return context
 
     def get_success_url(self):
         return reverse('songs:wizard_create_confirm', kwargs={
@@ -106,32 +198,8 @@ class WizardCreateConfirm(LoginRequiredMixin,
         })
 
 
-class WizardTrackCreate(LoginRequiredMixin,
-                        HasAccessToSongMixin,
-                        SongMixin,
-                        generic.CreateView):
-    model = Track
-    fields = ['instrument']
+class WizardTrackCreate(BaseTrackCreate):
     template_name = 'songs/song_wizard_track_create.html'
-
-    def form_valid(self, form):
-        audio_file = self.request.FILES.get('audio')
-        song = Song.objects.get(pk=self.kwargs['pk'])
-
-        track_uuid = uuid.uuid4()
-
-        form.instance.created_by = self.request.user
-        form.instance.song = song
-        form.instance.uuid = track_uuid
-
-        s3_track_upload_client = S3TrackUploadClient(song, track_uuid, audio_file.content_type)
-        form.instance.audio_url = s3_track_upload_client.get_upload_url()
-        form.instance.audio_name = audio_file.name
-        form.instance.audio_content_type = audio_file.content_type
-        form.instance.audio_size = audio_file.size
-        s3_track_upload_client.upload_file_obj(audio_file)
-
-        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('songs:wizard_track_create', kwargs={
@@ -139,35 +207,23 @@ class WizardTrackCreate(LoginRequiredMixin,
         })
 
 
-class WizardContributorCreate(LoginRequiredMixin,
-                              HasAccessToSongMixin,
-                              SongMixin,
-                              generic.CreateView):
-    model = Track
-    fields = ['instrument']
+class WizardTrackDelete(BaseTrackDelete):
+    def get_success_url(self):
+        return self.request.POST.get('next')
+
+
+class WizardContributorCreate(BaseContributorCreate):
     template_name = 'songs/song_wizard_contributor_create.html'
-
-    def form_valid(self, form):
-        song = Song.objects.get(pk=self.kwargs['pk'])
-
-        track_uuid = uuid.uuid4()
-
-        form.instance.created_by = self.request.user
-        form.instance.song = song
-        form.instance.uuid = track_uuid
-
-        form.instance.public = True
-        form.instance.audio_url = None
-        form.instance.audio_name = None
-        form.instance.audio_content_type = None
-        form.instance.audio_size = None
-
-        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('songs:wizard_contributor_create', kwargs={
             'pk': self.kwargs['pk']
         })
+
+
+class WizardContributorDelete(BaseTrackDelete):
+    def get_success_url(self):
+        return self.request.POST.get('next')
 
 
 # Redirect the user to song edit once song creation is complete.
@@ -180,79 +236,20 @@ def wizard_complete(request, pk):
     }))
 
 
-class Delete(LoginRequiredMixin,
-             HasAccessToSongMixin,
-             generic.DeleteView):
-    model = Song
-    template_name = 'songs/song_confirm_delete.html'
-    context_object_name = 'song'
-
-    def get_success_url(self):
-        messages.success(self.request, 'Deleted %s.' % self.object.title)
-        return reverse('users:detail', kwargs={
-            'username': self.request.user
-        })
-
-
-class TrackDelete(LoginRequiredMixin,
-                  HasAccessToTrack,
-                  SongMixin,
-                  generic.DeleteView):
-    model = Track
+class TrackDelete(BaseTrackDelete):
     template_name = 'songs/track_confirm_delete.html'
-    context_object_name = 'track'
-    pk_url_kwarg = 'track_id'
 
     def get_success_url(self):
         messages.success(self.request, 'Deleted track - %s.' % self.object.instrument)
-        return reverse('songs:edit', kwargs={
-            'pk': self.kwargs['pk']
-        })
+        return super().get_success_url()
 
 
-class TrackCreate(LoginRequiredMixin,
-                  HasAccessToSongMixin,
-                  SongMixin,
-                  generic.CreateView):
-    model = Track
-    fields = ['instrument', 'public']
+class TrackCreate(BaseTrackCreate):
     template_name = 'songs/track_create.html'
-
-    def form_valid(self, form):
-        audio_file = self.request.FILES.get('audio')
-        song = Song.objects.get(pk=self.kwargs['pk'])
-        accepting_contributions = form.instance.public
-
-        track_uuid = uuid.uuid4()
-
-        form.instance.created_by = self.request.user
-        form.instance.song = song
-        form.instance.uuid = track_uuid
-
-        if accepting_contributions:
-            form.instance.public = True
-            form.instance.audio_url = None
-            form.instance.audio_name = None
-            form.instance.audio_content_type = None
-            form.instance.audio_size = None
-        else:
-            form.instance.public = False
-
-            if audio_file:
-                s3_track_upload_client = S3TrackUploadClient(song, track_uuid, audio_file.content_type)
-                form.instance.audio_url = s3_track_upload_client.get_upload_url()
-                form.instance.audio_name = audio_file.name
-                form.instance.audio_content_type = audio_file.content_type
-                form.instance.audio_size = audio_file.size
-                s3_track_upload_client.upload_file_obj(audio_file)
-
-        return super().form_valid(form)
 
     def get_success_url(self):
         messages.success(self.request, 'Created track - %s.' % self.object.instrument)
-        return reverse('songs:edit', kwargs={
-            'pk': self.kwargs['pk']
-        })
+        return super().get_success_url()
 
 
 class TrackUpdate(LoginRequiredMixin,
@@ -260,7 +257,7 @@ class TrackUpdate(LoginRequiredMixin,
                   SongMixin,
                   generic.UpdateView):
     model = Track
-    fields = ['instrument', 'public']
+    fields = ['instrument']
     template_name = 'songs/track_update.html'
     context_object_name = 'track'
     pk_url_kwarg = 'track_id'
@@ -268,37 +265,68 @@ class TrackUpdate(LoginRequiredMixin,
     def form_valid(self, form):
         audio_file = self.request.FILES.get('audio')
         song = Song.objects.get(pk=self.kwargs['pk'])
-        accepting_contributions = form.instance.public
 
-        if accepting_contributions:
-            form.instance.public = True
-            form.instance.audio_url = None
-            form.instance.audio_name = None
-            form.instance.audio_content_type = None
-            form.instance.audio_size = None
-        else:
-            form.instance.public = False
+        form.instance.public = False
 
-            if audio_file:
-                s3_track_upload_client = S3TrackUploadClient(song, self.object.uuid, audio_file.content_type)
-                form.instance.audio_url = s3_track_upload_client.get_upload_url()
-                form.instance.audio_name = audio_file.name
-                form.instance.audio_content_type = audio_file.content_type
-                form.instance.audio_size = audio_file.size
-                s3_track_upload_client.upload_file_obj(audio_file)
+        if audio_file:
+            s3_track_upload_client = S3TrackUploadClient(song, self.object.uuid, audio_file.content_type)
+            form.instance.audio_url = s3_track_upload_client.get_upload_url()
+            form.instance.audio_name = audio_file.name
+            form.instance.audio_content_type = audio_file.content_type
+            form.instance.audio_size = audio_file.size
+            s3_track_upload_client.upload_file_obj(audio_file)
 
         return super().form_valid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['track_json'] = serializers.serialize("json", [context['track'], ])
-        return context
 
     def get_success_url(self):
         messages.success(self.request, 'Updated track - %s.' % self.object.instrument)
         return reverse('songs:edit', kwargs={
             'pk': self.kwargs['pk']
         })
+
+
+class ContributorCreate(BaseContributorCreate):
+    template_name = 'songs/contributor_create.html'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Created contributor - %s.' % self.object.instrument)
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class ContributorUpdate(LoginRequiredMixin,
+                        HasAccessToTrack,
+                        SongMixin,
+                        generic.UpdateView):
+    model = Track
+    fields = ['instrument']
+    template_name = 'songs/contributor_update.html'
+    context_object_name = 'track'
+    pk_url_kwarg = 'track_id'
+
+    def form_valid(self, form):
+        form.instance.public = True
+        form.instance.audio_url = None
+        form.instance.audio_name = None
+        form.instance.audio_content_type = None
+        form.instance.audio_size = None
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        messages.success(self.request, 'Updated contributor - %s.' % self.object.instrument)
+        return reverse('songs:edit', kwargs={
+            'pk': self.kwargs['pk']
+        })
+
+
+class ContributorDelete(BaseTrackDelete):
+    template_name = 'songs/contributor_confirm_delete.html'
+
+    def get_success_url(self):
+        messages.success(self.request, 'Deleted contributor - %s.' % self.object.instrument)
+        return super().get_success_url()
 
 
 class TrackRequestCreate(LoginRequiredMixin,

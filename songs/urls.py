@@ -4,10 +4,10 @@ from . import views
 
 app_name = 'songs'
 urlpatterns = [
-    url(r'^$', views.Index.as_view(), name='index'),
-    url(r'^(?P<pk>[0-9]+)/$', views.Detail.as_view(), name='detail'),
-    url(r'^(?P<pk>[0-9]+)/delete$', views.Delete.as_view(), name='delete'),
-    url(r'^(?P<pk>[0-9]+)/edit$', views.Update.as_view(), name='edit'),
+    url(r'^$', views.SongIndex.as_view(), name='index'),
+    url(r'^(?P<pk>[0-9]+)/$', views.SongDetail.as_view(), name='detail'),
+    url(r'^(?P<pk>[0-9]+)/delete$', views.SongDelete.as_view(), name='delete'),
+    url(r'^(?P<pk>[0-9]+)/edit$', views.SongUpdate.as_view(), name='edit'),
 
     url(r'^(?P<pk>[0-9]+)/download$', views.download_song, name='download'),
 
@@ -16,8 +16,12 @@ urlpatterns = [
     url(r'^create/(?P<pk>[0-9]+)/confirm$', views.WizardCreateConfirm.as_view(), name='wizard_create_confirm'),
     url(r'^create/(?P<pk>[0-9]+)/tracks/create$', views.WizardTrackCreate.as_view(),
         name='wizard_track_create'),
+    url(r'^create/(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/delete', views.WizardTrackDelete.as_view(),
+        name="wizard_track_delete"),
     url(r'^create/(?P<pk>[0-9]+)/contributors/create$', views.WizardContributorCreate.as_view(),
         name='wizard_contributor_create'),
+    url(r'^create/(?P<pk>[0-9]+)/contributors/(?P<track_id>[0-9]+)/delete', views.WizardContributorDelete.as_view(),
+        name="wizard_contributor_delete"),
     url(r'^create/(?P<pk>[0-9]+)/complete$', views.wizard_complete, name='wizard_complete'),
 
     # tracks
@@ -26,6 +30,13 @@ urlpatterns = [
         name="track_delete"),
     url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/edit', views.TrackUpdate.as_view(),
         name="track_update"),
+
+    # contributors
+    url(r'^(?P<pk>[0-9]+)/contributors/create', views.ContributorCreate.as_view(), name="contributor_create"),
+    url(r'^(?P<pk>[0-9]+)/contributors/(?P<track_id>[0-9]+)/edit', views.ContributorUpdate.as_view(),
+        name="contributor_update"),
+    url(r'^(?P<pk>[0-9]+)/contributors/(?P<track_id>[0-9]+)/delete', views.ContributorDelete.as_view(),
+        name="contributor_delete"),
 
     # track requests
     url(r'^(?P<pk>[0-9]+)/tracks/(?P<track_id>[0-9]+)/requests/create$', views.TrackRequestCreate.as_view(),

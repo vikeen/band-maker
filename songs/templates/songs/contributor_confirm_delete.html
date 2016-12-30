@@ -11,7 +11,7 @@
             <div class="col s12">
                 <a href="{% url 'users:songs' user.username %}" class="breadcrumb">My Songs</a>
                 <a href="{% url 'songs:edit' song.pk %}" class="breadcrumb">{{ song.title }}</a>
-                <a href="{% url 'songs:track_update' song.pk track.pk %}"
+                <a href="{% url 'songs:contributor_update' song.pk track.pk %}"
                    class="breadcrumb">{{ track.instrument | instrument_name }}</a>
             </div>
         </div>
@@ -20,11 +20,11 @@
 
     <div class="card">
         <div class="card-content">
-            <span class="card-title">Delete "{{ track.instrument | instrument_name }}" Track</span>
+            <span class="card-title">Delete "{{ track.instrument | instrument_name }}"</span>
             <p>Are you sure you want to delete "{{ track.instrument | instrument_name }}"?</p>
         </div>
         <div class="card-action">
-            <a href="{% url 'songs:track_update' song.pk track.pk %}">Cancel</a>
+            <a href="{% url 'songs:contributor_update' song.pk track.pk %}">Cancel</a>
             <form action="" method="post" style="display: inline">
                 {% csrf_token %}
 
