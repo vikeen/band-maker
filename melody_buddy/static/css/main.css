@@ -312,3 +312,13 @@ nav {
   line-height: 50px;
   overflow: hidden;
 }
+.site-footer__social-icons a {
+  display: block;
+  margin-left: 0;
+  margin-bottom: 15px;
+}
+.site-footer__social-icons a svg {
+  margin-right: 15px;
+  float: left;
+  fill: #eee;
+}
