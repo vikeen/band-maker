@@ -21,8 +21,9 @@
             {% include 'songs/media_player.html' %}
         </div>
         <div class="card-action">
-            <a href="{% url 'songs:download' song.pk %}">
-                <button class="btn">Download</button>
+            <a href="{% url 'songs:download' song.pk %}" class="btn">
+                <i class="material-icons left">file_download</i>
+                Download
             </a>
         </div>
     </div>
