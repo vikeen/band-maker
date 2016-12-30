@@ -43,7 +43,10 @@
             <span class="card-title">The Danger Zone</span>
         </div>
         <div class="card-action">
-            <a class="btn red" href="{% url 'songs:delete' song.id %}">Delete</a>
+            <a class="btn red" href="{% url 'songs:delete' song.id %}">
+                <i class="material-icons left">delete_forever</i>
+                Delete
+            </a>
         </div>
     </div>
 {% endblock %}
