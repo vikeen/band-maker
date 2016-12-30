@@ -47,7 +47,7 @@ class CreateSongTestCase(SongTestCase):
         super().login(self.user_creator)
         response = self.client.get(self.create_song_url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'songs/song_wizard_information.html')
+        self.assertTemplateUsed(response, 'songs/song_wizard_detail.html')
 
     def test_song_create_submits(self):
         super().login(self.user_creator)

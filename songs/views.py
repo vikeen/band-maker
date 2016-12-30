@@ -167,7 +167,7 @@ class WizardCreate(LoginRequiredMixin,
                    generic.CreateView):
     model = Song
     fields = ['title', 'description']
-    template_name = 'songs/song_wizard_information.html'
+    template_name = 'songs/song_wizard_detail.html'
 
     def get_license_information(self):
         return license[self.license]
@@ -184,7 +184,7 @@ class WizardCreate(LoginRequiredMixin,
 
 
 class WizardCreateConfirm(BaseSongUpdate):
-    template_name = 'songs/song_wizard_information_confirm.html'
+    template_name = 'songs/song_wizard_detail_confirm.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()

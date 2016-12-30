@@ -3,7 +3,7 @@
 <section class="wizard__preview">
     {% if song %}
         <span class="card-title">{{ song.title }}</span>
-        <p class="wizard__preview-description">{{ song.description | truncatechars:100 }}</p>
+        <p class="wizard__description">{{ song.description | truncatechars:100 }}</p>
     {% endif %}
 
     {% if tracks %}

@@ -3,7 +3,8 @@
 {% block title %}{{ song.title }}{% endblock %}
 
 {% block wizard_primary_content %}
-    <span class="card-title">Song Information</span>
+    <span class="card-title">Song Details</span>
+    <p class="wizard__description">Tell us about your song. What is your inspiration for creating it?</p>
     {% include 'songs/song_form.html' %}
 {% endblock %}
 

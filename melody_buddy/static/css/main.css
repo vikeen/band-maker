@@ -209,7 +209,7 @@ nav {
   display: inline;
   margin-left: 15px;
 }
-.wizard__preview .wizard__preview-description {
+.wizard__description {
   margin-bottom: 20px !important;
 }
 .wizard__preview .collection-item .secondary-content {

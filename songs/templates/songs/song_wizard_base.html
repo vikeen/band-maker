@@ -10,9 +10,9 @@
                 <ul>
                     <li class="{% song_wizard_navigation_class steps='songs:wizard_create,songs:wizard_create_confirm' %} col m4">
                         {% if song %}
-                            <a href="{% url 'songs:wizard_create_confirm' song.pk %}">1. Song Information</a>
+                            <a href="{% url 'songs:wizard_create_confirm' song.pk %}">1. Song Details</a>
                         {% else %}
-                            <a href="#!">1. Song Information</a>
+                            <a href="#!">1. Song Details</a>
                         {% endif %}
                     </li>
                     <li class="{% song_wizard_navigation_class steps='songs:wizard_track_create' %} col m4">
