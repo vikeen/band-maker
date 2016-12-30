@@ -47,9 +47,13 @@ class HasAccessToTrack(object):
 class SongMixin(ContextMixin):
     def get_context_data(self, **kwargs):
         context = super(SongMixin, self).get_context_data(**kwargs)
-        context['song'] = Song.objects.get(pk=self.kwargs['pk'])
-        context['tracks'] = context['song'].track_set.filter(public=False)
-        context['contributor_tracks'] = context['song'].track_set.filter(public=True)
+        song_pk = self.kwargs.get('pk')
+
+        if song_pk:
+            context['song'] = Song.objects.get(pk=self.kwargs['pk'])
+            context['tracks'] = context['song'].track_set.filter(public=False)
+            context['contributor_tracks'] = context['song'].track_set.filter(public=True)
+
         return context
 
 
