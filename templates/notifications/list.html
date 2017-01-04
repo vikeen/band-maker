@@ -33,7 +33,7 @@
         <div class="clearfix content-block">
             <form action="{% url 'notifications:mark_all_as_read' %}" method="post" class="right">
                 {% csrf_token %}
-                <button class="btn" type="submit">{% trans 'mark all as read' %}</button>
+                <button class="btn btn--default" type="submit">{% trans 'mark all as read' %}</button>
             </form>
         </div>
         <ul class="collection">

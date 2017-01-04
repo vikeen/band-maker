@@ -13,7 +13,7 @@ class Song(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     media_url = models.CharField(max_length=500, null=True, blank=True)
-    description = models.TextField(max_length=500, null=True, blank=True)
+    description = models.TextField(max_length=2000, null=True, blank=True)
     published = models.BooleanField(default=False)
     license = models.CharField(choices=(("cc-by-4.0", "Creative Commons Attribution 4.0"),), default="cc-by-4.0",
                                max_length=100)

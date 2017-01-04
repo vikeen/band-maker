@@ -1,0 +1,27 @@
+@import (reference) "includes/_colors";
+@import (reference) "includes/_measurements";
+
+.site-header {
+    .brand-logo img {
+        height: 35px;
+        vertical-align: middle;
+    }
+
+    .gravatar {
+        position: relative;
+
+        img {
+            position: relative;
+            top: 12px;
+        }
+
+        .dropdown-content {
+            min-width: 200px;
+            right: 0;
+
+            a {
+                color: @color-ui !important;
+            }
+        }
+    }
+}

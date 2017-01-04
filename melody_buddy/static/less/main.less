@@ -2,11 +2,17 @@
 @import (reference) "./includes/_measurements";
 @import "./_utilities";
 @import "./theme";
+
 /*
  *  components
  */
+@import "./buttons";
+@import "./footer";
+@import "./header";
 @import "./media_player";
+@import "./messages";
 @import "./wizard";
+
 /*
  *  apps
  */
@@ -48,70 +54,4 @@ nav {
 
 .content-block {
     margin-top: @margin-default;
-}
-
-.site-header .gravatar {
-    position: relative;
-
-    img {
-        position: relative;
-        top: 12px;
-    }
-
-    .dropdown-content {
-        min-width: 200px;
-        right: 0;
-    }
-}
-
-.site-footer {
-    &:extend(.text-color--muted);
-    margin-top: @margin-large;
-    padding-top: @padding-large;
-}
-
-.site-footer__copyright {
-    height: 50px;
-    line-height: 50px;
-    overflow: hidden;
-}
-
-.site-footer__social-icons {
-    a {
-        display: block;
-        margin-left: 0;
-        margin-bottom: @margin-default;
-
-        svg {
-            margin-right: @margin-default;
-            float: left;
-            fill: #eee
-        }
-    }
-}
-
-.message {
-    &.message--success {
-        &:extend(.bg-color--success);
-        &:extend(.text-color--inverse);
-    }
-
-    &.message--error {
-        &:extend(.bg-color--danger);
-        &:extend(.text-color--inverse);
-    }
-
-    &.message--info {
-        &:extend(.bg-color--info);
-        &:extend(.text-color--inverse);
-    }
-
-    &.message--warning {
-        &:extend(.bg-color--warning);
-        &:extend(.text-color--inverse);
-    }
-
-    .message__close {
-        &:extend(.text-color--inverse);
-    }
 }

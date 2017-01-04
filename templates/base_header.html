@@ -1,10 +1,14 @@
 {% load avatar_image %}
 {% load notifications_tags %}
+{% load static %}
 
 <header class="site-header">
     <nav>
         <div class="nav-wrapper container">
-            <a href="{% url 'index' %}" class="brand-logo">Melody Buddy</a>
+            <a href="{% url 'index' %}" class="brand-logo">
+                <img src="{% static 'images/white_logo_transparent_background_small.png' %}" alt="Melody Buddy logo"
+                     title="Melody Buddy"/>
+            </a>
             <a href="#" data-activates="mobile-main-navigation" class="button-collapse">
                 <i class="material-icons">menu</i>
             </a>

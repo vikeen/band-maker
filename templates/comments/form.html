@@ -16,7 +16,7 @@
                 {{ form.comment.errors }}
             </div>
             <input type="hidden" name="next" value="{{ request.path }}"/>
-            <input type="submit" value="Comment" id="id_submit" class="btn"/>
+            <input type="submit" value="Comment" id="id_submit" class="btn btn--default"/>
         </form>
     {% else %}
         <p>Please <a href="{% url 'accounts:login' %}">log in</a> to leave a comment.</p>

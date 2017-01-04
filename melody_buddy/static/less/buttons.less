@@ -1,0 +1,29 @@
+@import (reference) "includes/_colors";
+@import (reference) "includes/_measurements";
+
+.btn {
+    &.btn--success {
+        &:extend(.bg-color--success);
+        &:extend(.text-color--inverse);
+    }
+
+    &.btn--error {
+        &:extend(.bg-color--danger);
+        &:extend(.text-color--inverse);
+    }
+
+    &.btn--info {
+        &:extend(.bg-color--info);
+        &:extend(.text-color--inverse);
+    }
+
+    &.btn--warning {
+        &:extend(.bg-color--warning);
+        &:extend(.text-color--inverse);
+    }
+
+    &.btn--default {
+        &:extend(.bg-color--primary);
+        &:extend(.text-color--inverse);
+    }
+}

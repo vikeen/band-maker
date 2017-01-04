@@ -16,7 +16,7 @@
                 <form action="{% url 'accounts:avatar_upload' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="file-field input-field">
-                        <div class="btn">
+                        <div class="btn btn--default">
                             <i class="material-icons left">add_a_photo</i>
                             <span>Image</span>
                             <input type="file" id="id_avatar" name="avatar" accept=".png, .jpg, .jpeg, .gif" required/>
@@ -26,7 +26,7 @@
                         </div>
                         {{ user_profile_form.avatar.errors }}
                     </div>
-                    <button class="btn">Upload</button>
+                    <button class="btn btn--default">Upload</button>
                 </form>
             </div>
         </div>

@@ -1,0 +1,30 @@
+@import (reference) "includes/_colors";
+@import (reference) "includes/_measurements";
+
+.site-footer {
+    &:extend(.text-color--muted);
+    background-color: @color-primary;
+    margin-top: @margin-large;
+    padding-top: @padding-large;
+}
+
+.site-footer__copyright {
+    background-color: @color-gray-darker;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+}
+
+.site-footer__social-icons {
+    a {
+        display: block;
+        margin-left: 0;
+        margin-bottom: @margin-default;
+
+        svg {
+            margin-right: @margin-default;
+            float: left;
+            fill: #eee
+        }
+    }
+}

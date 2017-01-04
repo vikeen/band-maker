@@ -1,0 +1,28 @@
+@import (reference) "includes/_colors";
+@import (reference) "includes/_measurements";
+
+.message {
+    &.message--success {
+        &:extend(.bg-color--success);
+        &:extend(.text-color--inverse);
+    }
+
+    &.message--error {
+        &:extend(.bg-color--danger);
+        &:extend(.text-color--inverse);
+    }
+
+    &.message--info {
+        &:extend(.bg-color--info);
+        &:extend(.text-color--inverse);
+    }
+
+    &.message--warning {
+        &:extend(.bg-color--warning);
+        &:extend(.text-color--inverse);
+    }
+
+    .message__close {
+        &:extend(.text-color--inverse);
+    }
+}

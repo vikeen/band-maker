@@ -15,7 +15,7 @@
                                {% if request.GET.accepting_contributions %}checked{% endif %}/>
                         <label for="id_accepting_contributions">Accepting Contributions</label>
                     </p>
-                    <button type="submit" class="btn indigo">Filter</button>
+                    <button type="submit" class="btn btn--default">Filter</button>
                 </form>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 </span>
                     <p>{{ song.description | truncatechars:100 }}</p>
                     <div class="secondary-content">
-                        <span class="new badge blue" data-badge-caption="views">{{ song.songstats.views }}</span>
+                        <span class="new badge" data-badge-caption="views">{{ song.songstats.views }}</span>
                     </div>
                     <footer>
                         <ul>

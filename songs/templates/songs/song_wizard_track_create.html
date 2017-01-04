@@ -13,7 +13,7 @@
     <a href="{% url 'songs:wizard_create_confirm' song.pk %}" class="btn btn-flat">
         &larr; Song Information
     </a>
-    <a href="{% url 'songs:wizard_contributor_create' song.pk %}" class="btn"
+    <a href="{% url 'songs:wizard_contributor_create' song.pk %}" class="btn btn--default"
        {% if tracks.count == 0 %}disabled="disabled"{% endif %}>
         Add Contributor Tracks &rarr;
     </a>

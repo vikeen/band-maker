@@ -16,7 +16,7 @@
                         {% endif %}
                     </li>
                     <li class="{% song_wizard_navigation_class steps='songs:wizard_track_create' %} col m4">
-                        {% if tracks %}
+                        {% if song %}
                             <a href="{% url 'songs:wizard_track_create' song.pk %}">2. Your Tracks</a>
                         {% else %}
                             <a href="#!">2. Your Tracks</a>

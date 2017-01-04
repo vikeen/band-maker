@@ -6,7 +6,7 @@
 {% block content %}
     {% include 'accounts/navigation.html' with active_link='skills' %}
     <div class="card-panel">
-        <a href="{% url 'accounts:skill_create' %}" class="btn">Add Skill</a>
+        <a href="{% url 'accounts:skill_create' %}" class="btn btn--default">Add Skill</a>
         <div class="skills">
             {% for skill in skill_list %}
                 <div class="chip">
