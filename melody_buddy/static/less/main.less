@@ -34,6 +34,24 @@ main.container {
     margin-top: 50px;
 }
 
+#home {
+    .parallax-container {
+        height: 100vh;
+    }
+
+    .headline-container {
+        text-align: center;
+        margin-top: 10rem;
+        padding: 2rem 1rem;
+        background: rgba(0, 0, 0, 0.7);
+        text-transform: capitalize;
+    }
+
+    #headline {
+        &:extend(.text-color--inverse);
+    }
+}
+
 form {
     .errors, .errorlist {
         color: @color-danger;

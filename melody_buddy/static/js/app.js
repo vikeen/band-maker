@@ -23,6 +23,8 @@ $(document).ready(() => {
     $(".button-collapse").sideNav();
     $('ul.tabs').tabs();
     $('select').material_select();
+    $('.parallax').parallax();
+    $('.scrollspy').scrollSpy();
 
     new window.bm.components.Messages();
 });

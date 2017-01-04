@@ -343,6 +343,16 @@ main {
 main.container {
   margin-top: 50px;
 }
+#home .parallax-container {
+  height: 100vh;
+}
+#home .headline-container {
+  text-align: center;
+  margin-top: 10rem;
+  padding: 2rem 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  text-transform: capitalize;
+}
 form .errors,
 form .errorlist {
   color: #f44336;
