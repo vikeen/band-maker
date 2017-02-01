@@ -1,10 +1,9 @@
 {% load static %}
 
-{% block title %}{% endblock %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Melody Buddy | Home</title>
+    <title>Melody Buddy</title>
     {% include 'base_head.html' %}
 </head>
 <body>
@@ -12,96 +11,150 @@
 {% include 'base_site_header.html' %}
 
 <main id="home">
-    <div class="parallax-container">
-        <div class="headline-container container">
-            <h1 id="headline">Write music without limitations</h1>
-        </div>
-        <div class="parallax">
-            <img src="{% static 'images/apple-laptop-macbook-pro-notebook.jpg' %}"
-                 alt="apple laptop macbook pro notebook"/>
+    <div style="
+            background-image: url('{% static "images/night-vintage-music-bokeh.jpg" %}');
+            background-size: cover;
+            background-position-x: center;
+            background-position-y: center;
+            height: 100vh;
+            ">
+        <div class="headline-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <h1>Finding Musicians is Difficult</h1>
+                        <p class="flow-text"> Finding musicians is a difficult, time-consuming experience. Our passion
+                            drives us through
+                            the hardship only to be back at square one again in a month.
+                        </p>
+                        <p class="flow-text">Collaborating with other musicians doesn't have to be hard, and we don't
+                            have to be limited
+                            to the town we live in or by our personal networks.
+                        </p>
+                        <div class="center meet-the-product">
+                            <a class="btn btn-large" href="#meet">Meet Melody Buddy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="section white">
-        <div class="row container">
-            <h2 class="header">Parallax</h2>
-            <p class="grey-text text-darken-3 lighten-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                varius ut dui a faucibus.
-                Pellentesque
-                metus erat, ultricies eget nisl quis, tempor sollicitudin mauris. Vestibulum vel eleifend
-                turpis.
-                Donec vel orci in purus volutpat finibus vel sit amet ligula. Vivamus odio lectus,
-                scelerisque
-                vitae
-                dolor eu, fermentum sagittis risus. Sed a nunc facilisis, facilisis lacus non, fermentum
-                eros.
-                Curabitur eu odio egestas, auctor mauris ac, commodo tellus. Quisque lacinia nulla interdum,
-                congue
-                ipsum a, varius neque. Integer varius venenatis tincidunt. Nulla blandit, arcu at convallis
-                congue,
-                purus eros varius eros, ac malesuada ex odio placerat neque. Cras nec auctor dui, sed
-                laoreet
-                mauris. Aliquam arcu ipsum, euismod sit amet tortor eu, vulputate dignissim risus. Praesent
-                finibus
-                velit sed enim pellentesque scelerisque. Vivamus mattis lacinia arcu, eget pharetra enim
-                hendrerit
-                id. Sed luctus mollis nulla eget dignissim.
-
-                Nulla id pretium quam. Praesent nulla neque, ultrices sed turpis id, iaculis fermentum nibh.
-                Vestibulum sodales malesuada laoreet. Morbi fermentum lacinia augue vitae interdum. Praesent
-                arcu
-                ante, hendrerit accumsan consectetur in, pretium id nisi. Aenean vitae eros varius, blandit
-                risus a,
-                mattis ex. Sed dictum fringilla ipsum nec dapibus. Fusce et tristique leo. Ut varius vel
-                libero
-                sit
-                amet iaculis. Integer in fermentum risus.
-
-                Nulla facilisi. Integer ipsum massa, finibus ut viverra quis, sagittis a felis. Praesent
-                pulvinar,
-                felis a convallis accumsan, mi mi tristique nibh, eget scelerisque metus lectus ut sem.
-                Aliquam
-                iaculis dictum ornare. Maecenas vestibulum sem non congue fermentum. Etiam quis fermentum
-                dolor.
-                Aliquam erat volutpat. Etiam ut arcu auctor, pretium lorem sit amet, scelerisque diam.
-
-                Cras tincidunt ullamcorper pellentesque. Phasellus laoreet nunc a metus blandit, quis
-                sagittis
-                ligula tincidunt. Etiam mollis neque a nisl vestibulum, a semper augue efficitur. Aliquam
-                quis
-                nulla
-                id libero luctus tincidunt. Maecenas commodo ac orci vitae egestas. Fusce laoreet blandit
-                tortor,
-                nec consectetur lacus dignissim vitae. Etiam euismod mollis lacus vel commodo. Mauris sed
-                auctor
-                diam. Morbi pulvinar nulla neque, nec faucibus nulla imperdiet ac. Donec ac enim consequat,
-                mollis
-                odio id, pulvinar nisi. Fusce scelerisque, nisi sit amet imperdiet maximus, mi est fringilla
-                felis,
-                sed placerat libero nulla quis lectus. Aliquam vel feugiat velit. Sed lacinia rhoncus augue.
-
-                Duis semper sapien metus, a egestas ligula gravida eget. Quisque interdum sapien quis lorem
-                laoreet,
-                quis cursus leo convallis. In lobortis, lacus sit amet pellentesque finibus, odio mi rhoncus
-                nisl,
-                eu posuere magna felis sed ex. Nam id facilisis justo, sed consequat ligula. Aenean sapien
-                magna,
-                posuere ultrices urna sit amet, rhoncus tempor elit. Nam magna risus, iaculis at euismod ut,
-                iaculis
-                sed enim. Maecenas dapibus pellentesque eleifend. Morbi nec blandit lacus. Nunc a dui eget
-                erat
-                aliquet aliquam sit amet vitae arcu. Nulla et dapibus sem.</p>
+    <div id="meet" class="section white">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6">
+                    <p class="flow-text">
+                        Melody Buddy is a music collaboration website that unshackles our songwriting potential.
+                    </p>
+                    <p class="flow-text">
+                        Currently in development, Melody Buddy's mission is to help musicians write better songs by
+                        building a platform to create and share original music together.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <img src="{% static 'images/macbook-with-application.png' %}" style="width: 100%"
+                         alt="melody buddy application"/>
+                </div>
+            </div>
         </div>
     </div>
     <div class="section">
-        <div class="row container">
-            <p class="grey-text text-darken-3 lighten-3">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6">
+                    <h3>Create Music with Anyone, Anywhere</h3>
+                    <p class="flow-text">
+                        Find a musician down the street to jam with or a vocalist in Paris, France. Melody Buddy lets
+                        you spend less time searching for musicians and more time creating music. It's a win-win.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <img src="{% static 'images/global-collaboration.png' %}" style="width: 100%"
+                         alt="global map of musicians"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section white">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m4">
+                    <img src="{% static 'images/empty-drumset.jpg' %}" style="width: 100%"
+                         alt="empty drumset"/>
+                </div>
+                <div class="col s12 m8">
+                    <h3>No Drummer. No Problem.</h3>
+                    <p class="flow-text">
+                        With Melody Buddy, you don't need to know a drummer, guitarist, or vocalist to have these parts
+                        in your music. When you create your song in Melody Buddy, add the contributor instrument tracks
+                        you want in the song, and a musician can upload their work to your song.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8">
+                    <h3>Share and Sell Your Music</h3>
+                    <p class="flow-text">
+                        When you're ready to share your music why not sell it too?
+                    </p>
+                    <p class="flow-text">
+                        Melody Buddy's marketplace lets you sell your music and automatically share a portion of the
+                        profits with musicians who contributed to it.
 
+                        Whether it's your music or music you contributed to you can receive income your contributions.
+                    </p>
+                </div>
+                <div class="col s12 m4">
+                    <img src="{% static 'images/growth-chart.png' %}" style="width: 100%"
+                         alt="growth bar chart"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section white">
+        <div class="container">
+            <p class="flow-text center">Sign up below to follow the progress of Melody Buddy and gain early access.</p>
+            <div class="row">
+                <form method="POST" action="{% url 'follow' %}" class="col s12 offset-m3 m6">
+                    {% csrf_token %}
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email"/>
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="thank-you-modal" class="modal">
+        <div class="modal-content">
+            <h4>Thank You</h4>
+            <p class="flow-text">
+                Your interest in the Melody Buddy project is greatly appreciated.
             </p>
-            <a href="{% url 'accounts:registration' %}" class="btn">Sign up for free &rarr;</a>
+
+            <p class="flow-text">
+                Sincerely,<br/>
+                The Melody Buddy Team
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close btn-flat">Close</a>
         </div>
     </div>
 </main>
 
 {% include 'base_site_footer.html' %}
+<script>
+    $(document).ready(function () {
+        var show_thank_you_modal = !!window.location.search.match(/subscribed/);
+
+        if (show_thank_you_modal) {
+            $('#thank-you-modal').modal('open');
+        }
+    });
+</script>
 </body>
 </html>

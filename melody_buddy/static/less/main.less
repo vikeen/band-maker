@@ -21,7 +21,8 @@
 
 body {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 500px;
     flex-direction: column;
     background: @color-gray-light;
 }
@@ -35,20 +36,20 @@ main.container {
 }
 
 #home {
-    .parallax-container {
-        height: 100vh;
-    }
-
     .headline-container {
-        text-align: center;
-        margin-top: 10rem;
+        height: 100%;
         padding: 2rem 1rem;
-        background: rgba(0, 0, 0, 0.7);
-        text-transform: capitalize;
+        background: rgba(0, 0, 0, 0.8);
+        color: @color-ui-inverse;
     }
 
-    #headline {
-        &:extend(.text-color--inverse);
+    .meet-the-product {
+        margin-top: 4rem;
+    }
+
+    .section {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 }
 

@@ -25,6 +25,7 @@ $(document).ready(() => {
     $('select').material_select();
     $('.parallax').parallax();
     $('.scrollspy').scrollSpy();
+    $('.modal').modal();
 
     new window.bm.components.Messages();
 });
