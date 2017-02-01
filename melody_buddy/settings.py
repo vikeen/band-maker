@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'users.apps.UsersConfig',
     'accounts.apps.AccountsConfig',
     'registration.backends.simple',
-    'home',
+    'melody_buddy',
     'notifications'
 )
 
@@ -182,7 +182,7 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/songs'
 LOGIN_URL = '/accounts/login/'
 
 # attach extra arguments to notify.send(...) will be serialized as json data

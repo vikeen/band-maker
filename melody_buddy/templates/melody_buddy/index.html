@@ -1,0 +1,160 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Melody Buddy</title>
+    {% include 'base_head.html' %}
+</head>
+<body>
+
+{% include 'base_site_header.html' %}
+
+<main id="home">
+    <div style="
+            background-image: url('{% static "images/night-vintage-music-bokeh.jpg" %}');
+            background-size: cover;
+            background-position-x: center;
+            background-position-y: center;
+            height: 100vh;
+            ">
+        <div class="headline-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <h1>Finding Musicians is Difficult</h1>
+                        <p class="flow-text"> Finding musicians is a difficult, time-consuming experience. Our passion
+                            drives us through
+                            the hardship only to be back at square one again in a month.
+                        </p>
+                        <p class="flow-text">Collaborating with other musicians doesn't have to be hard, and we don't
+                            have to be limited
+                            to the town we live in or by our personal networks.
+                        </p>
+                        <div class="center meet-the-product">
+                            <a class="btn btn-large" href="#meet">Meet Melody Buddy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="meet" class="section white">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6">
+                    <p class="flow-text">
+                        Melody Buddy is a music collaboration website that unshackles our songwriting potential.
+                    </p>
+                    <p class="flow-text">
+                        Currently in development, Melody Buddy's mission is to help musicians write better songs by
+                        building a platform to create and share original music together.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <img src="{% static 'images/macbook-with-application.png' %}" style="width: 100%"
+                         alt="melody buddy application"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6">
+                    <h3>Create Music with Anyone, Anywhere</h3>
+                    <p class="flow-text">
+                        Find a musician down the street to jam with or a vocalist in Paris, France. Melody Buddy lets
+                        you spend less time searching for musicians and more time creating music. It's a win-win.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <img src="{% static 'images/global-collaboration.png' %}" style="width: 100%"
+                         alt="global map of musicians"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section white">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m4">
+                    <img src="{% static 'images/empty-drumset.jpg' %}" style="width: 100%"
+                         alt="empty drumset"/>
+                </div>
+                <div class="col s12 m8">
+                    <h3>No Drummer. No Problem.</h3>
+                    <p class="flow-text">
+                        With Melody Buddy, you don't need to know a drummer, guitarist, or vocalist to have these parts
+                        in your music. When you create your song in Melody Buddy, add the contributor instrument tracks
+                        you want in the song, and a musician can upload their work to your song.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8">
+                    <h3>Share and Sell Your Music</h3>
+                    <p class="flow-text">
+                        When you're ready to share your music why not sell it too?
+                    </p>
+                    <p class="flow-text">
+                        Melody Buddy's marketplace lets you sell your music and automatically share a portion of the
+                        profits with musicians who contributed to it.
+
+                        Whether it's your music or music you contributed to you can receive income your contributions.
+                    </p>
+                </div>
+                <div class="col s12 m4">
+                    <img src="{% static 'images/growth-chart.png' %}" style="width: 100%"
+                         alt="growth bar chart"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section white">
+        <div class="container">
+            <p class="flow-text center">Sign up below to follow the progress of Melody Buddy and gain early access.</p>
+            <div class="row">
+                <form method="POST" action="{% url 'follow' %}" class="col s12 offset-m3 m6">
+                    {% csrf_token %}
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email"/>
+                    <button type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="thank-you-modal" class="modal">
+        <div class="modal-content">
+            <h4>Thank You</h4>
+            <p class="flow-text">
+                Your interest in the Melody Buddy project is greatly appreciated.
+            </p>
+
+            <p class="flow-text">
+                Sincerely,<br/>
+                The Melody Buddy Team
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close btn-flat">Close</a>
+        </div>
+    </div>
+</main>
+
+{% include 'base_site_footer.html' %}
+<script>
+    $(document).ready(function () {
+        var show_thank_you_modal = !!window.location.search.match(/subscribed/);
+
+        if (show_thank_you_modal) {
+            $('#thank-you-modal').modal('open');
+        }
+    });
+</script>
+</body>
+</html>

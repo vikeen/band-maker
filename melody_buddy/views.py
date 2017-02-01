@@ -1,49 +1,21 @@
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
-from django.views import generic
-from users.models import Skill
+
+from users.models import Follower
 
 
-class ProfileUpdate(generic.UpdateView):
-    model = User
-    fields = ['first_name', 'last_name', 'email']
-    template_name = 'accounts/profile_update.html'
-
-    def get_object(self, queryset=None):
-        return User.objects.get(pk=self.request.user.pk)
-
-    def get_success_url(self):
-        return reverse('accounts:edit')
+def index(request):
+    return render(request, 'melody_buddy/index.html')
 
 
-class SkillIndex(generic.ListView):
-    model = Skill
-    context_object_name = 'skill_list'
-    template_name = 'accounts/skill_list.html'
+def follow(request):
+    email = request.POST.get("email")
 
-    def get_queryset(self):
-        return Skill.objects.filter(user=self.request.user)
+    if email and request.method == "POST":
+        follower = Follower.objects.filter(email=email)
 
+        if not follower:
+            follower = Follower.objects.create(email=email)
+            follower.save()
 
-class SkillCreate(generic.CreateView):
-    model = Skill
-    fields = ['name']
-    template_name = 'accounts/skill_create.html'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(SkillCreate, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('accounts:skills')
-
-
-class SkillDelete(generic.DeleteView):
-    model = Skill
-    template_name = 'accounts/skill_confirm_delete.html'
-
-    def get_object(self, queryset=None):
-        return Skill.objects.get(pk=self.kwargs['skill_id'])
-
-    def get_success_url(self):
-        return reverse('accounts:skills')
+    return redirect(reverse('index') + "?subscribed=true")

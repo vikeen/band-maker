@@ -21,7 +21,8 @@
 
 body {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 500px;
     flex-direction: column;
     background: @color-gray-light;
 }
@@ -32,6 +33,24 @@ main {
 
 main.container {
     margin-top: 50px;
+}
+
+#home {
+    .headline-container {
+        height: 100%;
+        padding: 2rem 1rem;
+        background: rgba(0, 0, 0, 0.8);
+        color: @color-ui-inverse;
+    }
+
+    .meet-the-product {
+        margin-top: 4rem;
+    }
+
+    .section {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
 }
 
 form {
