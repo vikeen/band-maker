@@ -18,21 +18,24 @@
             background-position-y: center;
             height: 100vh;
             ">
-        <div class="headline-container">
+        <div class="headline-container center">
             <div class="container">
                 <div class="row">
                     <div class="col s12">
-                        <h1>Finding Musicians is Difficult</h1>
-                        <p class="flow-text"> Finding musicians is a difficult, time-consuming experience. Our passion
-                            drives us through
-                            the hardship only to be back at square one again in a month.
-                        </p>
+                        <h1>Musicians <span style="text-decoration: underline">need</span> a Community</h1>
                         <p class="flow-text">Collaborating with other musicians doesn't have to be hard, and we don't
                             have to be limited
                             to the town we live in or by our personal networks.
                         </p>
                         <div class="center meet-the-product">
-                            <a class="btn btn-large" href="#meet">Meet Melody Buddy</a>
+                            <script>
+                                window.meetMelodyBuddy = function () {
+                                    $('html, body').animate({
+                                        scrollTop: $("#meet").offset().top
+                                    }, 1000);
+                                };
+                            </script>
+                            <button class="btn btn-large" onclick="meetMelodyBuddy()">Meet Melody Buddy</button>
                         </div>
                     </div>
                 </div>
@@ -44,11 +47,11 @@
             <div class="row">
                 <div class="col s12 m6">
                     <p class="flow-text">
-                        Melody Buddy is a music collaboration website that unshackles our songwriting potential.
+                        Melody Buddy is a musician's community that unshackles your potential.
                     </p>
                     <p class="flow-text">
-                        Currently in development, Melody Buddy's mission is to help musicians write better songs by
-                        building a platform to create and share original music together.
+                        Currently in pre-launch, Melody Buddy's mission is to build a community for musicians. We want
+                        to become your source for <b>feedback</b> and <b>creative inspiration</b>.
                     </p>
                 </div>
                 <div class="col s12 m6">
@@ -62,9 +65,9 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 m6">
-                    <h3>Create Music with Anyone, Anywhere</h3>
+                    <h3>Take your ideas and jam with anyone, anywhere</h3>
                     <p class="flow-text">
-                        Find a musician down the street to jam with or a vocalist in Paris, France. Melody Buddy lets
+                        Find a musician down the street to or a vocalist in Paris, France. Melody Buddy lets
                         you spend less time searching for musicians and more time creating music. It's a win-win.
                     </p>
                 </div>
@@ -78,44 +81,22 @@
     <div class="section white">
         <div class="container">
             <div class="row">
-                <div class="col s12 m4">
-                    <img src="{% static 'images/empty-drumset.jpg' %}" style="width: 100%"
-                         alt="empty drumset"/>
+                <div class="col s12 m6">
+                    <img src="{% static 'images/country-girl-with-guitar.jpeg' %}" style="width: 100%"
+                         alt="country girl with guitar"/>
                 </div>
-                <div class="col s12 m8">
-                    <h3>No Drummer. No Problem.</h3>
+                <div class="col s12 m6">
+                    <h3>Creative Source of Inspiration</h3>
                     <p class="flow-text">
-                        With Melody Buddy, you don't need to know a drummer, guitarist, or vocalist to have these parts
-                        in your music. When you create your song in Melody Buddy, add the contributor instrument tracks
-                        you want in the song, and a musician can upload their work to your song.
+                        Find musicians who inspire you. We believe that every musician brings their unique flavor to the
+                        table when it comes to music.
+                        Share you ideas and let the inspiration flow when others contribute back.
                     </p>
                 </div>
             </div>
         </div>
     </div>
     <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m8">
-                    <h3>Share and Sell Your Music</h3>
-                    <p class="flow-text">
-                        When you're ready to share your music why not sell it too?
-                    </p>
-                    <p class="flow-text">
-                        Melody Buddy's marketplace lets you sell your music and automatically share a portion of the
-                        profits with musicians who contributed to it.
-
-                        Whether it's your music or music you contributed to you can receive income your contributions.
-                    </p>
-                </div>
-                <div class="col s12 m4">
-                    <img src="{% static 'images/growth-chart.png' %}" style="width: 100%"
-                         alt="growth bar chart"/>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="section white">
         <div class="container">
             <p class="flow-text center">Sign up below to follow the progress of Melody Buddy and gain early access.</p>
             <div class="row">
